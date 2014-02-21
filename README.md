@@ -13,4 +13,4 @@ To install Microbe-ID on your server you need the following components and appli
 - You custom fasta database for **Sequence-ID**
 - Your custom file for **Genotype-ID**
 
-
+Designed and built by members of the [grunwald lab](http://grunwaldlab.cgrb.oregonstate.edu).
