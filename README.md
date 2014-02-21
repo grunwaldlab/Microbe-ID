@@ -1,7 +1,7 @@
-Microbe_id
+Microbe-ID
 ===============
 
-Webpage of Microbe-ID created by the Grunwald lab. It contains both the website pages for the whole website and the shiny-server files for Genotype-ID.
+this site provides all modules and applciaitons necessary for creating  awebsite for species ID or genotyping. It contains both the website pages for the whole website and Shiny R server files.
 
 Contents
 -----------------
