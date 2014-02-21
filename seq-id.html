@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+    <!--- Change the title of the webpage in the <title> tag --->
+	<title>Microbe-ID | Sequence-ID</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="root" >
+	<!-- Le styles, make sure that the Bootstrap_files folder is in the same directory than your homepage -->
+	<link href="Bootstrap_files/bootstrap.css" rel="stylesheet">
+	<link href="Bootstrap_files/phytophthora-lab.css" rel="stylesheet">
+	<style>
+	#updates .modal-body {
+	max-height: 800px;
+	}
+	#updates{
+	width: 900px;
+	margin: -250px 60 0 -450px; 
+		}
+	     /* Sticky footer styles
+      -------------------------------------------------- */
+
+      html,
+      body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+      }
+
+      /* Wrapper for page content to push down footer */
+      #wrap {
+        min-height: 95%;
+        height: auto !important;
+        height: 95%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -70px;
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 120px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+      
+      #wrap > .container {
+        padding-top: 60px;
+      }
+      .container .credit {
+        margin: 20px 0;
+      }
+
+      code {
+        font-size: 80%;
+      }
+	
+	</style>
+	<!-- Recalling stylesheets and icons. Once again, make sure that the Bootstrap_files folder is in the same directory than your homepage -->
+	<link href="Bootstrap_files/bootstrap-responsive.css" rel="stylesheet">
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="../assets/js/html5shiv.js"></script>
+	<![endif]-->
+	<!-- Fav and touch icons -->
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="img/customIcon.png">
+</head>
+<body>
+	<div id="wrap">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<!-- Names of the links are between the <a></a> tags. -->
+					<a class="brand" href="./index.html">Microbe-ID</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<li><a href="./index.html">Home</a></li>
+							<li><a href="./seq-id.html">Sequence-ID</a></li>
+							<li><a href="./geno-id.html">Genotype-ID</a></li>
+							<li><a href="./about.html">About</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</div>
+		<div class="container">
+		<!-- Change this image to the one of your preference! -->
+			<h1><img src="img/seqid.png" class="img-circle" style="border:8px solid green; width:80px " >  Sequence-ID</h1>
+			<p>Choose a tab to identify species using BLAST against a curated database</p>
+			<!-- Tabs and Dropdowns -->
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#its" data-toggle="tab">Blast</a></li>
+				<li class="dropdown" id="help_menu">
+					<a class="dropdown-toggle" data-toggle="dropdown">Help<b class="caret"></b></a>  
+					<ul class="dropdown-menu">  
+						<li><a href="#updates" data-toggle="modal">Site Help</a></li>   
+					</ul>
+				<li>
+			</ul>
+			<div class="tab-content">
+				<!-- Form for BLAST submission-->
+				<div class="tab-pane active" id="its">
+				<!-- The following section is a crucial part of the BLAST search: The form name and id should be 
+				called the same way, as both are communicating to the blast.cgi perl script. the blast.cgi
+				script is a perl script which contains PERL code that is transformed in HTML and also submits the
+				query to the server in order to run BLAST. Additionally, the "onSubmit=" class in the form is a 
+				custom javascript to determine if the sequence is a FASTA file or not.
+				
+				The blast.cgi file is contained in a folder called cgi-bin in the root repository. MOVE THAT FILE
+				TO THE cgi-bin FOLDER ON APACHE (Ask your network administrator if you don't know how to do this. 
+				the BLAST submission page will not work without it.-->
+					<form name="blast" onSubmit="return validateFasta(this);" class="form-horizontal" id="blast" method="get" action="/cgi-bin/blast.cgi">
+						<fieldset>
+							<legend>blastn search</legend>
+							<!-- Job Name Form -->
+							<div class="control-group">
+								<label class="control-label">Job name</label>
+								<div class="controls">
+									<input type="text" class="input-xlarge span6" id="job_name" name="job_name" data-content="Enter a name for the job." data-original-title="Job Name" placeholder="Enter job name here">
+								</div>
+							</div>
+							<!-- Sequence Form -->			
+							<div class="control-group">  
+								<label class="control-label" for="textarea" >Input FASTA format sequence here:</label>  
+								<div class="controls">  
+									<textarea rows="11" class="input-xlarge span6" id="fasta_file" name="fasta_file" placeholder=" >Query file
+										GTGAGTACCTTGGGCTGCCTTTATATATAATCTAGAAACAAGGCCCCTGTAAGGCCCTTTCCTTCCTCCTCCCCAAAGCTATAAAAGATATTTGGGTAGAATTCACAGCTTCAGGCTATGGAACTCCTGGATTCCCTCCTTCCACTTCCACCCTACTGCAGAGATGCTGAGAAAGTCTGGGAGGGTTTTTCTAAAAGCTAAGCTGGGCCAAATAGCCAGGTTCAAGTCAGTACATGAAGAGTTGTGGTTCTAAATTCCTTCCCTACTCCAGCTCCAAATTTCATTTTAGTTCCACTTTTGGGCCTAACCAGCTAAAGGTCCCCACCCAGCTCCTGCCTATCTAGTCACTGCATATGGCAGACCTTGAAAGTCCTATCTCAAAGCAGCAGAATTATCAGTTATCTGTCTTGTCATGGAAAAGAGAGATAAGCAGAGGCCTGAGAAAGGAGTCTGGAGCTCCAGCTTCTGGTACACATCCTTGTGTTACCTGGATATGATCCTATTCCTCTAGAG"></textarea>  
+									</div>  
+								</div>  
+								<!-- ITS Submit button-->
+								<div class="control-group">
+									<label class="control-label"></label>
+									<div class="controls">
+										<button id="button" type="submit" class="btn btn-success" >Submit and run</button>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+			</div>
+			<!-- Start Of Modal popup showing the site help-->
+			<div class="modal fade hide" id="updates">
+				<div class="modal-header">
+					<a class="close" data-dismiss="modal">&times;</a>
+					<h2>Help</h2>
+					<p>Choose the appropriate tab for help.</p>
+					<ul class="nav nav-pills">
+						<li class="active"><a href="#sequence" data-toggle="pill">Sequence</a></li>
+					</ul>
+				</div>
+				<div class="modal-body"> 
+					<div class="pill-content">						
+						<div class="pill-pane active" id="sequence">
+							<h3> Sequence format	</h3>
+							<p>
+								Sequences need to follow the FASTA format:
+							</p>
+							<pre>
+	>Name of the sequence
+	CCACACCTAAAAAACTTTCCACGTGAACCGTATCAACCCTTTTAGTTGGG
+	GGTCTTGTACCCTATCATGGCGAATGTTTGGACTTCGGTCCGGGCGAGTA
+	GCTTTTTGTTTTAAACCCATTTCACAATTCTGATTATACTGTGGGGACGA
+	AAGTCTCTGCTTTTAACTAGATAGCAACTTTCAGCAGTGGATGTCTAGGC
+	TCGCACATCGATGAAGAACGCTGCGAACTGCGATACGTAATGCGAATTGC
+	AGGATTCAGTGAGTCATCGAAATTTTGAACGCATATTGCACTTCCGGGTT
+	AGTCCTGGGAGTATGCCTGTATCAGTGTCCGTACATCAAACTTGGCTTTC
+	TTCCTTCCGTGTAGTCGGTGGAGGATGTGCCAGATGTGAAGTGTCTTGCG
+	TGTTGTCCTTCGGGTCGACTGCGAGTCCTTTTAAATGTACTGAACTGTAC
+	TTCTCTTTGCTCGAAAAGCGTGGTGTTGCTGGTTGTGGAGGCTGCCTGCG
+	TGGCCAGTCGGCGACCGGTTTGTCTGCTGCGGCGTTTAAAGGAGGAGTGT
+	TCGATTCGCGGTATGGTTGGCTTCGGCTGAACAGGCGCTTATTGAATGCT
+	TTTCCTGCTGTGGCGTGATGGGCTGGTGAACCGTAGCTGTGTTTGGCTTG
+	GCTTTTGAATCGGTTTTGCTGTTGCGAAGTAGAGTGGCGGCTTCGGCTGT
+	CGAGGGTCGATCCATTTTGGGAATTTTGTGTGCACTTCGGTGCGCATCTC
+	AA</pre>
+							</div>
+							</div>
+					<div class="modal-footer">
+								<a href="#" class="btn" data-dismiss="modal">Close</a>
+							</div>
+				</div>			</div>
+			<div id="push"></div>		
+		</div>
+
+	</div>
+	
+	
+	
+<div id="footer">
+	<div class="container">
+		<br>
+		<p>Add some content here </p>
+	</div>
+</div>
+															<!-- Le javascript
+															================================================== -->
+															<!-- Placed at the end of the document so the pages load faster -->
+															<script src="Bootstrap_files/jquery.js"></script>
+															<script src="Bootstrap_files/bootstrap-transition.js"></script>
+															<script src="Bootstrap_files/bootstrap-alert.js"></script>
+															<script src="Bootstrap_files/bootstrap-modal.js"></script>
+															<script src="Bootstrap_files/bootstrap-dropdown.js"></script>
+															<script src="Bootstrap_files/bootstrap-scrollspy.js"></script>
+															<script src="Bootstrap_files/bootstrap-tab.js"></script>
+															<script src="Bootstrap_files/bootstrap-tooltip.js"></script>
+															<script src="Bootstrap_files/bootstrap-popover.js"></script>
+															<script src="Bootstrap_files/bootstrap-button.js"></script>
+															<script src="Bootstrap_files/bootstrap-collapse.js"></script>
+															<script src="Bootstrap_files/bootstrap-carousel.js"></script>
+															<script src="Bootstrap_files/bootstrap-typeahead.js"></script>
+															<script src="Bootstrap_files/holder.js"></script>
+															<script src="validate.js"></script>
+</body></html>
