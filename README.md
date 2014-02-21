@@ -15,4 +15,4 @@ To install Microbe-ID on your server you need the following components and appli
 
 This site was built solely with open source components.
 
-Designed and built by members of the [Grunwald lab](http://grunwaldlab.cgrb.oregonstate.edu). For questions, please contact Javier Tabima, Niklaus Grunwald<grunwaln@science.oregonstate.edu>, and Zhian Kamavar.
+Designed and built by members of the [Grunwald lab](http://grunwaldlab.cgrb.oregonstate.edu). For questions, please contact Javier Tabima, [Niklaus Grunwald](grunwaln@science.oregonstate.edu), and Zhian Kamavar.
