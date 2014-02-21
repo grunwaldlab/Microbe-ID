@@ -1,19 +1,16 @@
 Microbe-ID
 ===============
 
-this site provides all modules and applciaitons necessary for creating  awebsite for species ID or genotyping. It contains both the website pages for the whole website and Shiny R server files.
+Modules and applications necessary for creating a website for species identification or genotyping. 
 
-Contents
------------------
-This repository contains the Bootstrap Twitter html pages of the Microbe-ID webpage that is being created by the Grunwald Lab in Oregon State University and the HCRL-USDA, Corvallis, OR.
+Components
+------
 
-The page is comprised by:
-* The **Index page**, which contains the welcome and basics.
-* The **Sequence-ID** page, which has the PERL-CGI BLAST capabilities using custom databases for different loci.
-* The **Genotype-ID** front page and iframe container, which permits the selection of R Shiny frameworks for different species
-* The **About** page, containing all the information regardin collaborators, coauthors, and acknowledgments.
+To install Microbe-ID on your server you need the following components and applications:
+- Your own linux server
+- A website based on <bootstrap>[http://getbootstrap.com] to host your version of Microbe-ID
+- A self-hosted <shiny>[http://www.rstudio.com/shiny/] R server session running on your server
+- You custom fasta database for **Sequence-ID**
+- Your custom file for **Genotype-ID**
 
-Instructions
---------------
 
-TBA
