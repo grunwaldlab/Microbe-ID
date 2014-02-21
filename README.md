@@ -11,7 +11,7 @@ To install Microbe-ID on your server you need the following components and appli
 - A website based on [bootstrap](http://getbootstrap.com) to host your version of Microbe-ID
 - A self-hosted [shiny](http://www.rstudio.com/shiny/) R server session running on your server
 - You custom fasta database for **Sequence-ID**
-- Your custom tab-delimited text file for **Genotype-ID** compatibel with the (*poppr*)[http://grunwaldlab.cgrb.oregonstate.edu/poppr-r-package-population-genetics] R package
+- Your custom tab-delimited text file for **Genotype-ID** compatibel with the [*poppr*](http://grunwaldlab.cgrb.oregonstate.edu/poppr-r-package-population-genetics) R package
 
 This site was built solely with open source components.
 
