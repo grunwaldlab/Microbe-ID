@@ -2,7 +2,13 @@ library(shiny)
 library(poppr)
 library(ape)
 library(igraph)
+
+######## IMPORTANT ##############
+# Here's where you add your database file (Comma Separated Object). Make sure that the DB 
+# is in the same folder than this file (server.R)
 df <- read.table("reduced_database.txt.csv", header = TRUE, sep = "\t")
+#################################
+
 df.m <- as.matrix(df)
 #newrow <- c()
 msn.plot <- NULL
@@ -11,7 +17,11 @@ p <- NULL
 a <- NULL
 gen <- NULL
 random.sample <- 1
+
+######## IMPORTANT ##############
+#Change this values to the repeat lenghts of your SSR markers
 ssr <- c(PrMS6 = 3, PRMS9c3 = 2, PrMS39a = 2, PrMS45 = 4, PrMS43ab = 4, KI18 = 2, KI64 = 2, ILVOPrMS131 = 2)
+##################################
 
 shinyServer(function(input, output) {
  
@@ -52,7 +62,8 @@ shinyServer(function(input, output) {
        gen$other$tipcolor <<- pop(gen)
        levels(gen$other$tipcolor) <<- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod", heat.colors(length(levels(gen$other$tipcolor)) - 4))
        gen$other$tipcolor <<- as.character(gen$other$tipcolor)
-         #Running the tree, setting a cutoff of 50 and saving it into a variable to be plotted (a)
+       
+       #Running the tree, setting a cutoff of 50 and saving it into a variable to be plotted (a)
        if (input$tree=="nj"){
         a <<- bruvo.boot(gen, replen = ssr, sample=input$boot, tree=input$tree, cutoff=50)
         a <<- phangorn::midpoint(ladderize(a))
@@ -60,9 +71,11 @@ shinyServer(function(input, output) {
        else {
          a <<- bruvo.boot(gen, replen = ssr, sample = input$boot, tree = input$tree, cutoff = 50)
        }
+       
        #Drawing the tree
        plot.phylo(a)
-       #Adding the tip lables from each population, and with the already defined colors
+       
+       #Adding the tip labels from each population, and with the already defined colors
        tiplabels(pop(gen), adj = c(-4, 0.5), frame = "n", col = gen$other$tipcolor, cex = 0.8, font = 2)
        
        #Adding the nodel labels: Bootstrap values.
@@ -99,17 +112,22 @@ shinyServer(function(input, output) {
 	    V(msn.plot$graph)$size <<- 10
 
 	    # Highlighting only the names of the submitted genotypes and the isolates they match with.
+	    
 	    number_of_queries <- nrow(t)
 	    gen.mlg <- mlg.vector(gen)
+	    
 	    # The labels in the graph are organized by MLG, so we will use that to extract the names we need.
 	    gen.input <- unique(gen.mlg[(1+length(gen.mlg)-number_of_queries):length(gen.mlg)])
 	    labs <- unlist(strsplit(V(msn.plot$graph)$label, "\\."))
 	    labs <- as.numeric(labs[!labs %in% "MLG"])
+	    
 	    # Find out which labels correspond to the input genotypes and reorder the indices to match that of the graph.
 	    chosenlabs <- labs[which(labs %in% gen.input)]
 	    gen.input <- gen.input[vapply(chosenlabs, function(x) which(gen.input == x), 1)]
+	    
 	    # Combine all the names that match with each particular MLG in gen.input.
 	    combined_names <- vapply(gen.input, function(x) paste(rev(gen@ind.names[gen.mlg == x]), collapse = "\n"), " ")
+	    
 	    # Remove all of the labels that don't match the input genotypes and replace the original "MLG" names.
 	    labs[which(!labs %in% gen.input)] <- NA
 	    labs[!is.na(labs)] <- combined_names
