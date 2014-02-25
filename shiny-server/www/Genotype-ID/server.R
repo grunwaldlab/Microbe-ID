@@ -33,7 +33,6 @@ shinyServer(function(input, output) {
   })
 
   output$distPlotTree <- renderPlot({
-    #newrow <<- c("query", "???", input$mst1, input$mst2, input$mst3, input$mst4, input$mst5, input$mst6, input$mst7, input$mst8, input$mst9)
     if (gsub("\\s", "", input$table) == ""){
       plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
     }
@@ -43,9 +42,6 @@ shinyServer(function(input, output) {
       df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
       gen <<- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], ind.names = df.m[, 1])
-      # popchar <- nchar(levels(pop(gen)))
-      # maxchar <- max(popchar)
-      # levels(pop(gen)) <- paste(levels(pop(gen)), vapply(popchar, function(x) paste(rep(" ", maxchar - x), collapse = ""), ""))
       if (input$boot > 1000){
         plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "The number of bootstrap repetitions should be less or equal to 2000", cex = 1.6, col = "white")
       }
@@ -102,7 +98,7 @@ shinyServer(function(input, output) {
 
 	    # Highlighting only the names of the submitted genotypes and the isolates they match with.
 	    
-	    number_of_queries <- nrow(input_table)
+	    number_of_queries <- nrow(t)
 	    gen.mlg <- mlg.vector(gen)
 	    
 	    # The labels in the graph are organized by MLG, so we will use that to extract the names we need.
