@@ -38,14 +38,9 @@ shinyServer(function(input, output) {
       plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
     }
     else{
-      p <- c(input$table)
-      b <- unlist(strsplit(p, c("\n")))
-      b <- sub(" ", "\t", b)
-      b <- strsplit(b, c("\t"))
-      t <- t(as.data.frame(b))
-      rownames(t) <- NULL
-      colnames(t) <- colnames(df.m)
-      df.m <- rbind(df.m, t, deparse.level = 0)
+      input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
+      colnames(input_table) <- colnames(df.m)
+      df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
       gen <<- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], ind.names = df.m[, 1])
       # popchar <- nchar(levels(pop(gen)))
@@ -97,23 +92,17 @@ shinyServer(function(input, output) {
       plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
     }
     else{
-    	p <- c(input$table)
-	    b <- unlist(strsplit(p, c("\n")))
-	    b <- sub(" ", "\t", b)
-	    b <- strsplit(b, c("\t"))
-	    t <- t(as.data.frame(b))
-	    rownames(t) <- NULL
-	    colnames(t) <- colnames(df.m)
-	    
-	    df.m <- rbind(df.m, t, deparse.level = 0)
-	    df.m <- as.data.frame(df.m)
-	    gen <<- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], ind.names = df.m[, 1])
+      input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
+      colnames(input_table) <- colnames(df.m)
+      df.m <- rbind(df.m, input_table, deparse.level = 0)
+      df.m <- as.data.frame(df.m)
+      gen <<- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], ind.names = df.m[, 1])
 	    msn.plot <<- bruvo.msn(gen, replen = ssr)
 	    V(msn.plot$graph)$size <<- 10
 
 	    # Highlighting only the names of the submitted genotypes and the isolates they match with.
 	    
-	    number_of_queries <- nrow(t)
+	    number_of_queries <- nrow(input_table)
 	    gen.mlg <- mlg.vector(gen)
 	    
 	    # The labels in the graph are organized by MLG, so we will use that to extract the names we need.
