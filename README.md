@@ -1,7 +1,7 @@
 Microbe-ID
 ===============
 
-Modules and applications necessary for creating a website for species identification or genotyping. 
+Modules and applications necessary for creating a website for species identification or genotyping. [Phytophthora-ID](http://phytophthora-id.org) is an example of an implementation for identification and genotyping of pathogens in the genus *Phytophthora*. 
 
 Components
 ------
