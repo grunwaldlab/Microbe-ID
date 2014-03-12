@@ -6,21 +6,7 @@ library(igraph)
 ######## IMPORTANT ##############
 # Here's where you add your database file (Comma Separated Object). Make sure that the DB 
 # is in the same folder than this file (server.R)
-df <- read.table("reduced_database.txt.csv", header = TRUE, sep = "\t")
-#################################
 
-df.m <- as.matrix(df)
-#newrow <- c()
-msn.plot <- NULL
-labs <- NULL
-p <- NULL
-a <- NULL
-gen <- NULL
-random.sample <- 1
-
-######## IMPORTANT ##############
-#Change this values to the repeat lenghts of your SSR markers
-ssr <- c(PrMS6 = 3, PRMS9c3 = 2, PrMS39a = 2, PrMS45 = 4, PrMS43ab = 4, KI18 = 2, KI64 = 2, ILVOPrMS131 = 2)
 ##################################
 
 shinyServer(function(input, output) {
@@ -31,6 +17,22 @@ shinyServer(function(input, output) {
            "nj" = "nj"
            )
   })
+  
+  df <- read.table("reduced_database.txt.csv", header = TRUE, sep = "\t")
+  #################################
+  
+  df.m <- as.matrix(df)
+  #newrow <- c()
+  msn.plot <- NULL
+  labs <- NULL
+  p <- NULL
+  a <- NULL
+  gen <- NULL
+  random.sample <- 1
+  
+  ######## IMPORTANT ##############
+  #Change this values to the repeat lenghts of your SSR markers
+  ssr <- c(PrMS6 = 3, PRMS9c3 = 2, PrMS39a = 2, PrMS45 = 4, PrMS43ab = 4, KI18 = 2, KI64 = 2, ILVOPrMS131 = 2)
 
   output$distPlotTree <- renderPlot({
     if (gsub("\\s", "", input$table) == ""){
