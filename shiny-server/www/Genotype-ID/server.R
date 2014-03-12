@@ -43,7 +43,7 @@ shinyServer(function(input, output) {
       colnames(input_table) <- colnames(df.m)
       df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
-      gen <<- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], ind.names = df.m[, 1])
+      gen <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], ind.names = df.m[, 1])
       if (input$boot > 1000){
         plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "The number of bootstrap repetitions should be less or equal to 2000", cex = 1.6, col = "white")
       }
@@ -52,17 +52,17 @@ shinyServer(function(input, output) {
       }
       else{
        #Adding colors to the tip values according to the clonal lineage
-       gen$other$tipcolor <<- pop(gen)
-       levels(gen$other$tipcolor) <<- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod", heat.colors(length(levels(gen$other$tipcolor)) - 4))
-       gen$other$tipcolor <<- as.character(gen$other$tipcolor)
+       gen$other$tipcolor <- pop(gen)
+       levels(gen$other$tipcolor) <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod", heat.colors(length(levels(gen$other$tipcolor)) - 4))
+       gen$other$tipcolor <- as.character(gen$other$tipcolor)
        
        #Running the tree, setting a cutoff of 50 and saving it into a variable to be plotted (a)
        if (input$tree=="nj"){
-        a <<- bruvo.boot(gen, replen = ssr, sample=input$boot, tree=input$tree, cutoff=50)
-        a <<- phangorn::midpoint(ladderize(a))
+        a <- bruvo.boot(gen, replen = ssr, sample=input$boot, tree=input$tree, cutoff=50)
+        a <- phangorn::midpoint(ladderize(a))
        }
        else {
-         a <<- bruvo.boot(gen, replen = ssr, sample = input$boot, tree = input$tree, cutoff = 50)
+         a <- bruvo.boot(gen, replen = ssr, sample = input$boot, tree = input$tree, cutoff = 50)
        }
        
        #Drawing the tree
