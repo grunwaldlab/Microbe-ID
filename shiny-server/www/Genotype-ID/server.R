@@ -191,6 +191,11 @@ shinyServer(function(input, output) {
   boottree <- reactive({
     # Running the tree, setting a cutoff of 50 and saving it into a variable to 
     # be plotted (tree)
+    if (input$boot > 1000){
+      return(1000L)
+    } else if (input$boot < 10){
+      return(10L)
+    }
     set.seed(input$seed)
     tree <- bruvo.boot(data(), replen = ssr, sample = input$boot, 
                        tree = input$tree, cutoff = 50)
@@ -213,32 +218,32 @@ shinyServer(function(input, output) {
   
   output$distPlotTree <- renderPlot({
     if (is.null(data())){
-      plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
-    }
-    else{
-      if (input$boot > 1000){
-        plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "The number of bootstrap repetitions should be less or equal to 2000", cex = 1.6, col = "white")
-      }
-      else if (input$boot < 10){
-        plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "The number of bootstrap repetitions should be greater than 10", cex = 1.6, col = "white")
-      }
-      else{
-        
+      plot.new() 
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
+    } else if (is.integer(boottree())){
+      msg <- ifelse(boottree() > 10L, "\nless than or equal to 1000",
+                                      "greater than 10")
+      msg <- paste("The number of bootstrap replicates should be", msg)
+      plot.new()
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      text(x = 0.5, y = 0.9, msg, cex = 1.6, col = "white")
+    } else {
         #Drawing the tree
-        plot.phylo(boottree())
-        
-        #Adding the tip labels from each population, and with the already defined colors
-        tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", col = data()$other$tipcolor, cex = 0.8, font = 2)
-        
-        #Adding the nodel labels: Bootstrap values.
-        nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", cex = 0.9, font = 3)
-        
-        if (input$tree == "upgma"){
-          axisPhylo(3)
-        }
-        else if (input$tree == "nj"){
-          add.scale.bar(x = 0.89, y = 1.18, length = 0.05, lwd = 2)
-        }
+      plot.phylo(boottree())
+      
+      #Adding the tip labels from each population, and with the already defined colors
+      tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", 
+                col = data()$other$tipcolor, cex = 0.8, font = 2)
+      
+      #Adding the nodel labels: Bootstrap values.
+      nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
+                 cex = 0.9, font = 3)
+      
+      if (input$tree == "upgma"){
+        axisPhylo(3)
+      } else {
+        add.scale.bar(x = 0.89, y = 1.18, length = 0.05, lwd = 2)
       }
     }
   })
@@ -246,11 +251,13 @@ shinyServer(function(input, output) {
   #Minimum Spanning Network
   output$MinSpanTree <- renderPlot({
     if (is.null(data())){
-      plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n') + rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
-    }
-    else{
-      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", vertex.label.font = 2, 
-                     vertex.label.dist = 0.5, inds = data()$other$input_data, quantiles = FALSE)
+      plot.new() 
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
+    } else {
+      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
+                     vertex.label.font = 2, vertex.label.dist = 0.5, 
+                     inds = data()$other$input_data, quantiles = FALSE)
       # Highlighting only the names of the submitted genotypes and the isolates they match with.
       
       # 	    number_of_queries <- data()$other$original_length
