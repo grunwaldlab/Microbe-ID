@@ -188,6 +188,10 @@ shinyServer(function(input, output) {
     }
   })
   
+  seed <- reactive({
+    return(input$seed)
+  })
+  
   boottree <- reactive({
     # Running the tree, setting a cutoff of 50 and saving it into a variable to 
     # be plotted (tree)
@@ -196,7 +200,7 @@ shinyServer(function(input, output) {
     } else if (input$boot < 10){
       return(10L)
     }
-    set.seed(input$seed)
+    set.seed(seed())
     tree <- bruvo.boot(data(), replen = ssr, sample = input$boot, 
                        tree = input$tree, cutoff = 50)
     if (input$tree=="nj"){
@@ -206,14 +210,10 @@ shinyServer(function(input, output) {
   })
   
   msnet <- reactive ({
-    set.seed(input$seed)
     msn.plot <- bruvo.msn(data(), replen = ssr)
     V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
-  
-  
-  
 
   
   output$distPlotTree <- renderPlot({
@@ -255,6 +255,7 @@ shinyServer(function(input, output) {
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
       text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
     } else {
+      set.seed(seed())
       plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
                      inds = data()$other$input_data, quantiles = FALSE)
