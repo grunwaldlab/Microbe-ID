@@ -33,12 +33,23 @@
 		    <br>
 		    </form>
 		    <form class="text">
-		    <p><label>Random Seed (Add any numeric value)</label>
-		    <input id="seed" name="seed" class="shiny-bound-input" cols="1" rows="1" value="200" style="width: 5%"></textarea> </p>
+		    <p>
+		    <label>Random Seed (This will affect bootstrap values and the layout of the minimum spanning network.)</label>
+		    <!-- 
+		    Change the default value of your seed depending on how you want the 
+		    minimum spanning network to appear initially. 
+		    -->
+		    <input type = "number" name = "seed" id = "seed" value = "9001" min = "0" />
+		    </p>
 		    <button type="submit" class="btn btn-success">Submit genotype</button>
     		</form>
     	</div>
     	</div>
+    	<!-- Testing Seed
+		<br>
+    	<h4>SEED</h4>
+    	<pre class = "shiny-html-output" id = "txt" name = "txt", style = "width: 5%"></pre> 
+    	-->
     	<div id="plot" class="shiny-plot-output shiny-bound-output" style="width: 100% ; height: 900px">
 		<div class="span9 offset1">
 		<h4>Analysis</h4>
