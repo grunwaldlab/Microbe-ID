@@ -291,18 +291,20 @@ shinyServer(function(input, output) {
   
   
   output$downloadData <- downloadHandler(
-    filename = function() { paste(input$tree, '.tre', sep = '') },
+    filename = function() { paste0(input$tree, '.tre') },
     content = function(file) {
       write.tree(boottree(), file)
     })
   
   output$downloadPdf <- downloadHandler(
-    filename = function() { paste(input$tree, '.pdf', sep = '') },
+    filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
-      pdf(file,width=11, height=8.5)
+      pdf(file, width=11, height=8.5)
       plot.phylo(boottree(), cex = 0.5)
-      tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", col = data()$other$tipcolor, cex = 0.4, font = 2)
-      nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", cex = 0.4, font = 3)
+      tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", 
+                col = data()$other$tipcolor, cex = 0.4, font = 2)
+      nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
+                 cex = 0.4, font = 3)
       if (input$tree == "upgma"){
         axisPhylo(3)
       }
@@ -310,10 +312,12 @@ shinyServer(function(input, output) {
     })
   
   output$downloadPdfMst <- downloadHandler(
-    filename = function() { paste("min_span_net", '.pdf', sep = '')} ,
+    filename = function() { paste0("min_span_net", '.pdf')} ,
     content = function(file) {
-      pdf(file,width=11, height=8.5)
-      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", vertex.label.font = 2, vertex.label.dist = 0.5, inds = data()$other$input_data, quantiles = FALSE)
+      pdf(file, width=11, height=8.5)
+      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
+                     vertex.label.font = 2, vertex.label.dist = 0.5, 
+                     inds = data()$other$input_data, quantiles = FALSE)
       dev.off()
     }
   )
