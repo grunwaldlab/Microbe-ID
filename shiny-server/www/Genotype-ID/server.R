@@ -161,27 +161,35 @@ shinyServer(function(input, output) {
       input_data <- input_table[[1]]
       df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
-      gen <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], ind.names = df.m[, 1])
+      gen <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], 
+                       ind.names = df.m[, 1])
       #Adding colors to the tip values according to the clonal lineage
       gen$other$tipcolor <- pop(gen)
       gen$other$input_data <- input_data
-      levels(gen$other$tipcolor) <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod", heat.colors(length(levels(gen$other$tipcolor)) - 4))
+
+      ########### IMPORTANT ############
+      # Change these colors to represent the groups defined in your data set.
+      group_colors <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod")
+      # Change heat.colors to whatever color palette you want to represent
+      # submitted data. 
+      input_colors <- heat.colors(length(levels(gen$other$tipcolor)) - length(group_colors))
+      ##################################
+      levels(gen$other$tipcolor) <- c(group_colors, input_colors)
       gen$other$tipcolor <- as.character(gen$other$tipcolor)
       return(gen)
     }
   })
   
   boottree <- reactive({
-    #Running the tree, setting a cutoff of 50 and saving it into a variable to be plotted (a)
+    # Running the tree, setting a cutoff of 50 and saving it into a variable to 
+    # be plotted (tree)
     set.seed(input$seed)
+    tree <- bruvo.boot(data(), replen = ssr, sample = input$boot, 
+                       tree = input$tree, cutoff = 50)
     if (input$tree=="nj"){
-      a <- bruvo.boot(data(), replen = ssr, sample=input$boot, tree=input$tree, cutoff=50)
-      a <- phangorn::midpoint(ladderize(a))
+      tree <- phangorn::midpoint(ladderize(tree))
     }
-    else {
-      a <- bruvo.boot(data(), replen = ssr, sample = input$boot, tree = input$tree, cutoff = 50)
-    }
-    return(a)
+    return(tree)
   })
   
   msnet <- reactive ({
