@@ -9,12 +9,7 @@ library(igraph)
 df <- read.table("reduced_database.txt.csv", header = TRUE, sep = "\t")
 ##################################
 df.m <- as.matrix(df)
-msn.plot <- NULL
-labs <- NULL
-p <- NULL
-a <- NULL
-gen <- NULL
-random.sample <- 1
+
 
 ########### IMPORTANT ############
 # Change these values to the repeat lenghts and names of your SSR markers.
@@ -178,10 +173,14 @@ shinyServer(function(input, output) {
       ngroups              <- length(levels(gen$other$tipcolor))
       ########### IMPORTANT ############
       # Change these colors to represent the groups defined in your data set.
+      #
       defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod")
+      #
       # Change heat.colors to whatever color palette you want to represent
       # submitted data. 
+      #
       input_colors   <- heat.colors(ngroups - length(defined_groups))
+      #
       ##################################
       levels(gen$other$tipcolor) <- c(defined_groups, input_colors)
       gen$other$tipcolor <- as.character(gen$other$tipcolor)
