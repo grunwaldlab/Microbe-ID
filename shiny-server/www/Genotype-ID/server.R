@@ -3,9 +3,12 @@ library(poppr)
 library(ape)
 library(igraph)
 
+########### IMPORTANT ############
+# Here's where you add your database file (Comma Separated Object). Make sure 
+# that the database is in the same folder than this file (server.R)
 df <- read.table("reduced_database.txt.csv", header = TRUE, sep = "\t")
+##################################
 df.m <- as.matrix(df)
-#newrow <- c()
 msn.plot <- NULL
 labs <- NULL
 p <- NULL
@@ -13,6 +16,18 @@ a <- NULL
 gen <- NULL
 random.sample <- 1
 
+########### IMPORTANT ############
+# Change these values to the repeat lenghts and names of your SSR markers.
+ssr <- c(PrMS6       = 3, 
+         PRMS9c3     = 2, 
+         PrMS39a     = 2, 
+         PrMS45      = 4, 
+         PrMS43ab    = 4, 
+         KI18        = 2, 
+         KI64        = 2, 
+         ILVOPrMS131 = 2
+         )
+##################################
 
 #==============================================================================#
 # Function to plot the minimum spanning network obtained from poppr.msn or
@@ -136,12 +151,6 @@ plot_poppr_msn <- function(gid, poppr_msn, gadj = 3, glim = c(0, 0.8),
   par(oma=c(0,0,0,0)) # Figure margins
 }
 
-######## IMPORTANT ##############
-# Here's where you add your database file (Comma Separated Object). Make sure that the DB 
-# is in the same folder than this file (server.R)
-
-##################################
-
 shinyServer(function(input, output) {
   
   
@@ -158,23 +167,23 @@ shinyServer(function(input, output) {
     } else {
       input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
       colnames(input_table) <- colnames(df.m)
-      input_data <- input_table[[1]]
+      input_data            <- input_table[[1]]
       df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
-      gen <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], 
-                       ind.names = df.m[, 1])
+      gen  <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], 
+                        ind.names = df.m[, 1])
       #Adding colors to the tip values according to the clonal lineage
-      gen$other$tipcolor <- pop(gen)
+      gen$other$tipcolor   <- pop(gen)
       gen$other$input_data <- input_data
-
+      ngroups              <- length(levels(gen$other$tipcolor))
       ########### IMPORTANT ############
       # Change these colors to represent the groups defined in your data set.
-      group_colors <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod")
+      defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod")
       # Change heat.colors to whatever color palette you want to represent
       # submitted data. 
-      input_colors <- heat.colors(length(levels(gen$other$tipcolor)) - length(group_colors))
+      input_colors   <- heat.colors(ngroups - length(defined_groups))
       ##################################
-      levels(gen$other$tipcolor) <- c(group_colors, input_colors)
+      levels(gen$other$tipcolor) <- c(defined_groups, input_colors)
       gen$other$tipcolor <- as.character(gen$other$tipcolor)
       return(gen)
     }
@@ -199,12 +208,9 @@ shinyServer(function(input, output) {
     return(msn.plot)
   })
   
-  #################################
   
   
-  ######## IMPORTANT ##############
-  #Change this values to the repeat lenghts of your SSR markers
-  ssr <- c(PrMS6 = 3, PRMS9c3 = 2, PrMS39a = 2, PrMS45 = 4, PrMS43ab = 4, KI18 = 2, KI64 = 2, ILVOPrMS131 = 2)
+
   
   output$distPlotTree <- renderPlot({
     if (is.null(data())){
