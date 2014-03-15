@@ -316,6 +316,7 @@ shinyServer(function(input, output) {
     filename = function() { paste0("min_span_net", '.pdf')} ,
     content = function(file) {
       pdf(file, width=11, height=8.5)
+      set.seed(seed())
       plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
                      inds = data()$other$input_data, quantiles = FALSE)
