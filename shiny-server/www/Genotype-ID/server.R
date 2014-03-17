@@ -201,8 +201,22 @@ shinyServer(function(input, output) {
       return(10L)
     }
     set.seed(seed())
-    tree <- bruvo.boot(data(), replen = ssr, sample = input$boot, 
-                       tree = input$tree, cutoff = 50)
+    tree <- try(bruvo.boot(data(), replen = ssr, sample = input$boot, 
+                       tree = input$tree, cutoff = 50), silent = TRUE)
+
+    # This is a catch to avoid having missing data within the distance matrix. 
+    if ("try-error" %in% class(tree)){
+      for (i in sample(100)){
+        tree <- try(bruvo.boot(data(), replen = ssr, sample = input$boot, 
+                               tree = input$tree, cutoff = 50), silent = TRUE)
+        if (!"try-error" %in% class(tree)){
+          print(paste0("Success: ", i))
+          break
+        }
+        print(paste0("Failed: ", i))
+      }
+    }
+
     if (input$tree=="nj"){
       tree <- phangorn::midpoint(ladderize(tree))
     }
