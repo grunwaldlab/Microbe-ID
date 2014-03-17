@@ -148,14 +148,7 @@ plot_poppr_msn <- function(gid, poppr_msn, gadj = 3, glim = c(0, 0.8),
 
 shinyServer(function(input, output) {
   
-  
-  #   treeInput <- reactive({
-  #     switch(input$tree,
-  #            "upgma" = "upgma",
-  #            "nj" = "nj"
-  #            )
-  #   })
-  
+
   data <- reactive({
     if (gsub("\\s", "", input$table) == ""){
       return(NULL)
@@ -273,33 +266,6 @@ shinyServer(function(input, output) {
       plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
                      inds = data()$other$input_data, quantiles = FALSE)
-      # Highlighting only the names of the submitted genotypes and the isolates they match with.
-      
-      # 	    number_of_queries <- data()$other$original_length
-      # 	    gen.mlg <- mlg.vector(data())
-      # 	    
-      # 	    # The labels in the graph are organized by MLG, so we will use that to extract the names we need.
-      # 	    gen.input <- unique(gen.mlg[(1+length(gen.mlg)-number_of_queries):length(gen.mlg)])
-      # 	    labs <- unlist(strsplit(V(msn.plot$graph)$label, "\\."))
-      # 	    labs <- as.numeric(labs[!labs %in% "MLG"])
-      # 	    
-      # 	    # Find out which labels correspond to the input genotypes and reorder the indices to match that of the graph.
-      # 	    chosenlabs <- labs[which(labs %in% gen.input)]
-      # 	    gen.input <- gen.input[vapply(chosenlabs, function(x) which(gen.input == x), 1)]
-      # 	    
-      # 	    # Combine all the names that match with each particular MLG in gen.input.
-      # 	    combined_names <- vapply(gen.input, function(x) paste(rev(data()@ind.names[gen.mlg == x]), collapse = "\n"), " ")
-      # 	    
-      # 	    # Remove all of the labels that don't match the input genotypes and replace the original "MLG" names.
-      # 	    labs[which(!labs %in% gen.input)] <- NA
-      # 	    labs[!is.na(labs)] <- combined_names
-      # 	    labs <<- labs
-      # 
-      # 	    #x <<- sample(10000, 1)
-      # 	    x <<- 200
-      # 	    set.seed(x)
-      # 	    plot.igraph(msn.plot$graph, vertex.label = labs, vertex.label.font = 2, vertex.label.dist = 0.5, vertex.label.color = "firebrick")
-      # 	    legend("topleft" , bty = "n", cex = 1.2, legend = msn.plot$populations, title = "Populations", fill = msn.plot$color, border = NULL)
     }  	
     
   })
