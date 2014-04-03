@@ -3,7 +3,7 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <!--- Change the title of the webpage in the <title> tag -->
-    <title>Microbe-ID | Genotype-ID: SSR analysis</title>
+    <title>Microbe-ID | Genotype-ID: MLST Analysis</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="root" >
@@ -94,7 +94,7 @@
 			</div>
 		</div>
 		</div>
-	</div>
+</div>
     
 <div class="container">
 		<!-- IMPORTANT: The following division contains the Shiny-Server instance that you installed according to the shiny server manual, point the hyperlinks
@@ -103,23 +103,16 @@
 		<p>Choose a tab to select the type of data and analysis.</p>
 	<!-- Tabs and Dropdowns -->
 		<ul class="nav nav-tabs">
-			<li class="active"><a href=".">SSR/Microsatellite data</a></li>
-			<li><a href="./MLST.html">MLST data</a></li>
+			<li><a href="./geno-id.html">SSR/Microsatellite data</a></li>
+			<li class="active"><a href="./MLST.html">MLST data</a></li>
 		</ul>
-		<p>Select the species, paste and submit microsatellite data (see reference files for format), and then choose a tab for a distance tree analysis or a minimum spanning network.</p>
+		<p>Select the species, paste and submit one or multiple FASTA files and select the analysis to run.</p>
+		<h4 style="color:red"><b>Warning:<b></h4><p>Do not include any underscores ("_") in your dataset!</p>
 		<hr>
-		<h3>Select species:</h3>
-		    <ul class="nav nav-pills">
-			    	<li  class="active"><a href="#shinyserver" data-toggle="pill"><em>Shiny Instance</em></a></li>
-		    </ul>
-		<div class="pill-content">
-			<div class="pill-pane " id="shinyserver">
-     			 <iframe style="border:0;width:100%; height:1800px" name="shinyid_frame" src=""></iframe>
-			</div>
+		<iframe style="border:0;width:100%; height:1800px" name="shinyid_frame" src="http://127.0.0.1:7068"></iframe>
 		</div>
 		<div id="push"></div>
 </div>
-
 <div id="footer">
 	<div class="container">
 		<br>
@@ -155,4 +148,5 @@
 }</script>
 
 
-</body></html>
+</body>
+	</html>

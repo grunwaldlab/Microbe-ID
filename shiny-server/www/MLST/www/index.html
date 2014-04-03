@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script src="shared/jquery.js" type="text/javascript"></script>
+  <script src="shared/shiny.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
+  <link rel="stylesheet" type="text/css" href="shared/slider/css/jquery.slider.min.css"/>
+  <script src="shared/slider/js/jquery.slider.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="shared/bootstrap/css/bootstrap.min.css"/>
+  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" type="text/css" href="shared/bootstrap/css/bootstrap-responsive.min.css"/>
+  <script type="text/javascript">
+	function validateForm()
+		{
+		var x=document.fasta_file.fasta.value;
+		var atpos=x.indexOf(">");
+		if (atpos<1)
+		  {
+		  alert("Not a valid FASTA file");
+		  return false;
+		  }
+		}
+</script>
+  <title>Phytophthora ID: MLST-ID (Using Multilocus sequence tags to identify strains)</title>
+</head>
+<body>
+ 
+
+<div class="row-fluid">
+		<div class="span12">
+		<h3>Upload FASTA sequence and select analysis</h3>
+		<p>Copy and paste your sequences in FASTA format into the window below.</p>
+		<p style="color:blue"><b>Warning:</b> Only FASTA formats are accepted</p>.
+		<hr>
+		</div>
+		<div class="span11">		
+		<div class="control">		    
+		    <form name="fasta_file" class="text" onSubmit="return validateForm();" method="post">
+		    <label style="align:center">FASTA Input</label>
+		    <textarea id="fasta" name="fasta" class="shiny-bound-input" cols="25" rows="7" style="width: 100%"></textarea> 
+		    <br>
+		    </form>
+		    <form class="text">
+		    <p>
+		    <label>Random Seed</label>
+		    <!-- 
+		    Change the default value of your seed depending on how you want the 
+		    minimum spanning network to appear initially. 
+		    -->
+		    <input type = "number" name = "seed" id = "seed" value = "9449" min = "0" />
+		    </p>
+			<div class="control-group">		
+				<label class="control-label" for="model">Choose a tree algorithm:</label>
+				<select id="model" style="width:100px">
+					<option value="raw">raw</option>
+					<option value="TS">Transitions</option>
+					<option value="TV">Transversions</option>
+					<option value="JC69">Jukes-Cantor</option>
+					<option value="F81">Felsenstein 81</option>
+					<option value="K81">Kimura 81</option>
+					<option value="F84">Felsenstein 84</option>
+					<option value="TN93">TN93</option>
+					<option value="indel">Indel</option>
+					<option value="K80" selected="selected">Kimura 80</option>
+				</select>
+			</div>
+		    <button type="submit" class="btn btn-success">Submit genotype</button>
+    		</form>
+			<hr>
+    	</div>
+    	</div>
+    	<!-- Testing Seed
+		<br>
+    	<h4>SEED</h4>
+    	<pre class = "shiny-html-output" id = "txt" name = "txt", style = "width: 5%"></pre> 
+    	-->
+    	<div id="plot" class="shiny-plot-output shiny-bound-output" style="width: 100% ; height: 900px">
+		<div class="span9 offset1">
+		<h4>Analysis</h4>
+		<p>Select between a distance tree with bootstrap support values or a minimum spanning network</p>
+		<div class="tabbable">
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#tab-8923-1" data-toggle="tab">Distance Tree with Bootstrap</a>
+			</li>
+			<li>
+				<a href="#tab-8923-2" data-toggle="tab">Minimum Spanning Network</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" title="Bootstrap Tree" id="tab-8923-1">
+					<h2>Tree Parameters</h2>
+					<form id="form" class="well">
+					<div class="row-fluid">
+					<div class="control-group span3">		
+					<label class="control-label" for="tree">Choose a tree algorithm:</label>
+					<select id="tree" style="width:100px">
+						<option value="nj">nj</option>
+						<option value="upgma" selected="selected">UPGMA</option>
+					</select>
+					</div>
+						<div class="control-group span6">
+					<label class="control-label">Number of bootstrap replicates</label>     
+							<div class="controls">
+							<input id="boot" name="boot" type="number" value="100" min="10" max="1000" style="width:100px">
+							</div>
+						</div>
+						<br>
+					</div>			
+					<div class="row-fluid">					
+					<div class="control-group span3">
+						<button type="submit" class="btn btn-success" data-loading-text="Calculating...">Create Tree</button>
+					</div>			
+					<div class="span9" >					
+						<a id="downloadData" class="btn btn-primary shiny-download-link" href="" target="_blank">Newick File</a>
+						<a id="downloadPdf"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>
+					</div>
+					</div>
+				    <br>
+					<span class="help-block" style="color:green">Please wait while the tree is generated</span>
+				
+					</form>	    					
+				<!/div>	
+				<div data-display-if="$('html').hasClass('shiny-busy')"> 			
+					<div class="span9 offset1">
+					<br>
+					<h4>Processing, please wait.</h4>   
+					<div class="progress progress-striped active">
+    					<div class="bar" style="width: 100%;"></div>
+    				</div>
+    				</div>
+    			</div>				
+				<div id="distPlotTree" class="span6 shiny-plot-output" style="width: 100% ; height: 800px"></div>
+			</div>
+			<div class="tab-pane" title="Minimum spanning network" id="tab-8923-2">		
+				<div class="span12">
+				<h3>Minimum Spanning Network</h3>								
+					<form id="form" class="well">
+					<span class="help-block">Note: Distances are calculated using the model selected before.</span>	
+					<button type="submit" class="btn btn-success" data-loading-text="Calculating...">Calculate MST</button>
+					<a id="downloadPdfMst"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>				
+					</form>
+				</div>
+				<div id="MinSpanTree" class="shiny-plot-output" style="width: 100% ; height: 800px"></div>
+			</div>
+		</div>
+		</div>
+	</div-->
+</div>
+</div>
+</body>
+</html>
