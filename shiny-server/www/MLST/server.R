@@ -77,17 +77,17 @@ shinyServer(function(input, output) {
     }
     set.seed(seed())
   #  boot.dist <- function(al,di){
-      if(input$tree == "upgma"){
-      tre <- upgma(dist())
-      bp <- boot.phylo(tre,alin(),function(x) upgma(dist()),B=input$boot)
-      }else{
-      tre <- nj(dist())
-      bp <- boot.phylo(tre,alin(),function(x) nj(dist()),B=input$boot)
+      if (input$tree == "upgma"){
+        tre <- upgma(dist())
+        bp <- boot.phylo(tre,alin(),function(x) upgma(dist()),B=input$boot)
+      } else {
+        tre <- nj(dist())
+        bp <- boot.phylo(tre,alin(),function(x) nj(dist()),B=input$boot)
       }
 
       tre$node.labels <- round(((bp / input$boot)*100))
-      plot(tre,label.offset = 0.0125)
-      nodelabels(tre$node.labels, adj = c(1.3, -0.5), frame="n", cex=0.9, font=3)
+      #plot(tre,label.offset = 0.0125)
+      #nodelabels(tre$node.labels, adj = c(1.3, -0.5), frame="n", cex=0.9, font=3)
 
     if (input$tree=="nj"){
       tre <- phangorn::midpoint(ladderize(tre))
