@@ -10,7 +10,13 @@ library(gdata)
 # that the database is in the same folder than this file (server.R)
 df <- read.dna("database.fasta", format="fasta")
 # Change this path to reflect where your binary of muscle is located.
-muscle_dir <- "~/Downloads/muscle3.8.31_i86darwin64"
+muscle_dir <- "~/Downloads/muscle3.8.31_i86linux64"
+
+get_last_substring <- function(x, sep = "_"){
+  splitx <- strsplit(x, sep)
+  last   <- vapply(splitx, function(y) y[[length(y)]], character(1))
+  return(last)
+}
 
 shinyServer(function(input, output) {
   
@@ -20,8 +26,8 @@ shinyServer(function(input, output) {
       return(NULL)
     } else {
       if (startsWith(input$fasta,">") == TRUE){
-        cat(input$fasta,file="input.fasta")
-        input_table <- read.dna("input.fasta",format="fasta")
+        cat(input$fasta, file="input.fasta")
+        input_table <- read.dna("input.fasta", format="fasta")
         rownames(input_table) <- paste(rownames(input_table),c("query"),sep="_")
         input_table <- as.list(input_table)
         df <- as.list(df)
@@ -42,12 +48,12 @@ shinyServer(function(input, output) {
   data <- reactive({
     gen <- DNAbin2genind(alin())
     #Adding colors to the tip values according to the clonal lineage
-    pop(gen) <- as.factor(sapply(strsplit(gen$ind.names,"_"),"[[",2))
+    popnames <- get_last_substring(gen$ind.names, "_")
+    pop(gen) <- popnames
     gen$other$tipcolor <- pop(gen)
-    gen$ind.names <- sapply(strsplit(gen$ind.names,"_"),"[[",1)
-    gen$other$input_data <- alin() # This is putting a DNAbin object in the
-                                   # other slot. It would be better to only
-                                   # put the names of the input data here.
+    name_char_end <- nchar(indNames(gen)) - nchar(popnames) - 1
+    gen$ind.names <- substr(indNames(gen), 1, name_char_end)
+    gen$other$input_data <- indNames(gen)[pop(gen) %in% "query"]
     ngroups   <- length(levels(gen$other$tipcolor))
 #     ########### IMPORTANT ############
 #     # Change these colors to represent the groups defined in your data set.
@@ -147,7 +153,7 @@ shinyServer(function(input, output) {
       set.seed(seed())
       plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
- quantiles = FALSE, gadj = 40)
+ quantiles = FALSE, gadj = 40, inds = data()$other$input_data, nodelab = 10)
     }  	
     
   })
