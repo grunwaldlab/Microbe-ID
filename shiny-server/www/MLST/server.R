@@ -9,6 +9,8 @@ library(gdata)
 # Here's where you add your database file (Comma Separated Object). Make sure 
 # that the database is in the same folder than this file (server.R)
 df <- read.dna("database.fasta", format="fasta")
+# Change this path to reflect where your binary of muscle is located.
+muscle_dir <- "~/Downloads/muscle3.8.31_i86darwin64"
 
 shinyServer(function(input, output) {
   
@@ -22,9 +24,9 @@ shinyServer(function(input, output) {
         input_table <- read.dna("input.fasta",format="fasta")
         rownames(input_table) <- paste(rownames(input_table),c("query"),sep="_")
         input_table <- as.list(input_table)
-        df <-as.list(df)
+        df <- as.list(df)
         all <- c(input_table,df)
-        all.al <- muscle(all,exec="/Users/tabimaj/Downloads/muscle3.8.31_i86darwin64")
+        all.al <- muscle(all, exec = muscle_dir)
         return(all.al)
       }else{
         return(NULL)
