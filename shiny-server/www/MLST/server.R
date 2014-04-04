@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
         df <- as.list(df)
         all <- c(input_table,df)
         all.al <- muscle(all, exec = muscle_dir)
-        return(all.al)
+        return(all.al) # Returns a DNAbin object.
       }else{
         return(NULL)
       }
@@ -45,7 +45,9 @@ shinyServer(function(input, output) {
     pop(gen) <- as.factor(sapply(strsplit(gen$ind.names,"_"),"[[",2))
     gen$other$tipcolor <- pop(gen)
     gen$ind.names <- sapply(strsplit(gen$ind.names,"_"),"[[",1)
-    gen$other$input_data <- alin()
+    gen$other$input_data <- alin() # This is putting a DNAbin object in the
+                                   # other slot. It would be better to only
+                                   # put the names of the input data here.
     ngroups   <- length(levels(gen$other$tipcolor))
 #     ########### IMPORTANT ############
 #     # Change these colors to represent the groups defined in your data set.
@@ -96,7 +98,7 @@ shinyServer(function(input, output) {
   })
   
   msnet <- reactive ({
-    msn.plot <-poppr.msn(data(), dist(),palette=rainbow)
+    msn.plot <-poppr.msn(data(), dist(), palette=rainbow, showplot = FALSE)
    # browser()
     V(msn.plot$graph)$size <- 3
     return(msn.plot)
@@ -179,7 +181,8 @@ shinyServer(function(input, output) {
       set.seed(seed())
       plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
-                     inds = data()$other$input_data, quantiles = FALSE, gadj = 90)
+                     inds = data()$other$input_data, # This does not match with the above function.
+                     quantiles = FALSE, gadj = 90)
       dev.off()
     }
   )
