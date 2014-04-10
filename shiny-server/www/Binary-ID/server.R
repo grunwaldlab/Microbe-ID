@@ -11,6 +11,15 @@ df <- read.table("Aeut.txt", header = TRUE, sep = "\t")
 df.m <- as.matrix(df)
 
 
+get_dist_fun <- function(dist){
+  switch(dist,
+         nei = 'nei.dist',
+         edwards = 'edwards.dist',
+         rogers = 'rogers.dist',
+         reynolds = 'reynolds.dist',
+         provesti = 'provesti.dist')
+}
+
 shinyServer(function(input, output) {
   
 
@@ -18,7 +27,11 @@ shinyServer(function(input, output) {
     if (gsub("\\s", "", input$table) == ""){
       return(NULL)
     } else {
+      #browser()
       input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
+      if (input_table[1,1] == "Ind" | input_table[1,2] == "Pop"){
+        input_table <- input_table[-1,]
+      }
       colnames(input_table) <- colnames(df.m)
       input_data            <- input_table[[1]]
       df.m <- rbind(df.m, input_table, deparse.level = 0)
@@ -31,7 +44,7 @@ shinyServer(function(input, output) {
       ########### IMPORTANT ############
       # Change these colors to represent the groups defined in your data set.
       #
-      defined_groups <- c("blue", "darkolivegreen", "red")
+      defined_groups <- c("blue", "darkolivegreen")#, "red")
       #
       # Change heat.colors to whatever color palette you want to represent
       # submitted data. 
@@ -50,28 +63,14 @@ shinyServer(function(input, output) {
     return(input$seed)
   })
   
-  dist_mat <- reactive({
-    if(input$distance == "nei"){
-      dist <- nei.dist(data())
-      return(dist)
-    }else if (input$distance == "edwards") {
-      dist <- edwards.dist(data())
-      return(dist)
-    }else if (input$distance == "rogers") {
-      dist <- rogers.dist(data())
-      return(dist)
-    } else if (input$distance == "reynolds") {
-      dist <- reynolds.dist(data())
-      return(dist)
-    } else if (input$distance == "provesti") {
-      dist <- provesti.dist(data())
-      return(dist)
-    }
+ 
+
+  distfun <- reactive({
+    get_dist_fun(input$distance)
   })
   
-  boottree <- reactive({
-    # Running the tree, setting a cutoff of 50 and saving it into a variable to 
-    # be plotted (tree)
+
+boottree <- reactive({
     if (input$boot > 1000){
       return(1000L)
     } else if (input$boot < 10){
@@ -79,22 +78,9 @@ shinyServer(function(input, output) {
     }
     set.seed(seed())
     
-    if (input$distance == "nei"){
-    tree <- aboot(data(),distance=nei.dist, sample = input$boot, 
-                       tree = input$tree, cutoff = 50)
-    }else if (input$distance == "edwards"){
-      tree <- aboot(data(),distance=edwards.dist, sample = input$boot, 
-                        tree = input$tree, cutoff = 50)
-    }else if (input$distance == "rogers"){
-      tree <- aboot(data(),distance=rogers.dist, sample = input$boot, 
-                        tree = input$tree, cutoff = 50)
-    }else if (input$distance == "reynolds"){
-      tree <- aboot(data(),distance=reynolds.dist, sample = input$boot, 
-                        tree = input$tree, cutoff = 50)
-    }else{
-      tree <- aboot(data(),distance=provesti.dist, sample = input$boot, 
-                        tree = input$tree, cutoff = 50)
-    }
+    DIST <- match.fun(distfun())
+    tree <- aboot(data(), distance = DIST, sample = input$boot, showtree=FALSE,  
+                  tree = input$tree, cutoff = 50)
     # This is a catch to avoid having missing data within the distance matrix. 
 #     if ("try-error" %in% class(tree)){
 #       for (i in sample(100)){
@@ -116,7 +102,8 @@ shinyServer(function(input, output) {
   })
   
   msnet <- reactive ({
-    msn.plot <- poppr.msn(data(),distmat=dist_mat())
+    DIST <- match.fun(distfun())
+    msn.plot <- poppr.msn(data(),distmat=DIST(data()),showplot=FALSE)
     V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
@@ -164,7 +151,7 @@ shinyServer(function(input, output) {
       set.seed(seed())
       plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
-                     inds = data()$other$input_data, quantiles = FALSE)
+                     inds = data()$other$input_data, quantiles = FALSE, nodelab = 10)
     }  	
     
   })
@@ -196,9 +183,9 @@ shinyServer(function(input, output) {
     content = function(file) {
       pdf(file, width=11, height=8.5)
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(),  vertex.label.color = "firebrick", 
+      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
-                     quantiles = FALSE, gadj = 40, inds = data()$other$input_data, nodelab = 10)
+                     inds = data()$other$input_data, quantiles = FALSE)
       dev.off()
     }
   )
