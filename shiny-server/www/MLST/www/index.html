@@ -35,6 +35,18 @@
 		<hr>
 			<div class="control-group">		
 				<label class="control-label" for="dataset"><b>Select Dataset</b>: Choose a gene to compare your FASTA sequence to:</label>
+				<!--
+				Note:
+				This part allows the user to tell the program which data set to
+				use. This then goes through a long ifelse loop to detect the
+				file to use. Instead of doing this, it would be better to simply
+				change the values to the filenames so that the loop is not
+				necessary and the reactive could just be:
+
+				read.dna(input$dataset, format = "fasta")
+				
+				- Zhian
+				-->
 				<select id="dataset" style="width:100px">
 					<option value="dnaa">DnaA</option>
 					<option value="gyrb">GyrB</option>
