@@ -65,6 +65,7 @@ shinyServer(function(input, output) {
     }
     })
   
+
   dist <- reactive({
     all.dist <- dist.dna(alin(),input$model)
     return(all.dist)
@@ -109,6 +110,12 @@ shinyServer(function(input, output) {
       return(10L)
     }
     set.seed(seed())
+
+    # COMMENT:
+    # 
+    # It looks like you had the right idea here on this commented line.
+    # Remember, you can write functions that return functions.
+    # - Zhian
   #  boot.dist <- function(al,di){
       if (input$tree == "upgma"){
         tre <- upgma(dist())
