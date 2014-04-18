@@ -17,6 +17,13 @@ get_last_substring <- function(x, sep = "_"){
 shinyServer(function(input, output) {
   
   
+
+
+  # COMMENT:
+  #
+  # See www/index.html for my comments on this reactive block.
+  # -Zhian
+
   
   ########### IMPORTANT ############
   # Here's where you add your database file (Comma Separated Object). Make sure 
