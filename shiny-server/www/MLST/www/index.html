@@ -11,30 +11,34 @@
   <script src="shared/bootstrap/js/bootstrap.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" type="text/css" href="shared/bootstrap/css/bootstrap-responsive.min.css"/>
-  <script type="text/javascript">
+	<script>
 	function validateForm()
-		{
-		var x=document.fasta_file.fasta.value;
-		var atpos=x.indexOf(">");
-		if (atpos<1)
-		  {
-		  alert("Not a valid FASTA file");
-		  return false;
-		  }
+	{
+		/*jshint multistr:true */
+	var elementsInputs=document.forms["fasta_file"]["fasta"].value;
+		var j=0;
+		for(var i = 0; i < elementsInputs.length; i++) {
+			if (elementsInputs[i] == '>') {
+				j++;
+				}
 		}
-</script>
+		if (elementsInputs == "" ){
+			alert ('No sequence found')
+			return false;	
+			}
+		else if (j == 0){	
+			alert('Only FASTA format is permitted');
+			return false;
+		}
+
+	}
+	</script>
   <title>Phytophthora ID: MLST-ID (Using Multilocus sequence tags to identify strains)</title>
 </head>
-<body>
- 
 
-<div class="row-fluid">
-		<div class="span12">
-		<h3>Select a database to compare with, Upload FASTA sequence and select analysis.</h3>
-		<h4>A Simple tutorial can be found <a href=Help.html target="_blank">here</a></h4>
-		<hr>
-			<div class="control-group">		
-				<label class="control-label" for="dataset"><b>Select Dataset</b>: Choose a gene to compare your FASTA sequence to:</label>
+<body>
+		<h3>Select a database to compare with, Upload FASTA sequence and select analysis.<a href=Help.html target="_blank">A tutorial</a></h3>
+		<b>Select Dataset</b>: Choose a gene to compare your FASTA sequence to:</label>
 				<!--
 				Note:
 				This part allows the user to tell the program which data set to
@@ -46,59 +50,62 @@
 				read.dna(input$dataset, format = "fasta")
 				
 				- Zhian
+				
+				Done! - Javier
 				-->
 				<select id="dataset" style="width:100px">
-					<option value="dnaa">DnaA</option>
-					<option value="gyrb">GyrB</option>
-					<option value="kdpa">KdpA</option>
-					<option value="liga">LigA</option>
-					<option value="cela">CelA</option>
-					<option value="naga">NagA</option>
-					<option value="toma">TomA</option>
-					<option value="housekeeping">Housekeeping Genes</option>
-					<option value="virulence">Virulence Genes</option>
-					<option value="all" selected="selected">All Loci</option>
+					<option value="DnaA.fasta">DnaA</option>
+					<option value="GyrB.fasta">GyrB</option>
+					<option value="KdpA.fasta">KdpA</option>
+					<option value="LigA.fasta">LigA</option>
+					<option value="CelA.fasta">CelA</option>
+					<option value="NagA.fasta">NagA</option>
+					<option value="TomA.fasta">TomA</option>
+					<option value="Housekeeping.fasta">Housekeeping Genes</option>
+					<option value="Virulence.fasta">Virulence Genes</option>
+					<option value="All.fasta" selected="selected">All Loci</option>
 				</select>
-			</div>
 		<p>Copy and paste your sequences in FASTA format into the window below.</p>
 		<p style="color:blue"><b>Warning:</b></p><p>Only <a href="./example.txt" target="_blank">FASTA</a> formats are accepted</p>
-		<hr>
-		</div>
-		<div class="span11">		
-		<div class="control">		    
-		    <form name="fasta_file" class="text" onSubmit="return validateForm();" method="post">
-		    <label style="align:center">FASTA Input</label>
-		    <textarea id="fasta" name="fasta" class="shiny-bound-input" cols="25" rows="7" style="width: 100%"></textarea> 
+		<hr>		    
+			<form name="fasta_file" class="form-horizontal" onSubmit="return validateForm();" id="fasta_file" method="get">
+            <label style="align:center">FASTA Input</label>
+	            <textarea id="fasta" name="fasta" class="shiny-bound-input" cols="25" rows="3" style="width: 100%"></textarea>
 		    <br>
 		    </form>
-		    <form class="text">
-		    <p>
+		    <div class="row span12">
+				<div class="span4">
+			<form class="text">			
 		    <label>Random Seed</label>
 		    <!-- 
 		    Change the default value of your seed depending on how you want the 
 		    minimum spanning network to appear initially. 
 		    -->
-		    <input type = "number" name = "seed" id = "seed" value = "9448" min = "0" />
-		    </p>
-			<div class="control-group">		
-				<label class="control-label" for="model">Choose a tree algorithm:</label>
-				<select id="model" style="width:100px">
-					<option value="raw">raw</option>
-					<option value="TS">Transitions</option>
-					<option value="TV">Transversions</option>
-					<option value="JC69">Jukes-Cantor</option>
-					<option value="F81">Felsenstein 81</option>
-					<option value="K81">Kimura 81</option>
-					<option value="F84">Felsenstein 84</option>
-					<option value="TN93">TN93</option>
-					<option value="indel">Indel</option>
-					<option value="K80" selected="selected">Kimura 80</option>
-				</select>
-			</div>
-		    <button type="submit" class="btn btn-success">Submit genotype</button>
-    		</form>
+
+					<input type = "number" name = "seed" id = "seed" value = "9448" min = "0" />	
+			</form>
+				</div>
+				<div class="span3">
+					<label class="control-label" for="model">Choose a distance:</label>
+					<select id="model" style="width:100px">
+						<option value="raw">raw</option>
+						<option value="TS">Transitions</option>
+						<option value="TV">Transversions</option>
+						<option value="JC69">Jukes-Cantor</option>
+						<option value="F81">Felsenstein 81</option>
+						<option value="K81">Kimura 81</option>
+						<option value="F84">Felsenstein 84</option>
+						<option value="TN93">TN93</option>
+						<option value="indel">Indel</option>
+						<option value="K80" selected="selected">Kimura 80</option>
+					</select>
+				</div>
+				<div class="span1">
+				<button type="submit" class="btn btn-success">Submit genotype</button>	
+				</div>
+		</div>
+		<div class="span12">
 			<hr>
-    	</div>
     	</div>
     	<!-- Testing Seed
 		<br>
@@ -136,7 +143,6 @@
 							<input id="boot" name="boot" type="number" value="100" min="10" max="1000" style="width:100px">
 							</div>
 						</div>
-						<br>
 					</div>			
 					<div class="row-fluid">					
 					<div class="control-group span3">
@@ -147,14 +153,12 @@
 						<a id="downloadPdf"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>
 					</div>
 					</div>
-				    <br>
 					<span class="help-block" style="color:green">Please wait while the tree is generated</span>
 				
 					</form>	    					
 				<!/div>	
 				<div data-display-if="$('html').hasClass('shiny-busy')"> 			
 					<div class="span9 offset1">
-					<br>
 					<h4>Processing, please wait.</h4>   
 					<div class="progress progress-striped active">
     					<div class="bar" style="width: 100%;"></div>

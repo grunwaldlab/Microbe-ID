@@ -6,7 +6,8 @@ library(igraph)
 library(gdata)
 
 # Change this path to reflect where your binary of muscle is located.
-muscle_dir <- "/usr/bin/muscle"
+#muscle_dir <- "/usr/bin/muscle"
+muscle_dir <- "/Users/tabimaj/Downloads/muscle3.8.31_i86darwin64"
 
 get_last_substring <- function(x, sep = "_"){
   splitx <- strsplit(x, sep)
@@ -28,28 +29,8 @@ shinyServer(function(input, output) {
   ########### IMPORTANT ############
   # Here's where you add your database file (Comma Separated Object). Make sure 
   # that the database is in the same folder than this file (server.R)
-  data_f <- reactive({
-    if (input$dataset == "dnaa"){
-      df <- read.dna("DnaA.fasta", format="fasta")
-    }else if (input$dataset == "gyrb"){
-      df <- read.dna("GyrB.fasta", format="fasta")
-    } else if (input$dataset == "kdpa"){
-      df <- read.dna("KdpA.fasta", format="fasta")
-    } else if (input$dataset == "liga"){
-      df <- read.dna("LigA.fasta", format="fasta")
-    } else if (input$dataset == "cela"){
-      df <- read.dna("CelA.fasta", format="fasta")
-    } else if (input$dataset == "naga"){
-      df <- read.dna("NagA.fasta", format="fasta")
-    } else if (input$dataset == "toma"){
-      df <- read.dna("TomA.fasta", format="fasta")
-    } else if (input$dataset == "housekeeping"){
-      df <- read.dna("Housekeeping.fasta", format="fasta")
-    } else if (input$dataset == "virulence"){
-      df <- read.dna("Virulence.fasta", format="fasta")
-    } else if (input$dataset == "all"){
-      df <- read.dna("all.fasta", format="fasta")
-    } 
+  data_f <- reactive({ 
+    df <- read.dna(input$dataset, format = "fasta")
     return(df)
     })
 
@@ -126,10 +107,10 @@ shinyServer(function(input, output) {
   #  boot.dist <- function(al,di){
       if (input$tree == "upgma"){
         tre <- upgma(dist())
-        bp <- boot.phylo(tre,alin(),function(x) upgma(dist()),B=input$boot)
+        bp <- boot.phylo(tre,alin(),function(x) upgma(dist.dna(x,input$model)),B=input$boot)
       } else {
         tre <- nj(dist())
-        bp <- boot.phylo(tre,alin(),function(x) nj(dist()),B=input$boot)
+        bp <- boot.phylo(tre,alin(),function(x) nj(dist.dna(x,input$model)),B=input$boot)
       }
 
       tre$node.labels <- round(((bp / input$boot)*100))
