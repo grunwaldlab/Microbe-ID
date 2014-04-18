@@ -143,6 +143,13 @@ shinyServer(function(input, output) {
   })
 
   
+  # COMMENT:
+  #
+  # Tiplabels are doubled up and not lining up with the tree. 
+  # Remove the tiplabels command and use the tip.col argument in the
+  # plot.phylo function. See the poppr internal function: poppr.plot.phylo
+  # -Zhian
+
   output$distPlotTree <- renderPlot({
     if (is.null(alin())){
       plot.new() 
