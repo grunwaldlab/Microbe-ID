@@ -142,7 +142,17 @@ shinyServer(function(input, output) {
     return(msn.plot)
   })
 
-  
+
+# COMMENT:
+#
+# Since we are drawing plots and saving those plots to files, they should be the
+# same. Instead of copying/pasting the functions, we could write wrappers functions
+# for these plotting functions Where the variables (data(), boottree(), msnet(), 
+# seed(), etc.) are taken in as arguments to the function and options that we
+# want to keep static (cex, border, etc.) are defined.
+# - Zhian
+
+
   # COMMENT:
   #
   # Tiplabels are doubled up and not lining up with the tree. 
