@@ -5,12 +5,8 @@ library(phangorn)
 library(igraph)
 library(gdata)
 
-########### IMPORTANT ############
-# Here's where you add your database file (Comma Separated Object). Make sure 
-# that the database is in the same folder than this file (server.R)
-df <- read.dna("database.fasta", format="fasta")
 # Change this path to reflect where your binary of muscle is located.
-muscle_dir <- "~/Downloads/muscle3.8.31_i86linux64"
+muscle_dir <- "/usr/bin/muscle"
 
 get_last_substring <- function(x, sep = "_"){
   splitx <- strsplit(x, sep)
@@ -20,6 +16,35 @@ get_last_substring <- function(x, sep = "_"){
 
 shinyServer(function(input, output) {
   
+  
+  
+  ########### IMPORTANT ############
+  # Here's where you add your database file (Comma Separated Object). Make sure 
+  # that the database is in the same folder than this file (server.R)
+  data_f <- reactive({
+    if (input$dataset == "dnaa"){
+      df <- read.dna("DnaA.fasta", format="fasta")
+    }else if (input$dataset == "gyrb"){
+      df <- read.dna("GyrB.fasta", format="fasta")
+    } else if (input$dataset == "kdpa"){
+      df <- read.dna("KdpA.fasta", format="fasta")
+    } else if (input$dataset == "liga"){
+      df <- read.dna("LigA.fasta", format="fasta")
+    } else if (input$dataset == "cela"){
+      df <- read.dna("CelA.fasta", format="fasta")
+    } else if (input$dataset == "naga"){
+      df <- read.dna("NagA.fasta", format="fasta")
+    } else if (input$dataset == "toma"){
+      df <- read.dna("TomA.fasta", format="fasta")
+    } else if (input$dataset == "housekeeping"){
+      df <- read.dna("Housekeeping.fasta", format="fasta")
+    } else if (input$dataset == "virulence"){
+      df <- read.dna("Virulence.fasta", format="fasta")
+    } else if (input$dataset == "all"){
+      df <- read.dna("all.fasta", format="fasta")
+    } 
+    return(df)
+    })
 
   alin <- reactive({
     if (gsub("\\s", "", input$fasta) == ""){
@@ -30,7 +55,7 @@ shinyServer(function(input, output) {
         input_table <- read.dna("input.fasta", format="fasta")
         rownames(input_table) <- paste(rownames(input_table),c("query"),sep="_")
         input_table <- as.list(input_table)
-        df <- as.list(df)
+        df <- as.list(data_f())
         all <- c(input_table,df)
         all.al <- muscle(all, exec = muscle_dir)
         return(all.al) # Returns a DNAbin object.

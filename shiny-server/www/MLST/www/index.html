@@ -30,9 +30,26 @@
 
 <div class="row-fluid">
 		<div class="span12">
-		<h3>Upload FASTA sequence and select analysis</h3>
+		<h3>Select a database to compare with, Upload FASTA sequence and select analysis.</h3>
+		<h4>A Simple tutorial can be found <a href=Help.html target="_blank">here</a></h4>
+		<hr>
+			<div class="control-group">		
+				<label class="control-label" for="dataset"><b>Select Dataset</b>: Choose a gene to compare your FASTA sequence to:</label>
+				<select id="dataset" style="width:100px">
+					<option value="dnaa">DnaA</option>
+					<option value="gyrb">GyrB</option>
+					<option value="kdpa">KdpA</option>
+					<option value="liga">LigA</option>
+					<option value="cela">CelA</option>
+					<option value="naga">NagA</option>
+					<option value="toma">TomA</option>
+					<option value="housekeeping">Housekeeping Genes</option>
+					<option value="virulence">Virulence Genes</option>
+					<option value="all" selected="selected">All Loci</option>
+				</select>
+			</div>
 		<p>Copy and paste your sequences in FASTA format into the window below.</p>
-		<p style="color:blue"><b>Warning:</b></p><p>Only <a href="./example.fasta" target="_blank">FASTA</a> formats are accepted</p>.
+		<p style="color:blue"><b>Warning:</b></p><p>Only <a href="./example.txt" target="_blank">FASTA</a> formats are accepted</p>
 		<hr>
 		</div>
 		<div class="span11">		
