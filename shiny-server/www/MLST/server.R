@@ -15,10 +15,8 @@ get_last_substring <- function(x, sep = "_"){
   return(last)
 }
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   
-  
-
 
   # COMMENT:
   #
@@ -48,7 +46,7 @@ shinyServer(function(input, output) {
         all.al <- muscle(all, exec = muscle_dir)
         return(all.al) # Returns a DNAbin object.
       }else{
-        return(NULL)
+        return(FALSE)
       }
     }
     })
@@ -146,13 +144,24 @@ shinyServer(function(input, output) {
   # Tiplabels are doubled up and not lining up with the tree. 
   # Remove the tiplabels command and use the tip.col argument in the
   # plot.phylo function. See the poppr internal function: poppr.plot.phylo
-  # -Zhian
+  # -Zhian`
+output$validateFasta <- renderText({
+  if (is.null(alin())){
+    return("")
+  } else if (alin() == FALSE){
+    return("ERROR: Invalid FASTA file")
+  }
+  })
 
   output$distPlotTree <- renderPlot({
     if (is.null(alin())){
       plot.new() 
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
       text(x = 0.5, y = 0.9, "No FASTA data has been input.", cex = 1.6, col = "white")
+    } else if (alin() == FALSE){
+      plot.new() 
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+        text(x = 0.5, y = 0.9, "Invalid FASTA input.", cex = 1.6, col = "white")
     } else if (is.integer(boottree())){
       msg <- ifelse(boottree() > 10L, "\nless than or equal to 1000",
                                       "greater than 10")

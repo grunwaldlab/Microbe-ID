@@ -70,7 +70,8 @@
 		<hr>		    
 			<form name="fasta_file" class="form-horizontal" onSubmit="return validateForm();" id="fasta_file" method="get">
             <label style="align:center">FASTA Input</label>
-	            <textarea id="fasta" name="fasta" class="shiny-bound-input" cols="25" rows="3" style="width: 100%"></textarea>
+	        <textarea id="fasta" name="fasta" class="shiny-bound-input" cols="25" rows="3" style="width: 100%"></textarea>
+		    <h4><div id="validateFasta" class="span12 shiny-text-output" style="color:red"><i class="glyphicon glyphicon-search"></i></div></h4>
 		    <br>
 		    </form>
 		    <div class="row span12">
@@ -101,9 +102,10 @@
 					</select>
 				</div>
 				<div class="span1">
-				<button type="submit" class="btn btn-success">Submit genotype</button>	
+				<button type="submit" class="btn btn-success">Submit genotype</button>
 				</div>
 		</div>
+			</div>
 		<div class="span12">
 			<hr>
     	</div>
@@ -113,7 +115,7 @@
     	<pre class = "shiny-html-output" id = "txt" name = "txt", style = "width: 5%"></pre> 
     	-->
     	<div id="plot" class="shiny-plot-output shiny-bound-output" style="width: 100% ; height: 900px">
-		<div class="span9 offset1">
+		<div class="span12">
 		<h4>Analysis</h4>
 		<p>Select between a distance tree with bootstrap support values or a minimum spanning network</p>
 		<div class="tabbable">
