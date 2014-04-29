@@ -37,7 +37,7 @@
 </head>
 
 <body>
-		<h3>Select a database to compare with, Upload FASTA sequence and select analysis.<a href=Help.html target="_blank">A tutorial</a></h3>
+		<h3>Select a database to compare with, Upload FASTA sequence and select analysis.<a href=Help.html target="_blank"> (A tutorial)</a></h3>
 		<b>Select Dataset</b>: Choose a gene to compare your FASTA sequence to:</label>
 				<!--
 				Note:
@@ -69,25 +69,22 @@
 		<p style="color:blue"><b>Warning:</b></p><p>Only <a href="./example.txt" target="_blank">FASTA</a> formats are accepted</p>
 		<hr>		    
 			<form name="fasta_file" class="form-horizontal" onSubmit="return validateForm();" id="fasta_file" method="get">
-            <label style="align:center">FASTA Input</label>
-	        <textarea id="fasta" name="fasta" class="shiny-bound-input" cols="25" rows="3" style="width: 100%"></textarea>
-		    <h4><div id="validateFasta" class="span12 shiny-text-output" style="color:red"><i class="glyphicon glyphicon-search"></i></div></h4>
+            	<div class="well span12">
+		<label style="align:center">FASTA Input</label>
+	        <textarea id="fasta" name="fasta" class="shiny-bound-input" cols="25" rows="3" style="width: 95%"></textarea>
+		    <br>
+			<h4><div id="validateFasta" class="span12 shiny-text-output" style="color:red"><i class="glyphicon glyphicon-search"></i></div></h4>
 		    <br>
 		    </form>
 		    <div class="row span12">
-				<div class="span4">
-			<form class="text">			
-		    <label>Random Seed</label>
-		    <!-- 
-		    Change the default value of your seed depending on how you want the 
-		    minimum spanning network to appear initially. 
-		    -->
-
-					<input type = "number" name = "seed" id = "seed" value = "9448" min = "0" />	
-			</form>
-				</div>
-				<div class="span3">
-					<label class="control-label" for="model">Choose a distance:</label>
+			<div class="row span4">
+				<form style='margin: 0; padding: 0' class="text">			
+		    		<label>Random Seed</label>
+				<input type = "number" name = "seed" id = "seed" value = "22" min = "0" style="width: 60px display:inline;"/>	
+				</form>
+			</div>
+			<div class="span3">
+					<label for="model">Choose a Distance</label>
 					<select id="model" style="width:100px">
 						<option value="raw">raw</option>
 						<option value="TS">Transitions</option>
@@ -102,13 +99,14 @@
 					</select>
 				</div>
 				<div class="span1">
-				<button type="submit" class="btn btn-success">Submit genotype</button>
+				<br>
+				<button type="submit" class="btn btn-success">Submit</button>
 				</div>
 		</div>
 			</div>
 		<div class="span12">
 			<hr>
-    	</div>
+    	</div></div>
     	<!-- Testing Seed
 		<br>
     	<h4>SEED</h4>

@@ -109,12 +109,18 @@
 				<div id="distPlotTree" class="span6 shiny-plot-output" style="width: 100% ; height: 800px"></div>
 			</div>
 			<div class="tab-pane" title="Minimum spanning network" id="tab-8923-2">		
-				<div class="span12">
+				<div class="span12 well">
 				<h3>Minimum Spanning Network</h3>								
-					<form id="form" class="well">
+					<form id="form">
 					<span class="help-block">Note: Distances are calculated using Bruvo's distance, which follows a stepwise mutation model.</span>	
+					<div class="span3">
+					<label class="control-label" for="range">Greyscale </label>
+				  	<input id="range" type="slider" name="range" value="0.4;0.5" class="jslider" data-from="0" data-to="1" data-step="0.01" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>
+					</div> 
+					<div class="span12">
 					<button type="submit" class="btn btn-success" data-loading-text="Calculating...">Calculate MST</button>
 					<a id="downloadPdfMst"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>				
+					</div>
 					</form>
 				</div>
 				<div id="MinSpanTree" class="shiny-plot-output" style="width: 100% ; height: 800px"></div>

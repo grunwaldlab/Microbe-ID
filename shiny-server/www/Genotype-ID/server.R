@@ -216,6 +216,12 @@ shinyServer(function(input, output) {
     return(tree)
   })
   
+  
+  slider <- reactive({
+    slider.a <- (input$range)
+    return(slider.a)
+  })
+  
   msnet <- reactive ({
     msn.plot <- bruvo.msn(data(), replen = ssr)
     V(msn.plot$graph)$size <- 3
@@ -263,12 +269,13 @@ shinyServer(function(input, output) {
       text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
+      plot_poppr_msn(data(), msnet(),glim=c(slider()[1],slider()[2]), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
                      inds = data()$other$input_data, quantiles = FALSE)
-    }  	
-    
+    }
   })
+  
+
   
   
   output$downloadData <- downloadHandler(
