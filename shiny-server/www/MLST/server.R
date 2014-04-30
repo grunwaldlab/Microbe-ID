@@ -7,7 +7,7 @@ library(gdata)
 
 # Change this path to reflect where your binary of muscle is located.
 #muscle_dir <- "/usr/bin/muscle"
-muscle_dir <- "/Users/tabimaj/Downloads/muscle3.8.31_i86darwin64"
+muscle_dir <- "/Users/zhian/Downloads/muscle3.8.31_i86darwin64"
 
 get_last_substring <- function(x, sep = "_"){
   splitx <- strsplit(x, sep)
@@ -39,6 +39,7 @@ shinyServer(function(input, output, session) {
       if (startsWith(input$fasta,">") == TRUE){
         cat(input$fasta, file="input.fasta")
         input_table <- read.dna("input.fasta", format="fasta")
+        unlink("input.fasta")
         rownames(input_table) <- paste(rownames(input_table),c("query"),sep="_")
         input_table <- as.list(input_table)
         df <- as.list(data_f())
