@@ -168,13 +168,19 @@
 				<div id="distPlotTree" class="span6 shiny-plot-output" style="width: 100% ; height: 800px"></div>
 			</div>
 			<div class="tab-pane" title="Minimum spanning network" id="tab-8923-2">		
-				<div class="span12">
+				<div class="span12 well">
 				<h3>Minimum Spanning Network</h3>								
-					<form id="form" class="well">
+					<form id="form">
 					<span class="help-block">Note: Distances are calculated using the model selected before.</span>	
+					<div class="span3">
+					  <label class="control-label" for="integer">Use the slider to adjust the grey scale of the edge distances.</label>
+					  <input id="integer" type="slider" name="integer" value="40" class="jslider" data-from="0" data-to="100" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>
+					</div>
+					<div class="span12"> 
 					<button type="submit" class="btn btn-success" data-loading-text="Calculating...">Calculate MST</button>
 					<a id="downloadPdfMst"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>				
 					</form>
+					</div>
 				</div>
 				<div id="MinSpanTree" class="shiny-plot-output" style="width: 100% ; height: 800px"></div>
 			</div>

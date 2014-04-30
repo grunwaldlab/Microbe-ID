@@ -269,7 +269,7 @@ shinyServer(function(input, output) {
       text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(),gadj=c(slider()), vertex.label.color = "firebrick", 
+      plot_poppr_msn(data(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
                      inds = data()$other$input_data, quantiles = FALSE)
     }

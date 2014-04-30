@@ -7,7 +7,8 @@ library(gdata)
 
 # Change this path to reflect where your binary of muscle is located.
 #muscle_dir <- "/usr/bin/muscle"
-muscle_dir <- "/Users/zhian/Downloads/muscle3.8.31_i86darwin64"
+#muscle_dir <- "/Users/zhian/Downloads/muscle3.8.31_i86darwin64"
+muscle_dir <- "/Users/tabimaj/Downloads/muscle3.8.31_i86darwin64"
 
 get_last_substring <- function(x, sep = "_"){
   splitx <- strsplit(x, sep)
@@ -129,6 +130,10 @@ shinyServer(function(input, output, session) {
     return(msn.plot)
   })
 
+slider <- reactive({
+  slider.a <- (input$integer)
+  return(slider.a)
+})
 
 # COMMENT:
 #
@@ -198,9 +203,10 @@ output$validateFasta <- renderText({
       text(x = 0.5, y = 0.9, "No FASTA data has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
+      cat(slider())
+      plot_poppr_msn(data(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
- quantiles = FALSE, gadj = 40, inds = data()$other$input_data, nodelab = 10)
+ quantiles = FALSE, inds = data()$other$input_data, nodelab = 10)
     }  	
     
   })

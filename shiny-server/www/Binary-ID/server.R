@@ -101,6 +101,11 @@ boottree <- reactive({
     return(tree)
   })
   
+slider <- reactive({
+  slider.a <- (input$integer)
+  return(slider.a)
+})
+
   msnet <- reactive ({
     DIST <- match.fun(distfun())
     msn.plot <- poppr.msn(data(),distmat=DIST(data()),showplot=FALSE)
@@ -149,7 +154,7 @@ boottree <- reactive({
       text(x = 0.5, y = 0.9, "No binary (AFLP) data has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
+      plot_poppr_msn(data(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", 
                      vertex.label.font = 2, vertex.label.dist = 0.5, 
                      inds = data()$other$input_data, quantiles = FALSE, nodelab = 10)
     }  	
