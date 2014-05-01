@@ -16,36 +16,6 @@ get_last_substring <- function(x, sep = "_"){
   return(last)
 }
 
-# Functions to reduce redundancy
-## Plotting trees
-plot.tree <- function (tree, type = input$tree, ...){
-  ARGS <- c("nj", "upgma")
-  type <- match.arg(type, ARGS)
-  barlen <- min(median(tree$edge.length), 0.1)
-  if (barlen < 0.1) 
-    barlen <- 0.01
-  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
-             label.offset = 0, ...)
-  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
-             cex = 0.8, font = 3, xpd = TRUE)
-  tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid()))) 
-                          if (type == "nj") {
-                            add.scale.bar(lwd = 5, length = barlen)
-                            tree <- ladderize(tree)
-                          }
-                          else {
-                            axisPhylo(3)
-                          }
-}
-
-## Plotting Minimum spanning network
-plot.minspan <- function(x, y, ...){
-  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
-                 vertex.label.font = 2, vertex.label.dist = 0.5, 
-                 inds = data.genoid()$other$input_data, quantiles = FALSE)  
-}
-
-
 shinyServer(function(input, output, session) {
 
   data_f <- reactive({ 
@@ -142,6 +112,36 @@ slider <- reactive({
     #V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
+
+
+# Functions to reduce redundancy
+## Plotting trees
+plot.tree <- function (tree, type = input$tree, ...){
+  ARGS <- c("nj", "upgma")
+  type <- match.arg(type, ARGS)
+  barlen <- min(median(tree$edge.length), 0.1)
+  if (barlen < 0.1) 
+    barlen <- 0.01
+  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
+             label.offset = 0, ...)
+  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
+             cex = 0.8, font = 3, xpd = TRUE)
+  tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid()))) 
+  if (type == "nj") {
+    add.scale.bar(lwd = 5, length = barlen)
+    tree <- ladderize(tree)
+  }
+  else {
+    axisPhylo(3)
+  }
+}
+
+## Plotting Minimum spanning network
+plot.minspan <- function(x, y, ...){
+  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
+                 vertex.label.font = 2, vertex.label.dist = 0.5, 
+                 inds = data.genoid()$other$input_data, quantiles = FALSE)  
+}
 
 #Output
 
