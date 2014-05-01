@@ -24,32 +24,33 @@ ssr <- c(PrMS6       = 3,
          )
 ##################################
 
-#==============================================================================#
-# Function to plot the minimum spanning network obtained from poppr.msn or
-# bruvo.msn. This is in development. At the moment, it's purpose is to plot all
-# of the individual names that are assigned to a node. 
-# usage:
-# plot_poppr_msn(gid, poppr_msn)
-# gid: a genind object
-# poppr_msn: the output from a poppr.msn or bruvo.msn function
-# gadj: the grey adjustment factor
-# glim = grey limit
-# gweight = -1 for greater distances, 1 for shorter distances
-# inds = a character vector containing names of individuals you want to label on the graph.
-#        set to "none" or any character that doesn't exist in your data for no labels
-# quantiles = TRUE if you want the grey scale to be plotted using the raw data. 
-#             FALSE if you want the range from minimum to maximum plotted.
-# nodelab = when there are no inds labeled, this will label nodes with the number of individuals
-#           greater than or equal to this number. 
-# 
-# Example:
-#
-# library(poppr)
-# source('poppr_plot_msn.r')
-# data(partial_clone)
-# pc.msn <- bruvo.msn(partial_clone, replen = rep(1, 10))
-# plot_poppr_msn(partial_clone, pc.msn, vertex.label.color = "firebrick", vertex.label.font = 2)
-#==============================================================================#
+
+# Functions to create elements to plot
+## Distance Tree
+plot.tree <- function (tree, type = input$tree, ...){
+  ARGS <- c("nj", "upgma")
+  type <- match.arg(type, ARGS)
+  barlen <- min(median(tree$edge.length), 0.1)
+  if (barlen < 0.1) 
+    barlen <- 0.01
+  plot.phylo(tree, cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
+             label.offset = 0.0125, ...)
+  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
+             cex = 0.8, font = 3, xpd = TRUE)
+  if (input$tree == "nj") {
+    add.scale.bar(lwd = 5, length = barlen)
+    tree <- ladderize(tree)
+  }
+  else {
+    axisPhylo(3)
+  }
+}
+## Minimum spanning network
+plot.minspan <- function(x, y, ...){
+  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
+                 vertex.label.font = 2, vertex.label.dist = 0.5, 
+                 inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
+}
 
 shinyServer(function(input, output) {
   
@@ -123,7 +124,7 @@ shinyServer(function(input, output) {
         print(paste0("Failed: ", i))
       }
     }
-    tree$tip.label <- paste(tree$tip.label,data.genoid()$pop.names,sep="_")
+    tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid())) 
     if (input$tree=="nj"){
       tree <- phangorn::midpoint(ladderize(tree))
     }
@@ -136,34 +137,6 @@ shinyServer(function(input, output) {
     V(msn.plot$graph)$size <- 3
     return(msn.plot)  
   })
-
-# Functions to create elements to plot
-## Distance Tree
-plot.tree <- function (tree, type = input$tree, ...){
-    ARGS <- c("nj", "upgma")
-    type <- match.arg(type, ARGS)
-    barlen <- min(median(tree$edge.length), 0.1)
-    if (barlen < 0.1) 
-      barlen <- 0.01
-    plot.phylo(tree, cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
-               label.offset = 0.0125, ...)
-    nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
-               cex = 0.8, font = 3, xpd = TRUE)
-    if (input$tree == "nj") {
-      add.scale.bar(lwd = 5, length = barlen)
-      tree <- ladderize(tree)
-    }
-    else {
-      axisPhylo(3)
-    }
-  }
-## Minimum spanning network
-plot.minspan <- function(x, y, ...){
-  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
-                 vertex.label.font = 2, vertex.label.dist = 0.5, 
-                 inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
-}
-
 
 # Plotting on the UI
 

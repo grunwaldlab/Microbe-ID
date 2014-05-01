@@ -20,6 +20,34 @@ get_dist_fun <- function(dist){
          provesti = 'provesti.dist')
 }
 
+
+# Functions to create elements to plot
+## Distance Tree
+plot.tree <- function (tree, type = input$tree, ...){
+  ARGS <- c("nj", "upgma")
+  type <- match.arg(type, ARGS)
+  barlen <- min(median(tree$edge.length), 0.1)
+  if (barlen < 0.1) 
+    barlen <- 0.01
+  plot.phylo(tree, cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
+             label.offset = 0.0125, ...)
+  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
+             cex = 0.8, font = 3, xpd = TRUE)
+  if (input$tree == "nj") {
+    add.scale.bar(lwd = 5, length = barlen)
+    tree <- ladderize(tree)
+  }
+  else {
+    axisPhylo(3)
+  }
+}
+## Minimum spanning network
+plot.minspan <- function(x, y, ...){
+  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
+                 vertex.label.font = 2, vertex.label.dist = 0.5, 
+                 inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
+}
+
 shinyServer(function(input, output) {
   
 
@@ -91,7 +119,7 @@ shinyServer(function(input, output) {
       if (input$tree=="nj"){
         tree <- phangorn::midpoint(ladderize(tree))
       }
-      tree$tip.label <- paste(tree$tip.label,data.genoid()$pop.names,sep="_")
+      tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid())) 
       return(tree)
     })
   
@@ -103,38 +131,6 @@ shinyServer(function(input, output) {
       return(msn.plot)
     })
   
-# Functions to create elements to plot
-
-  ## Distance Tree
-  plot.tree <- function (tree, type = input$tree, ...){
-    ARGS <- c("nj", "upgma")
-    type <- match.arg(type, ARGS)
-    barlen <- min(median(tree$edge.length), 0.1)
-    if (barlen < 0.1) 
-      barlen <- 0.01
-    plot.phylo(tree, cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
-               label.offset = 0.0125, ...)
-    nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
-               cex = 0.8, font = 3, xpd = TRUE)
-    if (type == "nj") {
-      add.scale.bar(lwd = 5, length = barlen)
-      tree <- ladderize(tree)
-    }
-    else {
-      axisPhylo(3)
-    }
-  }
-  
-  ## Minimum spanning network
-  plot.minspan <- function(x, y, ...){
-    plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
-                   vertex.label.font = 2, vertex.label.dist = 0.5, 
-                   inds = data.genoid()$other$input_data, quantiles = FALSE)  
-  }
-  
-  
-  
-    
 # Plotting on the UI
   
   ## Distance Tree
