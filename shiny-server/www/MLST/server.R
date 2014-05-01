@@ -17,17 +17,7 @@ get_last_substring <- function(x, sep = "_"){
 }
 
 shinyServer(function(input, output, session) {
-  
 
-  # COMMENT:
-  #
-  # See www/index.html for my comments on this reactive block.
-  # -Zhian
-
-  
-  ########### IMPORTANT ############
-  # Here's where you add your database file (Comma Separated Object). Make sure 
-  # that the database is in the same folder than this file (server.R)
   data_f <- reactive({ 
     df <- read.dna(input$dataset, format = "fasta")
     return(df)
@@ -46,7 +36,7 @@ shinyServer(function(input, output, session) {
         df <- as.list(data_f())
         all <- c(input_table,df)
         all.al <- muscle(all, exec = muscle_dir)
-        return(all.al) # Returns a DNAbin object.
+        return(all.al)
       }else{
         return(FALSE)
       }
@@ -54,12 +44,12 @@ shinyServer(function(input, output, session) {
     })
   
 
-  dist <- reactive({
+  dist.genoid <- reactive({
     all.dist <- dist.dna(alin(),input$model)
     return(all.dist)
   })
   
-  data <- reactive({
+  data.genoid <- reactive({
     gen <- DNAbin2genind(alin())
     #Adding colors to the tip values according to the clonal lineage
     popnames <- get_last_substring(gen$ind.names, "_")
@@ -90,33 +80,20 @@ shinyServer(function(input, output, session) {
   })
   
   boottree <- reactive({
-    # Running the tree, setting a cutoff of 50 and saving it into a variable to 
-    # be plotted (tree)
     if (input$boot > 1000){
       return(1000L)
     } else if (input$boot < 10){
       return(10L)
     }
     set.seed(seed())
-
-    # COMMENT:
-    # 
-    # It looks like you had the right idea here on this commented line.
-    # Remember, you can write functions that return functions.
-    # - Zhian
-  #  boot.dist <- function(al,di){
       if (input$tree == "upgma"){
-        tre <- upgma(dist())
+        tre <- upgma(dist.genoid())
         bp <- boot.phylo(tre,alin(),function(x) upgma(dist.dna(x,input$model)),B=input$boot)
       } else {
-        tre <- nj(dist())
+        tre <- nj(dist.genoid())
         bp <- boot.phylo(tre,alin(),function(x) nj(dist.dna(x,input$model)),B=input$boot)
       }
-
-      tre$node.labels <- round(((bp / input$boot)*100))
-      #plot(tre,label.offset = 0.0125)
-      #nodelabels(tre$node.labels, adj = c(1.3, -0.5), frame="n", cex=0.9, font=3)
-
+    tre$node.labels <- round(((bp / input$boot)*100))
     if (input$tree=="nj"){
       tre <- phangorn::midpoint(ladderize(tre))
     }
@@ -124,33 +101,37 @@ shinyServer(function(input, output, session) {
   })
   
   msnet <- reactive ({
-    msn.plot <-poppr.msn(data(), dist(), palette=rainbow, showplot = FALSE)
-   # browser()
+    msn.plot <-poppr.msn(data.genoid(), dist.genoid(), palette=rainbow, showplot = FALSE)
     V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
 
-slider <- reactive({
-  slider.a <- (input$integer)
-  return(slider.a)
-})
+plot.tree <- function (tree, type = input$tree, ...){
+  ARGS <- c("nj", "upgma")
+  type <- match.arg(type, ARGS)
+  barlen <- min(median(tree$edge.length), 0.1)
+  if (barlen < 0.1) 
+    barlen <- 0.01
+  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
+             label.offset = 0, ...)
+  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
+             cex = 0.8, font = 3, xpd = TRUE)
+  if (type == "nj") {
+    add.scale.bar(lwd = 5, length = barlen)
+    tree <- ladderize(tree)
+  }
+  else {
+    axisPhylo(3)
+  }
+}
+## Minimum spanning network
+plot.minspan <- function(x, y, ...){
+  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
+                 vertex.label.font = 2, vertex.label.dist = 0.5, 
+                 inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
+}
 
-# COMMENT:
-#
-# Since we are drawing plots and saving those plots to files, they should be the
-# same. Instead of copying/pasting the functions, we could write wrappers functions
-# for these plotting functions Where the variables (data(), boottree(), msnet(), 
-# seed(), etc.) are taken in as arguments to the function and options that we
-# want to keep static (cex, border, etc.) are defined.
-# - Zhian
 
-
-  # COMMENT:
-  #
-  # Tiplabels are doubled up and not lining up with the tree. 
-  # Remove the tiplabels command and use the tip.col argument in the
-  # plot.phylo function. See the poppr internal function: poppr.plot.phylo
-  # -Zhian`
 output$validateFasta <- renderText({
   if (is.null(alin())){
     return("")
@@ -176,22 +157,7 @@ output$validateFasta <- renderText({
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
       text(x = 0.5, y = 0.9, msg, cex = 1.6, col = "white")
     } else {
-        #Drawing the tree
-      plot.phylo(boottree())
-      
-      #Adding the tip labels from each population, and with the already defined colors
-      tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", 
-                col = data()$other$tipcolor, cex = 0.8, font = 2)
-      
-      #Adding the nodel labels: Bootstrap values.
-      nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
-                 cex = 0.9, font = 3)
-      
-      if (input$tree == "upgma"){
-        axisPhylo(3)
-      } else {
-        add.scale.bar(x = 0.89, y = 1.18, length = 0.05, lwd = 2)
-      }
+      plot.tree(boottree(), tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
     }
   })
   
@@ -203,14 +169,10 @@ output$validateFasta <- renderText({
       text(x = 0.5, y = 0.9, "No FASTA data has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
-      cat(slider())
-      plot_poppr_msn(data(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", 
-                     vertex.label.font = 2, vertex.label.dist = 0.5, 
- quantiles = FALSE, inds = data()$other$input_data, nodelab = 10)
+      plot.minspan(data.genoid(),msnet())
     }  	
     
   })
-  
   
   output$downloadData <- downloadHandler(
     filename = function() { paste0(input$tree, '.tre') },
@@ -222,14 +184,15 @@ output$validateFasta <- renderText({
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
       pdf(file, width=11, height=8.5)
-      plot.phylo(boottree(), cex = 0.5)
-      tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", 
-                col = data()$other$tipcolor, cex = 0.4, font = 2)
-      nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
-                 cex = 0.4, font = 3)
-      if (input$tree == "upgma"){
-        axisPhylo(3)
-      }
+      plot.tree(boottree(), tip.col=as.character(unlist(data.genoid()$other$tipcolor)))      
+#       plot.phylo(boottree(), cex = 0.5)
+#       tiplabels(pop(data.genoid()), adj = c(-4, 0.5), frame = "n", 
+#                 col = data.genoid()$other$tipcolor, cex = 0.4, font = 2)
+#       nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
+#                  cex = 0.4, font = 3)
+#       if (input$tree == "upgma"){
+#         axisPhylo(3)
+#       }
       dev.off()
     })
   

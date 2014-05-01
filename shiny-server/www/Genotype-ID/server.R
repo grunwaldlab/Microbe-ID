@@ -51,126 +51,31 @@ ssr <- c(PrMS6       = 3,
 # plot_poppr_msn(partial_clone, pc.msn, vertex.label.color = "firebrick", vertex.label.font = 2)
 #==============================================================================#
 
-plot_poppr_msn <- function(gid, poppr_msn, gadj = 3, glim = c(0, 0.8),
-                           gweight = 1, inds = "ALL", quantiles = TRUE, nodelab = 2, ...){
-  if(!is.genind(gid)) stop(paste(gid, "is not a genind object."))
-  if(!identical(names(poppr_msn), c("graph", "populations", "colors"))) stop("graph not compatible")
-  
-  # Importing functions from igraph. This can be deleted when implemented in
-  # poppr.
-  E <- match.fun(igraph::E)
-  `E<-` <- match.fun(igraph::`E<-`)
-  V <- match.fun(igraph::V)
-  plot.igraph <- match.fun(igraph::plot.igraph)
-  
-  # Adjusting color scales. This will replace any previous scaling contained in
-  # poppr_msn.
-  weights <- E(poppr_msn$graph)$weight
-  wmin <- min(weights)
-  wmax <- max(weights)
-  gadj <- ifelse(gweight == 1, gadj, -gadj)
-  E(poppr_msn$graph)$color <- gray(poppr:::adjustcurve(weights, glim=glim,
-                                                       correction=gadj,show=FALSE))
-  
-  # Highlighting only the names of the submitted genotypes and the matching
-  # isolates.
-  gid.mlg <- mlg.vector(gid)
-  labs <- unique(gid.mlg)
-  # The labels in the graph are organized by MLG, so we will use that to extract
-  # the names we need.
-  if (length(inds) == 1 & toupper(inds[1]) == "ALL"){
-    gid.input <- unique(gid.mlg)
-  } else {
-    gid.input <- unique(gid.mlg[gid@ind.names %in% inds])
-  }
-  # Combine all the names that match with each particular MLG in gid.input.
-  combined_names <- vapply(gid.input, function(x)
-    paste(rev(gid@ind.names[gid.mlg == x]),
-          collapse = "\n"),
-    " ")
-  # Remove labels that are not specified.
-  labs[which(!labs %in% gid.input)] <- NA
-  labs[!is.na(labs)] <- combined_names
-  if (all(is.na(labs))){
-    labs <- V(poppr_msn$graph)$size
-    labs <- ifelse(labs >= nodelab, labs, NA)
-  }
-  # Change the size of the vertices to a log scale.
-  vsize <- log(V(poppr_msn$graph)$size, base = 1.15) + 3
-  
-  # Plotting parameters.
-  def.par <- par(no.readonly = TRUE)
-  # Setting up the matrix for plotting. Three vertical panels with a 1:3:1
-  # ratio with legend:plot:greyscale
-  #layout(matrix(1:3, ncol = 3), widths = c(1, 3, 0.5))
-  layout(matrix(c(1,2,1,3), ncol = 2, byrow = TRUE),
-         widths = c(1, 4), heights= c(4.5, 0.5))
-  # mar = bottom left top right
-  
-  ## LEGEND
-  par(mar = c(0, 0, 1, 0) + 0.5)
-  too_many_pops <- as.integer(ceiling(length(gid$pop.names)/30))
-  pops_correction <- ifelse(too_many_pops > 1, -1, 1)
-  yintersperse <- ifelse(too_many_pops > 1, 0.51, 0.62)
-  plot(c(0, 2), c(0, 1), type = 'n', axes = F, xlab = '', ylab = '',
-       main = 'POPULATION')
-  legend("topleft", bty = "n", cex = 1.2^pops_correction,
-         legend = poppr_msn$populations, fill = poppr_msn$color, border = NULL,
-         ncol = too_many_pops, x.intersp = 0.45, y.intersp = yintersperse)
-  
-  ## PLOT
-  par(mar = c(0,0,0,0))
-  plot.igraph(poppr_msn$graph, vertex.label = labs, vertex.size = vsize, ...)
-  
-  ## SCALE BAR
-  if (quantiles){
-    scales <- sort(weights)
-    greyscales <- gray(poppr:::adjustcurve(scales, show=FALSE,
-                                           glim=glim, correction=gadj))
-  } else {
-    scales <- seq(wmin, wmax, l = 1000)
-    greyscales <- gray(poppr:::adjustcurve(scales, show=FALSE,
-                                           glim=glim, correction=gadj))
-  }
-  legend_image <- as.raster(matrix(greyscales, nrow=1))
-  par(mar = c(0, 1, 0, 1) + 0.5)
-  plot.new()
-  rasterImage(legend_image, 0, 0.5, 1, 1)
-  polygon(c(0, 1 , 1), c(0.5, 0.5, 0.8), col = "white", border = "white", lwd = 2)
-  axis(3, at = c(0, 0.25, 0.5, 0.75, 1), labels = round(quantile(scales), 3))
-  text(0.5, 0, labels = "DISTANCE", font = 2, cex = 1.5, adj = c(0.5, 0))
-  
-  # Return top level plot to defaults.
-  layout(matrix(c(1), ncol=1, byrow=T))
-  par(mar=c(5,4,4,2) + 0.1) # number of lines of margin specified.
-  par(oma=c(0,0,0,0)) # Figure margins
-}
-
 shinyServer(function(input, output) {
   
-
-  data <- reactive({
+#Data input and manipulation
+  data.genoid <- reactive({
     if (gsub("\\s", "", input$table) == ""){
       return(NULL)
     } else {
       input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
       colnames(input_table) <- colnames(df.m)
-      input_data            <- input_table[[1]]
+      input_data.genoid            <- input_table[[1]]
       df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
       gen  <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2], 
                         ind.names = df.m[, 1])
       #Adding colors to the tip values according to the clonal lineage
       gen$other$tipcolor   <- pop(gen)
-      gen$other$input_data <- input_data
+      gen$other$input_data.genoid <- input_data.genoid
       ngroups              <- length(levels(gen$other$tipcolor))
       ########### IMPORTANT ############
-      # Change these colors to represent the groups defined in your data set.
+      # Change these colors to represent the groups defined in your data.genoid set.
       #
-      defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod")
+      defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod","red")
       #
       # Change heat.colors to whatever color palette you want to represent
-      # submitted data. 
+      # submitted data.genoid. 
       #
       input_colors   <- heat.colors(ngroups - length(defined_groups))
       #
@@ -180,11 +85,20 @@ shinyServer(function(input, output) {
       return(gen)
     }
   })
-  
+
+#Random seed number  
   seed <- reactive({
     return(input$seed)
   })
   
+#Greyscale Slider  
+  slider <- reactive({
+    slider.a <- (input$integer)
+    return(slider.a)
+  })
+
+
+# Bootstrap of a distance tree out of the data.genoid
   boottree <- reactive({
     # Running the tree, setting a cutoff of 50 and saving it into a variable to 
     # be plotted (tree)
@@ -194,13 +108,13 @@ shinyServer(function(input, output) {
       return(10L)
     }
     set.seed(seed())
-    tree <- try(bruvo.boot(data(), replen = ssr, sample = input$boot, 
+    tree <- try(bruvo.boot(data.genoid(), replen = ssr, sample = input$boot, 
                        tree = input$tree, cutoff = 50), silent = TRUE)
 
-    # This is a catch to avoid having missing data within the distance matrix. 
+    # This is a catch to avoid having missing data.genoid within the distance matrix. 
     if ("try-error" %in% class(tree)){
       for (i in sample(100)){
-        tree <- try(bruvo.boot(data(), replen = ssr, sample = input$boot, 
+        tree <- try(bruvo.boot(data.genoid(), replen = ssr, sample = input$boot, 
                                tree = input$tree, cutoff = 50), silent = TRUE)
         if (!"try-error" %in% class(tree)){
           print(paste0("Success: ", i))
@@ -209,31 +123,58 @@ shinyServer(function(input, output) {
         print(paste0("Failed: ", i))
       }
     }
-
+    tree$tip.labels <- paste(tree$tip.label,data.genoid()$pop.names,sep="_")
     if (input$tree=="nj"){
       tree <- phangorn::midpoint(ladderize(tree))
     }
     return(tree)
   })
-  
-  
-  slider <- reactive({
-    slider.a <- (input$integer)
-    return(slider.a)
-  })
-  
+
+#Minimum spanning network creation
   msnet <- reactive ({
-    msn.plot <- bruvo.msn(data(), replen = ssr)
+    msn.plot <- bruvo.msn(data.genoid(), replen = ssr)
     V(msn.plot$graph)$size <- 3
-    return(msn.plot)
+    return(msn.plot)  
   })
 
-  
+# Functions to create elements to plot
+## Distance Tree
+plot.tree <- function (tree, type = input$tree, ...){
+    ARGS <- c("nj", "upgma")
+    type <- match.arg(type, ARGS)
+    barlen <- min(median(tree$edge.length), 0.1)
+    if (barlen < 0.1) 
+      barlen <- 0.01
+    if (type == "nj") {
+      tree <- ladderize(tree)
+    }
+    plot.phylo(tree, cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
+               label.offset = 0.0125, ...)
+    nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
+               cex = 0.8, font = 3, xpd = TRUE)
+    if (input$tree == "nj") {
+      add.scale.bar(lwd = 5, length = barlen)
+    }
+    else {
+      axisPhylo(3)
+    }
+  }
+## Minimum spanning network
+plot.minspan <- function(x, y, ...){
+  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
+                 vertex.label.font = 2, vertex.label.dist = 0.5, 
+                 inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
+}
+
+
+# Plotting on the UI
+
+## Distance Tree
   output$distPlotTree <- renderPlot({
-    if (is.null(data())){
+    if (is.null(data.genoid())){
       plot.new() 
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
-      text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
+      text(x = 0.5, y = 0.9, "No SSR data.genoid has been input.", cex = 1.6, col = "white")
     } else if (is.integer(boottree())){
       msg <- ifelse(boottree() > 10L, "\nless than or equal to 1000",
                                       "greater than 10")
@@ -242,73 +183,51 @@ shinyServer(function(input, output) {
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
       text(x = 0.5, y = 0.9, msg, cex = 1.6, col = "white")
     } else {
-        #Drawing the tree
-      plot.phylo(boottree())
-      
-      #Adding the tip labels from each population, and with the already defined colors
-      tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", 
-                col = data()$other$tipcolor, cex = 0.8, font = 2)
-      
-      #Adding the nodel labels: Bootstrap values.
-      nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
-                 cex = 0.9, font = 3)
-      
-      if (input$tree == "upgma"){
-        axisPhylo(3)
-      } else {
-        add.scale.bar(x = 0.89, y = 1.18, length = 0.05, lwd = 2)
-      }
+      plot.tree(boottree(), tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
     }
   })
   
-  #Minimum Spanning Network
+##Minimum Spanning Network
   output$MinSpanTree <- renderPlot({
-    if (is.null(data())){
+    if (is.null(data.genoid())){
       plot.new() 
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
-      text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
+      text(x = 0.5, y = 0.9, "No SSR data.genoid has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", 
-                     vertex.label.font = 2, vertex.label.dist = 0.5, 
-                     inds = data()$other$input_data, quantiles = FALSE)
+      plot.minspan(data.genoid(),msnet())
     }
   })
   
 
-  
-  
+#Downloading results
+
+## Distance tree in .tre format
   output$downloadData <- downloadHandler(
     filename = function() { paste0(input$tree, '.tre') },
     content = function(file) {
       write.tree(boottree(), file)
     })
-  
+
+## Distance tree in PDF format  
   output$downloadPdf <- downloadHandler(
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
       pdf(file, width=11, height=8.5)
-      plot.phylo(boottree(), cex = 0.5)
-      tiplabels(pop(data()), adj = c(-4, 0.5), frame = "n", 
-                col = data()$other$tipcolor, cex = 0.4, font = 2)
-      nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
-                 cex = 0.4, font = 3)
-      if (input$tree == "upgma"){
-        axisPhylo(3)
-      }
+      plot.tree(tree, tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
       dev.off()
     })
-  
+
+## Minimum spanning network in PDF format
   output$downloadPdfMst <- downloadHandler(
     filename = function() { paste0("min_span_net", '.pdf')} ,
     content = function(file) {
       pdf(file, width=11, height=8.5)
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
-                     vertex.label.font = 2, vertex.label.dist = 0.5, 
-                     inds = data()$other$input_data, quantiles = FALSE)
+      plot.minspan(data.genoid(),msnet())
       dev.off()
     }
   )
-  
+
+#EOF
 })
