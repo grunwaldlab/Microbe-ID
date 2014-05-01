@@ -78,6 +78,13 @@ shinyServer(function(input, output, session) {
   seed <- reactive({
     return(input$seed)
   })
+
+#Greyscale Slider  
+slider <- reactive({
+  slider.a <- (input$integer)
+  return(slider.a)
+})
+
   
   boottree <- reactive({
     if (input$boot > 1000){
@@ -102,7 +109,7 @@ shinyServer(function(input, output, session) {
   
   msnet <- reactive ({
     msn.plot <-poppr.msn(data.genoid(), dist.genoid(), palette=rainbow, showplot = FALSE)
-    V(msn.plot$graph)$size <- 3
+    #V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
 
@@ -128,7 +135,7 @@ plot.tree <- function (tree, type = input$tree, ...){
 plot.minspan <- function(x, y, ...){
   plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
                  vertex.label.font = 2, vertex.label.dist = 0.5, 
-                 inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
+                 inds = data.genoid()$other$input_data, quantiles = FALSE)  
 }
 
 
@@ -166,14 +173,17 @@ output$validateFasta <- renderText({
     if (is.null(alin())){
       plot.new() 
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
-      text(x = 0.5, y = 0.9, "No FASTA data has been input.", cex = 1.6, col = "white")
+        text(x = 0.5, y = 0.9, "No FASTA data has been input.", cex = 1.6, col = "white")
+    } else if (alin() == FALSE){
+      plot.new() 
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+        text(x = 0.5, y = 0.9, "Invalid FASTA input.", cex = 1.6, col = "white")
     } else {
-      set.seed(seed())
+      #plot_poppr_msn(data.genoid(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", vertex.label.font = 2, vertex.label.dist = 0.5,                    inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
       plot.minspan(data.genoid(),msnet())
-    }  	
-    
+    }
   })
-  
+    
   output$downloadData <- downloadHandler(
     filename = function() { paste0(input$tree, '.tre') },
     content = function(file) {
@@ -185,14 +195,6 @@ output$validateFasta <- renderText({
     content = function(file) {
       pdf(file, width=11, height=8.5)
       plot.tree(boottree(), tip.col=as.character(unlist(data.genoid()$other$tipcolor)))      
-#       plot.phylo(boottree(), cex = 0.5)
-#       tiplabels(pop(data.genoid()), adj = c(-4, 0.5), frame = "n", 
-#                 col = data.genoid()$other$tipcolor, cex = 0.4, font = 2)
-#       nodelabels(boottree()$node.label, adj = c(1.2, -0.5), frame = "n", 
-#                  cex = 0.4, font = 3)
-#       if (input$tree == "upgma"){
-#         axisPhylo(3)
-#       }
       dev.off()
     })
   
@@ -201,12 +203,8 @@ output$validateFasta <- renderText({
     content = function(file) {
       pdf(file, width=11, height=8.5)
       set.seed(seed())
-      plot_poppr_msn(data(), msnet(), vertex.label.color = "firebrick", 
-                     vertex.label.font = 2, vertex.label.dist = 0.5, 
-                     inds = data()$other$input_data, # This does not match with the above function.
-                     quantiles = FALSE, gadj = 90)
+      plot.minspan(data.genoid(),msnet())
       dev.off()
-    }
-  )
+    })
   
 })
