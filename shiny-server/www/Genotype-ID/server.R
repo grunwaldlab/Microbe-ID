@@ -123,7 +123,7 @@ shinyServer(function(input, output) {
         print(paste0("Failed: ", i))
       }
     }
-    tree$tip.labels <- paste(tree$tip.label,data.genoid()$pop.names,sep="_")
+    tree$tip.label <- paste(tree$tip.label,data.genoid()$pop.names,sep="_")
     if (input$tree=="nj"){
       tree <- phangorn::midpoint(ladderize(tree))
     }

@@ -91,6 +91,7 @@ shinyServer(function(input, output) {
       if (input$tree=="nj"){
         tree <- phangorn::midpoint(ladderize(tree))
       }
+      tree$tip.label <- paste(tree$tip.label,data.genoid()$pop.names,sep="_")
       return(tree)
     })
   
