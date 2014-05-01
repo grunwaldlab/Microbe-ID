@@ -28,7 +28,7 @@ plot.tree <- function (tree, type = input$tree, ...){
              label.offset = 0, ...)
   nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
              cex = 0.8, font = 3, xpd = TRUE)
-  tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid())) 
+  tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid()))) 
                           if (type == "nj") {
                             add.scale.bar(lwd = 5, length = barlen)
                             tree <- ladderize(tree)
