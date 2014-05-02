@@ -61,13 +61,15 @@
 					<option value="CelA.fasta" selected="selected">CelA</option>
 					<option value="NagA.fasta">NagA</option>
 					<option value="TomA.fasta">TomA</option>
-					<option> --- </option>
+					<option value="SdhA.fasta">SdhA</option>
+					<li role="presentation" class="divider"></li>
 					<option value="Housekeeping.fasta">Housekeeping Genes</option>
 					<option value="Virulence.fasta">Virulence Genes</option>
+					<li role="presentation" class="divider"></li>
 					<option value="All.fasta">All Loci</option>
 				</select>
 		<p>Copy and paste your sequences in FASTA format into the window below.</p>
-		<p style="color:blue"><b>Warning:</b></p><p>Only <a href="./example.txt" target="_blank">FASTA</a> formats are accepted</p>
+		<p style="color:blue"><b>Warning:</b></p><p>Only <a href="./example.html" target="_blank">FASTA</a> formats are accepted</p>
 		<hr>		    
 			<form name="fasta_file" class="form-horizontal" onSubmit="return validateForm();" id="fasta_file" method="get">
             	<div class="well span12">
@@ -175,7 +177,7 @@
 					<span class="help-block">Note: Distances are calculated using the model selected before.</span>	
 					<div class="span3">
 					  <label class="control-label" for="integer">Use the slider to adjust the grey scale of the edge distances.</label>
-					  <input id="integer" type="slider" name="integer" value="40" class="jslider" data-from="0" data-to="100" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>
+					  <input id="integer" type="slider" name="integer" value="40" class="jslider" data-from="0" data-to="1000" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>
 					</div>
 					<div class="span12"> 
 					<button type="submit" class="btn btn-success" data-loading-text="Calculating...">Calculate MST</button>

@@ -16,6 +16,36 @@ get_last_substring <- function(x, sep = "_"){
   return(last)
 }
 
+
+
+# Functions to reduce redundancy
+## Plotting trees
+plot.tree <- function (tree, type = input$tree, ...){
+  ARGS <- c("nj", "upgma")
+  type <- match.arg(type, ARGS)
+  barlen <- min(median(tree$edge.length), 0.1)
+  if (barlen < 0.1) 
+    barlen <- 0.01
+  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
+             label.offset = 0, ...)
+  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
+             cex = 0.8, font = 3, xpd = TRUE)
+  if (type == "nj") {
+    add.scale.bar(lwd = 5, length = barlen)
+    tree <- ladderize(tree)
+  }
+  else {
+    axisPhylo(3)
+  }
+}
+
+## Plotting Minimum spanning network
+plot.minspan <- function(gen, mst, gadj=3, inds="none", ...){
+  plot_poppr_msn(gen, mst, gadj=gadj, vertex.label.color = "firebrick",nodelab=100,
+                 vertex.label.font = 2, vertex.label.dist = 0.5, 
+                 inds = inds, quantiles = FALSE)  
+}
+
 shinyServer(function(input, output, session) {
 
   data_f <- reactive({ 
@@ -101,6 +131,7 @@ slider <- reactive({
         bp <- boot.phylo(tre,alin(),function(x) nj(dist.dna(x,input$model)),B=input$boot)
       }
     tre$node.labels <- round(((bp / input$boot)*100))
+    tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid()))) 
     if (input$tree=="nj"){
       tre <- phangorn::midpoint(ladderize(tre))
     }
@@ -112,36 +143,6 @@ slider <- reactive({
     #V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
-
-
-# Functions to reduce redundancy
-## Plotting trees
-plot.tree <- function (tree, type = input$tree, ...){
-  ARGS <- c("nj", "upgma")
-  type <- match.arg(type, ARGS)
-  barlen <- min(median(tree$edge.length), 0.1)
-  if (barlen < 0.1) 
-    barlen <- 0.01
-  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
-             label.offset = 0, ...)
-  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
-             cex = 0.8, font = 3, xpd = TRUE)
-  tree$tip.label <- paste(tree$tip.label, as.character(pop(data.genoid()))) 
-  if (type == "nj") {
-    add.scale.bar(lwd = 5, length = barlen)
-    tree <- ladderize(tree)
-  }
-  else {
-    axisPhylo(3)
-  }
-}
-
-## Plotting Minimum spanning network
-plot.minspan <- function(x, y, ...){
-  plot_poppr_msn(x, y, gadj=c(slider()), vertex.label.color = "firebrick", 
-                 vertex.label.font = 2, vertex.label.dist = 0.5, 
-                 inds = data.genoid()$other$input_data, quantiles = FALSE)  
-}
 
 #Output
 
@@ -170,7 +171,7 @@ output$validateFasta <- renderText({
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
       text(x = 0.5, y = 0.9, msg, cex = 1.6, col = "white")
     } else {
-      plot.tree(boottree(), tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
+      plot.tree(boottree(), type = input$tree, tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
     }
   })
   
@@ -186,7 +187,7 @@ output$validateFasta <- renderText({
         text(x = 0.5, y = 0.9, "Invalid FASTA input.", cex = 1.6, col = "white")
     } else {
       #plot_poppr_msn(data.genoid(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", vertex.label.font = 2, vertex.label.dist = 0.5,                    inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
-      plot.minspan(data.genoid(),msnet())
+      plot.minspan(data.genoid(), msnet(), gadj=c(slider()), ind = data.genoid()$other$input_data)
     }
   })
     
@@ -200,7 +201,7 @@ output$validateFasta <- renderText({
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
       pdf(file, width=11, height=8.5)
-      plot.tree(boottree(), tip.col=as.character(unlist(data.genoid()$other$tipcolor)))      
+      plot.tree(boottree(), type = input$tree, tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
       dev.off()
     })
   
@@ -209,7 +210,7 @@ output$validateFasta <- renderText({
     content = function(file) {
       pdf(file, width=11, height=8.5)
       set.seed(seed())
-      plot.minspan(data.genoid(),msnet())
+      plot.minspan(data.genoid(), msnet(), gadj=c(slider()), ind = data.genoid()$other$input_data)
       dev.off()
     })
   
