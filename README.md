@@ -1,7 +1,7 @@
 Microbe-ID
 ===============
 
-Modules and applications necessary for creating a website for species identification or genotyping. [Phytophthora-ID](http://phytophthora-id.org) is an example of an implementation for identification and genotyping of pathogens in the genus *Phytophthora*. 
+This site provides all code and applications necessary for creating a website for species identification or genotyping. A working implementation of **Microbe-ID** for plant pathogens in the genus *Phytophthora* can be found at [Phytophthora-ID](http://phytophthora-id.org). This site allows identification of species based on ITS or *cox*-spacer sequences as well as placement of SSR genotypes into known reference populations.  
 
 Components
 ------
