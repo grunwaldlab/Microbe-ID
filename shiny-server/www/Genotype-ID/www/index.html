@@ -23,9 +23,19 @@
 		<p>Copy and paste your matrix using <a href="./SSR_Example_Data_ramorum.xlsx" target="_blank">this file</a> as template. Remember, <b>do not include the header and separate alleles using a slash (Allele1/Allele2)</b></p>
 		<p style="color:blue"><b>Warning:</b> All genotypes must have <b>2</b> alleles</p>
 		<hr>
+	
+
+
 	</div>
-	<div class="span11">		
-		<div class="control">		    
+	<div class="span11">	
+	<!-- The button here collapses a div tag with the id of "input" -->
+		<button type="button" class="btn btn-primary" data-toggle="collapse" 
+		   data-target="#input">
+		   data input
+		</button>		
+		<!-- class = "collapse in" will collapse everything in this div tag when
+		 the button is pressed -->
+		<div class="control collapse in" id = "input">		    
 		    <form class="well">
 		    <form class="text">
 		    <label style="align:center">Text Input</label>
