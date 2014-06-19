@@ -11,34 +11,37 @@
   <script src="shared/bootstrap/js/bootstrap.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" type="text/css" href="shared/bootstrap/css/bootstrap-responsive.min.css"/>
+	<link href="/twitter-bootstrap/twitter-bootstrap-v2/docs/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />  
+
   <title>Phytophthora ID: Genotype-ID (SSR identification for strains of P. ramorum)</title>
 </head>
 <body>
  
 
-<div class="row-fluid">
-	<div class="span12">
-		<h3>Upload genotypes and select analysis</h3>
-		<p>Separate alleles using a slash (Allele1/Allele2)</p>
-		<p>Copy and paste your matrix using <a href="./SSR_Example_Data_ramorum.xlsx" target="_blank">this file</a> as template. Remember, <b>do not include the header and separate alleles using a slash (Allele1/Allele2)</b></p>
-		<p style="color:blue"><b>Warning:</b> All genotypes must have <b>2</b> alleles</p>
-		<hr>
-	
-
-
+<div class="panel-group" id="accordion">
+	<p>Click on the following links to extend the contents of the webpage:</p>
+	<div class="panel panel-default">
+		<h4>
+		<ul class="nav nav-pills">
+		    	<li> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><em>Instructions</em></a></li>
+			    <li> <a data-toggle="collapse" data-parent="#accordion" href="#input"><em>Data Input</em></a></li>
+		</ul>
+		</h4>
+	    <div id="collapseOne" class="panel-collapse collapse">
+	        <div class="panel-body">
+	        <h4>Instructions</h4>
+			<p>Separate alleles using a slash (Allele1/Allele2)</p>
+			<p>Copy and paste your matrix using <a href="./SSR_Example_Data_ramorum.xlsx" target="_blank">this file</a> as template. Remember, <b>do not include the header and separate alleles using a slash (Allele1/Allele2)</b></p>
+			<p style="color:blue"><b>Warning:</b> All genotypes must have <b>2</b> alleles</p>
+			</div>
+		</div>
 	</div>
-	<div class="span11">	
-	<!-- The button here collapses a div tag with the id of "input" -->
-		<button type="button" class="btn btn-primary" data-toggle="collapse" 
-		   data-target="#input">
-		   data input
-		</button>		
 		<!-- class = "collapse in" will collapse everything in this div tag when
 		 the button is pressed -->
 		<div class="control collapse in" id = "input">		    
 		    <form class="well">
 		    <form class="text">
-		    <label style="align:center">Text Input</label>
+		    <label style="align:center"><h4>Data Input</h3></label>
 		    <textarea id="table" name="table" class="shiny-bound-input" cols="25" rows="7" style="width: 100%"></textarea> 
 		    <br>
 		    </form>
@@ -51,15 +54,12 @@
 		    -->
 		    <input type = "number" name = "seed" id = "seed" value = "9449" min = "0" />
 		    </p>
-		    <button type="submit" class="btn btn-success">Submit genotype</button>
+		    <button type="submit" class="btn btn-success collapse in" data-toggle="collapse" data-target="#input">Submit genotype</button>
     		</form>
     	</div>
 	</div>
-    	<!-- Testing Seed
-		<br>
-    	<h4>SEED</h4>
-    	<pre class = "shiny-html-output" id = "txt" name = "txt", style = "width: 5%"></pre> 
-    	-->
+	
+	<hr>
 	<div id="plot" class="shiny-plot-output shiny-bound-output" style="width: 100% ; height: 900px">
 		<div class="span9 offset1">
 			<h4>Analysis</h4>

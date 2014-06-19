@@ -37,22 +37,20 @@
 </head>
 
 <body>
-		<h3>Select a database to compare with, Upload FASTA sequence and select analysis.<a href=Help.html target="_blank"> (A tutorial)</a></h3>
+<div class="panel-group" id="accordion">
+	<p>Click on the following links to extend the contents of the webpage:</p>
+	<div class="panel panel-default">
+		<h4>
+		<ul class="nav nav-pills">
+		    	<li> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><em>Instructions</em></a></li>
+			    <li> <a data-toggle="collapse" data-parent="#accordion" href="#input"><em>Data Input</em></a></li>
+		</ul>
+		</h4>
+		<div id="collapseOne" class="panel-collapse collapse">
+	    <div class="panel-body">
+	    <h4>Instructions</h4>
+		<b>Select a database to compare with, Upload FASTA sequence and select analysis.<a href=Help.html target="_blank"> (A tutorial)</a></b>
 		<b>Select Dataset</b>: Choose a gene to compare your FASTA sequence to:</label>
-				<!--
-				Note:
-				This part allows the user to tell the program which data set to
-				use. This then goes through a long ifelse loop to detect the
-				file to use. Instead of doing this, it would be better to simply
-				change the values to the filenames so that the loop is not
-				necessary and the reactive could just be:
-
-				read.dna(input$dataset, format = "fasta")
-				
-				- Zhian
-				
-				Done! - Javier
-				-->
 				<select id="dataset" style="width:100px">
 					<option value="DnaA.fasta">DnaA</option>
 					<option value="GyrB.fasta">GyrB</option>
@@ -70,7 +68,12 @@
 				</select>
 		<p>Copy and paste your sequences in FASTA format into the window below.</p>
 		<p style="color:blue"><b>Warning:</b></p><p>Only <a href="./example.html" target="_blank">FASTA</a> formats are accepted</p>
-		<hr>		    
+		<br>
+			</div>
+		</div>
+	</div>		
+
+	<div class="control collapse in" id = "input">		    
 			<form name="fasta_file" class="form-horizontal" onSubmit="return validateForm();" id="fasta_file" method="get">
             	<div class="well span12">
 		<label style="align:center">FASTA Input</label>
@@ -103,13 +106,15 @@
 				</div>
 				<div class="span1">
 				<br>
-				<button type="submit" class="btn btn-success">Submit</button>
+				<button type="submit" class="btn btn-success collapse in" data-toggle="collapse" data-target="#input">Submit</button>
 				</div>
 		</div>
 			</div>
 		<div class="span12">
 			<hr>
-    	</div></div>
+    	</div>
+    	</div>
+    	</div>
     	<!-- Testing Seed
 		<br>
     	<h4>SEED</h4>

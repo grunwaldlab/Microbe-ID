@@ -14,17 +14,24 @@
   <title>Phytophthora ID: Genotype-ID (Binary (AFLP) genotype identification)</title>
 </head>
 <body>
- 
-
-<div class="row-fluid">
-		<div class="span12">
-		<h3>Upload genotypes and select analysis</h3>
+ <div class="panel-group span12" id="accordion">
+	<p>Click on the following links to extend the contents of the webpage:</p>
+	<div class="panel panel-default">
+		<h4>
+		<ul class="nav nav-pills">
+		    	<li> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><em>Instructions</em></a></li>
+			    <li> <a data-toggle="collapse" data-parent="#accordion" href="#input"><em>Data Input</em></a></li>
+		</ul>
+		</h4>
+		<div id="collapseOne" class="panel-collapse collapse">
+	    <div class="panel-body">
+	    <h4>Instructions</h4>
 		<p>Copy and paste your matrix using <a href="./AFLP_Aphanomyces.xlsx" target="_blank">this file</a> as template. <b>Do not include the header</b></p>
 		<p style="color:blue"><b>Warning:</b> Datatypes are of ONLY binary type (1 and 0)
 		<hr>
 		</div>
-		<div class="span11">		
-		<div class="control">		    
+	</div>
+	 <div class="control collapse in span12" id = "input">			    
 		    <form class="well">
 		    <form class="text">
 		    <label style="align:center">Text Input</label>
@@ -50,15 +57,17 @@
 		    -->
 		    <input type = "number" name = "seed" id = "seed" value = "9449" min = "0" />
 		    </p>
-		    <button type="submit" class="btn btn-success">Submit genotype</button>
+		    <button type="submit" class="btn btn-success collapse in" data-toggle="collapse" data-target="#input">Submit genotype</button>
     		</form>
     	</div>
-    	</div>
+    </div>
+</div>
     	<!-- Testing Seed
 		<br>
     	<h4>SEED</h4>
     	<pre class = "shiny-html-output" id = "txt" name = "txt", style = "width: 5%"></pre> 
     	-->
+	    
     	<div id="plot" class="shiny-plot-output shiny-bound-output" style="width: 100% ; height: 900px">
 		<div class="span9 offset1">
 		<h4>Analysis</h4>

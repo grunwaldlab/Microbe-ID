@@ -138,7 +138,7 @@ shinyServer(function(input, output) {
     if (is.null(data.genoid())){
       plot.new() 
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
-        text(x = 0.5, y = 0.9, "No SSR data.genoid has been input.", cex = 1.6, col = "white")
+        text(x = 0.5, y = 0.9, "No data genoid has been input.", cex = 1.6, col = "white")
     } else if (is.integer(boottree())){
       msg <- ifelse(boottree() > 10L, "\nless than or equal to 1000",
                     "greater than 10")
@@ -156,7 +156,7 @@ shinyServer(function(input, output) {
     if (is.null(data.genoid())){
       plot.new() 
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
-        text(x = 0.5, y = 0.9, "No SSR data.genoid has been input.", cex = 1.6, col = "white")
+        text(x = 0.5, y = 0.9, "No data has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
       plot.minspan(data.genoid(), msnet(), gadj = slider(), inds = data.genoid()$other$input_data.genoid)
