@@ -185,7 +185,7 @@ shinyServer(function(input, output) {
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
       pdf(file, width=11, height=8.5)
-      plot.tree(tree, type=input$tree, tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
+      plot.tree(boottree(), type=input$tree, tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
       dev.off()
     })
 
