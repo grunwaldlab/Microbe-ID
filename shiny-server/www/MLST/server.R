@@ -53,14 +53,16 @@ shinyServer(function(input, output, session) {
     return(df)
     })
 
-  alin <- reactive({
+alin <- reactive({
     if (gsub("\\s", "", input$fasta) == ""){
       return(NULL)
     } else {
       if (startsWith(input$fasta,">") == TRUE){
-        cat(input$fasta, file="input.fasta")
-        input_table <- read.dna("input.fasta", format="fasta")
-        unlink("input.fasta")
+        temp_dir <- tempdir()
+	tstamp <- paste(temp_dir,"/input.fasta",sep="")
+	cat(input$fasta, file=tstamp)
+        input_table <- read.dna(tstamp, format="fasta")
+        unlink(tstamp)
         rownames(input_table) <- paste(rownames(input_table),c("query"),sep="_")
         input_table <- as.list(input_table)
         df <- as.list(data_f())
@@ -72,6 +74,7 @@ shinyServer(function(input, output, session) {
       }
     }
     })
+  
   
 
   dist.genoid <- reactive({
