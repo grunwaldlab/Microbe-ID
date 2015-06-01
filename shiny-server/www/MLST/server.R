@@ -30,7 +30,7 @@ get_last_substring <- function(x, sep = "_"){
 # Functions to reduce redundancy
 ## Plotting trees
 plot.tree <- function (tree, type = input$tree, ...){
-  ARGS <- c("nj", "upgma")
+  ARGS <- c("nj", "njs", "upgma")
   type <- match.arg(type, ARGS)
   barlen <- min(median(tree$edge.length), 0.1)
   if (barlen < 0.1) 
@@ -184,13 +184,17 @@ slider <- reactive({
       if (input$tree == "upgma"){
         tre <- upgma(dist.genoid())
         bp <- boot.phylo(tre,alin(),function(x) upgma(dist.dna(x,input$model)),B=input$boot)
-      } else {
+      
+  	  } else if (input$tree == "njs") {
+        tre <- njs(dist.genoid())
+	    bp <- boot.phylo(tre,alin(),function(x) njs(dist.dna(x,input$model)),B=input$boot)
+  	  } else {
         tre <- nj(dist.genoid())
         bp <- boot.phylo(tre,alin(),function(x) nj(dist.dna(x,input$model)),B=input$boot)
       }
     tre$node.labels <- round(((bp / input$boot)*100))
     tre$tip.label <- paste(tre$tip.label, as.character(pop(data.genoid()))) 
-    if (input$tree=="nj"){
+    if (input$tree=="nj" || input$tree=="njs"){
       tre <- phangorn::midpoint(ladderize(tre))
     }
     return(tre)
