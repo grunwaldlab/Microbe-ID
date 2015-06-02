@@ -193,7 +193,9 @@ slider <- reactive({
         bp <- boot.phylo(tre,alin(),function(x) nj(dist.dna(x,input$model)),B=input$boot)
       }
     tre$node.labels <- round(((bp / input$boot)*100))
-    tre$tip.label <- paste(tre$tip.label, as.character(pop(data.genoid()))) 
+	#collapse short branches into polytomies
+	tre <- di2multi(tre)
+	tre$tip.label <- paste(tre$tip.label, as.character(pop(data.genoid()))) 
     if (input$tree=="nj" || input$tree=="njs"){
       tre <- phangorn::midpoint(ladderize(tre))
     }
