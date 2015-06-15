@@ -1,4 +1,4 @@
-# Genotype-ID shiny modules
+# Microbe-ID shiny R modules
 
 We created different `shiny R` modules for identification of different microbial strains using different molecular markers such as SSR/microsatellites, MLST, and binary-type loci (AFLP, RFLP, SNP).
 
