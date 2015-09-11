@@ -19,7 +19,7 @@ To install Microbe-ID on your server you need the following components and appli
 Customization
 -------
 
-Follow the following steps to cretae your custom website:
+Follow the following steps to create your custom website:
 
 - Customize each html file to your needs including for example ['index.html'](./index.html), ['seq-id.html'](./seq-id.html), ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['binary-id.html'](./binary-id.html), ['about.html'](./about.html), remove unnecesary files and add any additional pages for your site. Instructions for customizations are provided inside each html document as comments starting with '<!--MICROBE-ID customization: ...'.
 - Customize each server.R and ui.R file required by shiny for each applitaiton found under [shiny-server/www](./shiny-server/www). 
