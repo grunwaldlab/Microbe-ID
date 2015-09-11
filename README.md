@@ -21,4 +21,4 @@ Cutomization
 
 Follow the folloing steps to cretae your custom website:
 
-- Customize each html page to your needs including [about.html](./about.html).
+- Customize each html page to your needs including ['about.html'](./about.html).
