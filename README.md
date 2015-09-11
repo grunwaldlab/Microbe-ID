@@ -15,3 +15,10 @@ To install Microbe-ID on your server you need the following components and appli
 - Your custom fasta database for **Sequence-ID**.
 - A custom file input for each of the genotyping modules (`Genotype-ID`, `MLST-ID` or `Binary-ID`, each has a description and example in the `shiny-server` folder).
 - Further custom modules or pages can be added as needed.
+
+Cutomization
+-------
+
+Follow the folloing steps to cretae your custom website:
+
+- Customize each html page to your needs including [about.html](./about.html).
