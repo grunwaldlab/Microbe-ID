@@ -1,8 +1,8 @@
 # Microbe-ID shiny R modules
 
-We created different `shiny R` modules for identification of different microbial strains using different molecular markers such as SSR/microsatellites, MLST, and binary-type loci (AFLP, RFLP, SNP).
+We created several `shiny R` modules for identification of microbial taxa using different molecular markers such as SSR/microsatellites, MLST, and dominant or binary markers (AFLP, RFLP, etc.).
 
-Each of the modules is open source, fully customizable and easy to use, in order to provide the researcher with a modular web-application that permits flexible strain identification for a virtually any microbial species.
+Each of the modules are open source, fully customizable and easy to use, in order to provide the researcher with a modular web-application that permits flexible strain identification for virtually any microbial species.
 
 ## General Components
 
