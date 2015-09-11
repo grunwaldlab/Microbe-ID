@@ -21,4 +21,4 @@ Cutomization
 
 Follow the folloing steps to cretae your custom website:
 
-- Customize each html page to your needs including ['about.html'](./about.html).
+- Customize each html file to your needs including for example ['index.html'](./index.html), ['seq-id.html'](./seq-id.html), ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['binary-id.html'](./binary-id.html), ['about.html'](./about.html), remove unnecesary files and add any additional pages for your site. Instructions for customizations are provided inside each html document as comments starting with '<!--MICROBE-ID customization: ...'.
