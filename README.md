@@ -8,8 +8,8 @@ Components
 
 To install Microbe-ID on your server you need the following components and applications:
 
-- Your own linux server
-- A website based on [bootstrap](http://getbootstrap.com) to host your version of Microbe-ID
+- Access to a linux server to host the site
+- A website based on [bootstrap](http://getbootstrap.com) to host your version of Microbe-ID. See our example [here](./Bootstrap_files)
 - A self-hosted [shiny](http://www.rstudio.com/shiny/) R server session running on your server
 - Two [shiny R scripts](./shiny-server/www/Readme.md) for server and user interface (UI), respectively 
 - Your custom fasta database for **Sequence-ID**
