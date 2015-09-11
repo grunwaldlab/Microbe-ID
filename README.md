@@ -29,4 +29,4 @@ Follow the following steps to create your custom website:
 Example implementation
 -----
 
-A working implementation of Microbe-ID for plant pathogens in the genus *Phytophthora* can be found at [Phytophthora-ID](http://phytophthora-id.org). See the [Phytophthora-ID.org](https://github.com/grunwaldlab/phytophthora_id) github site as sample code for this implementation. 
+A working implementation of Microbe-ID for plant pathogens in the genus *Phytophthora* can be found at [Phytophthora-ID](http://phytophthora-id.org). See the sample code on [github](https://github.com/grunwaldlab/phytophthora_id)  for this implementation. 
