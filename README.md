@@ -1,7 +1,7 @@
 Microbe-ID
 ===============
 
-This site provides all code and applications necessary for creating a website for species identification or genotyping. A working implementation of Microbe-ID for plant pathogens in the genus *Phytophthora* can be found at [Phytophthora-ID](http://phytophthora-id.org).  
+This site provides all code and applications necessary for creating a website for species identification or strain genotyping. A working implementation of Microbe-ID for plant pathogens in the genus *Phytophthora* can be found at [Phytophthora-ID](http://phytophthora-id.org).  
 
 Components
 ------
