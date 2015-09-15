@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <script src="shared/jquery.js" type="text/javascript"></script>
-  <script type="text/javascript" src="Bootstrap_files/iframeResizer.contentWindow.min.js"></script>
+  <script type="text/javascript" src="javascript/libs/iframeResizer.contentWindow.min.js"></script>
   <script src="shared/shiny.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
   <link rel="stylesheet" type="text/css" href="shared/slider/css/jquery.slider.min.css"/>
@@ -25,9 +25,9 @@
 		}
 		if (elementsInputs == "" ){
 			alert ('No sequence found')
-			return false;	
+			return false;
 			}
-		else if (j == 0){	
+		else if (j == 0){
 			alert('Only FASTA format is permitted');
 			return false;
 		}
@@ -65,9 +65,9 @@
 		<br>
 			</div>
 		</div>
-	</div>		
+	</div>
 
-	<div class="control collapse in" id = "input">		    
+	<div class="control collapse in" id = "input">
 			<form name="fasta_file" class="form-horizontal" onSubmit="return validateForm();" id="fasta_file" method="get">
             	<div class="well span12">
 		<label style="align:center">FASTA Input</label>
@@ -78,9 +78,9 @@
 		    </form>
 		    <div class="row span12">
 			<div class="row span4">
-				<form style='margin: 0; padding: 0' class="text">			
+				<form style='margin: 0; padding: 0' class="text">
 		    		<label>Random Seed</label>
-				<input type = "number" name = "seed" id = "seed" value = "22" min = "0" style="width: 60px display:inline;"/>	
+				<input type = "number" name = "seed" id = "seed" value = "22" min = "0" style="width: 60px display:inline;"/>
 				</form>
 			</div>
 			<div class="span3">
@@ -112,7 +112,7 @@
     	<!-- Testing Seed
 		<br>
     	<h4>SEED</h4>
-    	<pre class = "shiny-html-output" id = "txt" name = "txt", style = "width: 5%"></pre> 
+    	<pre class = "shiny-html-output" id = "txt" name = "txt", style = "width: 5%"></pre>
     	-->
     	<div id="plot" class="shiny-plot-output shiny-bound-output" style="width: 100% ; height: 900px">
 		<div class="span12">
@@ -132,7 +132,7 @@
 					<h2>Tree Parameters</h2>
 					<form id="form" class="well">
 					<div class="row-fluid">
-					<div class="control-group span3">		
+					<div class="control-group span3">
 					<label class="control-label" for="tree">Choose a tree algorithm:</label>
 					<select id="tree" style="width:100px">
 						<option value="nj">nj</option>
@@ -141,47 +141,47 @@
 					</select>
 					</div>
 						<div class="control-group span6">
-					<label class="control-label">Number of bootstrap replicates</label>     
+					<label class="control-label">Number of bootstrap replicates</label>
 							<div class="controls">
 							<input id="boot" name="boot" type="number" value="100" min="10" max="1000" style="width:100px">
 							</div>
 						</div>
-					</div>			
-					<div class="row-fluid">					
+					</div>
+					<div class="row-fluid">
 					<div class="control-group span3">
 						<button type="submit" class="btn btn-success" data-loading-text="Calculating...">Create Tree</button>
-					</div>			
-					<div class="span9" >					
+					</div>
+					<div class="span9" >
 						<a id="downloadData" class="btn btn-primary shiny-download-link" href="" target="_blank">Newick File</a>
 						<a id="downloadPdf"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>
 					</div>
 					</div>
 					<span class="help-block" style="color:green">Please wait while the tree is generated</span>
-				
-					</form>	    					
-				<!/div>	
-				<div data-display-if="$('html').hasClass('shiny-busy')"> 			
+
+					</form>
+				<!/div>
+				<div data-display-if="$('html').hasClass('shiny-busy')">
 					<div class="span9 offset1">
-					<h4>Processing, please wait.</h4>   
+					<h4>Processing, please wait.</h4>
 					<div class="progress progress-striped active">
     					<div class="bar" style="width: 100%;"></div>
     				</div>
     				</div>
-    			</div>				
+    			</div>
 				<div id="distPlotTree" class="span6 shiny-plot-output" style="width: 100% ; height: 800px"></div>
 			</div>
-			<div class="tab-pane" title="Minimum spanning network" id="tab-8923-2">		
+			<div class="tab-pane" title="Minimum spanning network" id="tab-8923-2">
 				<div class="span12 well">
-				<h3>Minimum Spanning Network</h3>								
+				<h3>Minimum Spanning Network</h3>
 					<form id="form">
-					<span class="help-block">Note: Distances are calculated using the model selected before.</span>	
+					<span class="help-block">Note: Distances are calculated using the model selected before.</span>
 					<div class="span3">
 					  <label class="control-label" for="integer">Use the slider to adjust the grey scale of the edge distances.</label>
 					  <input id="integer" type="slider" name="integer" value="40" class="jslider" data-from="0" data-to="1000" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>
 					</div>
-					<div class="span12"> 
+					<div class="span12">
 					<button type="submit" class="btn btn-success" data-loading-text="Calculating...">Calculate MST</button>
-					<a id="downloadPdfMst"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>				
+					<a id="downloadPdfMst"  class="btn btn-info shiny-download-link" href="" target="_blank">PDF</a>
 					</form>
 					</div>
 				</div>
