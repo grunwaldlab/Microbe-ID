@@ -57,7 +57,7 @@ For more info in `Shiny Server` please read:
 
 If you want to use any of the Genotype-ID modules, you will need the packages `shiny`,`poppr`, `pegas`, `igraph`, `phangorn`, `gdata`, `XML`, `phyloch`
 
-2.2. If you are going to use `MLST-ID`, install `mafft`. `mat` is a multiple sequence alignment program using fourier algorithms. `MLST-ID` uses `mafft` to align and create a dataset of aligned sites in each of the MLST loci. 
+2.2. If you are going to use `MLST-ID`, install `mafft`. `mafft` is a multiple sequence alignment program using fourier algorithms. `MLST-ID` uses `mafft` to align and create a dataset of aligned sites in each of the MLST loci. 
 
 2.3. If you are planning on using **Sequence-ID**, install `BLAST`. `BLAST` is used by **Sequence-ID** to identify sequence data by similarity to a custom well-curated database.  For more information in `BLAST`, go to the [main page](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs) or to [downloads and installation](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 
