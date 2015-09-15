@@ -11,6 +11,15 @@ This site provides all code and applications necessary for creating a website fo
 
 ## Components
 
+Microbe-ID is comprised by two main applications: **Sequence-ID** and **Genotype-ID**.  **Sequence-ID** allows identification of species by blasting a query sequence for any locus of interest against a custom reference sequence database using BLAST.  **Genotype-ID**  allows placement of an unknown multilocus genotype in either a minimum spanning network or dendrogram with bootstrap support from a user-created reference database using R and a suite of R packages designed for molecular marker datasets. **Microbe-ID** groups these two applications in a simple HTML5 framework based on [Bootstrap](http://getbootstrap.com) that links the applications into a simple, web-ready site to be deployed locally or in a server.
+
+### Files included in this repository
+
+- `[index.html](./index.html)`: 
+- `[]()`
+
+## Requirements
+
 To install Microbe-ID on your server you need the following components and applications:
 
 ### General requirements
