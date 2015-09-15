@@ -1,6 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+.DS_store
 Table_1.xlsx
 shiny-server/www/Binary-ID/www/~$AFLP_Aphanomyces.xlsx
 

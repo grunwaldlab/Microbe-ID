@@ -57,7 +57,7 @@
     <!-- Recalling stylesheets and icons. Once again, make sure that the Bootstrap_files folder is in the same directory than your homepage -->
   	<link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
     <link href="Bootstrap_files/bootstrap-responsive.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="shared/shiny.css"/> 
+    <link rel="stylesheet" type="text/css" href="shared/shiny.css"/>
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -98,11 +98,12 @@
 		</div>
 		</div>
 </div>
-    
+
 <div class="container">
-		<!-- IMPORTANT: The following division contains the Shiny-Server instance that you installed according to the shiny server manual, point the hyperlinks
-		here!. -->
-		<h1><img src="img/genoid.png" class="img-circle" style="border:8px solid #0088CC ; width:80px " >Genotype-ID</h1>
+		<!-- MICROBE_ID specific: The following division contains the Shiny-Server instance that you 
+    installed according to the shiny server manual. Change the text, modify the links, and
+    point the hyperlinks here!. -->
+		<h1>Genotype-ID</h1>
 		<p>Choose a tab to select the type of data and analysis.</p>
 	<!-- Tabs and Dropdowns -->
 		<ul class="nav nav-tabs">
@@ -113,6 +114,7 @@
 		<h2>MLST genotype-ID for <em>Clavibacter michiganensis</em> subsp. <em>michiganensis</em></h2>
 		<p>Paste and submit one or multiple FASTA files and select the analysis to run</p>
 		<hr>
+    <!-- MICROBE_ID specific: IMPORTANT!!! Add the hyperlink to the app in the iframe (after the src= tag) -->
 		<iframe style="border:0;width:100%;" name="shinyid_frame" src="http://oomy.cgrb.oregonstate.edu:3838/MLST/"></iframe>
 		<script>iFrameResize({log:false})</script>
 		</div>
