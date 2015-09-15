@@ -52,7 +52,7 @@ For more info in `Shiny Server` please read:
 - [Shiny Server installation] (http://rstudio.github.io/shiny-server/latest/#installation)
 
 2. Install any additional software.
-- Install additional packages in `R`. We highly recommend to install the packages as a superuser, to make them available to all uses. 
+- Install additional packages in `R`. We highly recommend to install the packages as a superuser, to make them available to all uses.
 
 If you want to use any of the Genotype-ID modules, you will need the packages `shiny`,`poppr`, `pegas`, `igraph`, `phangorn`, `gdata`, `XML`, `phyloch`
 - If you are going to use `MLST-ID`, install `mafft`. `mafft` is a multiple sequence alignment program using fourier algorithms. `MLST-ID` uses `mafft` to align and create a dataset of aligned sites in each of the MLST loci.
@@ -81,6 +81,12 @@ If you want to use any of the Genotype-ID modules, you will need the packages `s
 - Customize each server.R and ui.R file required by shiny for each application found under [shiny-server/www](./shiny-server/www).
 - Do not modify any other files including ['validate.js'](./valdiate.js) and the `Bootstrap_files/` folder.
 - In case the user wants to modify the `.gitignore` file, please do not remove the files present originally.
+
+### Sequence-ID
+
+- Move the `blast.cgi` file from the repository `cgi-bin/` folder into your apache `cgi-bin` folder.
+- Create the database for your custom `BLAST` search using the `makeblastdb` command that comes with the `blast` binaries.
+- Change the path of the `blastn` executable and the `BLAST` database in the `blast.cgi` file.
 
 # Example implementation
 
