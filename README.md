@@ -82,6 +82,7 @@ If you want to use any of the Genotype-ID modules, you will need the packages `s
 - Images and additional diles can be added to the `img/` and `files/` respectively. Images or file can be added to any of the `html` pages using HTML5. More information on HTML5 image tags (here)[http://www.w3schools.com/html/html_images.asp]
 - Customize each server.R and ui.R file required by shiny for each application found under [shiny-server/www](./shiny-server/www). 
 - Do not modify any other files including ['validate.js'](./valdiate.js) and the `Bootstrap_files/` folder.
+- In case the user wants to modify the `.gitignore` file, please do not remove the files present originally.
 
 # Example implementation
 
