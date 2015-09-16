@@ -15,7 +15,7 @@ Microbe-ID is comprised by two main applications: **Sequence-ID** and **Genotype
 
 ### Files included in this repository
 
-- `[index.html](./index.html)`: 
+- [`index.html`](./index.html): 
 - `[]()`
 
 ## Requirements
