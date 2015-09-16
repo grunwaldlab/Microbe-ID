@@ -15,7 +15,7 @@ Microbe-ID is comprised by two main applications: **Sequence-ID** and **Genotype
 
 ### Files included in this repository
 
-- [`index.html`](./index.html): 
+- [`index.html`](./index.html):
 - `[]()`
 
 ## Requirements
@@ -86,7 +86,7 @@ If you want to use any of the Genotype-ID modules, you will need the packages `s
 
 - Customize each html file to your needs including for example ['index.html'](./index.html), ['seq-id.html'](./seq-id.html), ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['binary-id.html'](./binary-id.html), ['about.html'](./about.html). Instructions for customizations are provided inside each html document as comments starting with `<!--MICROBE-ID customization: ...>`. Please follow the directions of these tags carefully.
 - Remove unnecessary files and add any additional pages for your site.
-- Images and additional diles can be added to the `img/` and `files/` respectively. Images or file can be added to any of the `html` pages using HTML5. More information on HTML5 image tags (here)[http://www.w3schools.com/html/html_images.asp]
+- Images and additional files can be added to the `img/` and `files/` respectively. Images or file can be added to any of the `html` pages using HTML5. More information on HTML5 image tags (here)[http://www.w3schools.com/html/html_images.asp]
 - Customize each server.R and ui.R file required by shiny for each application found under [shiny-server/www](./shiny-server/www).
 - Do not modify any other files including ['validate.js'](./valdiate.js) and the `Bootstrap_files/` folder.
 - In case the user wants to modify the `.gitignore` file, please do not remove the files present originally.
