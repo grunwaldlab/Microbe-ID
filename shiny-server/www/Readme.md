@@ -6,29 +6,52 @@ Each of the modules are open source, fully customizable and easy to use, in orde
 
 ## General Components
 
-Quoting the shiny Rstudio tutorial: 
+Quoting the shiny Rstudio tutorial:
 
 ```
 Shiny apps have two components:
 
-* a user-interface script: The user-interface (ui) script controls the layout and appearance of your app. 
+* a user-interface script: The user-interface (ui) script controls the layout and appearance of your app.
 
-* a server script: The script contains the instructions that your computer needs to build your app. 
+* a server script: The script contains the instructions that your computer needs to build your app.
 
 In our cases, for each of the the components we have a server script (`server.R`) and an HTML based user interphase (`www/index.html`)
 
 The user interphase communicates with the R application by using forms. Each of the forms will contain the query information that will be passed to the R app and be analysed with the reference datasets. Each of the components is fully customizable and contain instructions to customize them efficiently
 
 ```
+
+## Installation
+
+
+**Genotype-ID** is based on R, it uses:
+* The latest [R](http://cran.r-project.org/) version
+* [poppr] (https://github.com/poppr/poppr) package and its dependencies.
+* [Shiny server] (https://github.com/rstudio/shiny-server) and its dependencies
+
+After installing the requirements, be sure that you have a folder named **shiny-server** on ``/var/``. Download the files into ``/var/shiny-server/``.
+
+After downloading the files, start the shiny-server
+
+``$ sudo shiny-server &``
+
+App Deployment
+-----------------------
+
+And go to your preferred browser (Genotype-ID is known to have issues with Internet Explorer, so we recommend using [Google Chrome](https://www.google.com/intl/es/chrome/browser/?hl=es) or, better yet, [Firefox](http://www.mozilla.org/en-US/firefox/new/#download-fx)) and go to the server port address:
+
+``http://localhost:3838/``
+
+The browser will show you a link to a folder called "Genotype-ID/", if you click on it, the application will deploy on shiny server and voila! there is your web-app.
 ## Genotype-ID
 
 Genotype-ID is a strain identification tool based on SSR. Genotype-ID uses `poppr` to construct a **Bruvo's distance dendrogram** (using UPGMA/NJ) or a **Minimum spanning network** of an SSR query against a well-curated database of reference SSR's.
 
 ### Requirements
 
-* `poppr` package 
- 
-### Database: 
+* `poppr` package
+
+### Database:
 
 Tab-delimited text file. Column names are loci names, rownames are samples. Each of the alleles is separated by a */*. The second column contains the reference population/lineage/code to group reference strains into discrete groups.
 
@@ -40,7 +63,7 @@ Here's an example of the `reduced_database.txt.csv` file that is used by *Genoty
 |PR-11-015|NA1|165/168|216/226|216/226|372/481|130/250|219/275|342/379|154/222|
 |PR-11-008|NA1|165/168|216/226|216/226|368/485|130/250|219/275|342/379|150/226|
 
-### Input: 
+### Input:
 
 At the user interphase, a text form will be filled containing the same loci for different queries:
 
@@ -59,7 +82,7 @@ MLST-ID is a MultiLocus Sequence Type Id app created in shiny R. It uses the inf
 
 ### Requirements:
 
-*R packages*: 
+*R packages*:
 
 * `ape`
 * `phangorn`
@@ -129,5 +152,3 @@ Ind_2	Queue	1	0	1	0	0	0	0
 
 * Customizable minimum spanning network
 * UPGMA/NJ dendrogram
-
-
