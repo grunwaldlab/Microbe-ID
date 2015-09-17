@@ -106,9 +106,9 @@ If you want to use any of the Genotype-ID modules, you will need the packages `s
 
 5. If you are installing **Sequence-ID**:
 
-- Move the `blast.cgi` file from the repository `cgi-bin/` folder into your apache `cgi-bin` folder.
-- Create the database for your custom `BLAST` search using the `makeblastdb` command that comes with the blast binaries.
-- Change the path of the `blastn` executable and the `BLAST` database in the `blast.cgi` file.
+  - Move the `blast.cgi` file from the repository `cgi-bin/` folder into your apache `cgi-bin` folder.
+  - Create the database for your custom `BLAST` search using the `makeblastdb` command that comes with the blast binaries.
+  - Change the path of the `blastn` executable and the `BLAST` database in the `blast.cgi` file.
 
 6. Integrate the **Genotype-ID** modules into your custom webpage by changing the paths on the `frames` in the ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['binary-id.html'](./binary-id.html) files.
 
