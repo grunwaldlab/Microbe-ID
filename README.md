@@ -74,9 +74,9 @@ To install Microbe-ID on your server you need the following components and appli
 
 For the R applications deploy successfully, shiny requires two types of files, the user interphase file and the shiny server.
 
-- User interphase (ui.R or index.html): The user interphase file permits the communication between the user and R using forms and reactive functions. The	UI can be defined as the "web-document" and its where the application will prompt the results and receive the input of the user. Examples of UI are available in any of the shiny-app folders of Microbe-ID (look for the `index.html` file)
+- **User interphase (ui.R or index.html):** The user interphase file permits the communication between the user and R using forms and reactive functions. The	UI can be defined as the "web-document" and its where the application will prompt the results and receive the input of the user. Examples of UI are available in any of the shiny-app folders of Microbe-ID (look for the `index.html` file)
 
-- Server file: The server script runs the application in R. The server script contains all the information that R will interpret to run the application (code, internal datasets and interpretations of the input/outputs from and to the user interphase file). Examples of server scripts are available in any of the shiny-app folders of Microbe-ID (look for the `server.R` file)
+- **Server file:** The server script runs the application in R. The server script contains all the information that R will interpret to run the application (code, internal datasets and interpretations of the input/outputs from and to the user interphase file). Examples of server scripts are available in any of the shiny-app folders of Microbe-ID (look for the `server.R` file)
 
 Both `server.R` and `iu.R` files should be in the same directory. If you prefer to use the `index.html` file, create a folder called `www/` and move the `index.html` file to this folder.
 
