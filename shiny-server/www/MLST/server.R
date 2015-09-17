@@ -33,11 +33,11 @@ plot.tree <- function (tree, type = input$tree, ...){
   ARGS <- c("nj", "njs", "upgma")
   type <- match.arg(type, ARGS)
   barlen <- min(median(tree$edge.length), 0.1)
-  if (barlen < 0.1) 
+  if (barlen < 0.1)
     barlen <- 0.01
-  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE, 
+  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE,
              label.offset = 0, ...)
-  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n", 
+  nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n",
              cex = 0.8, font = 3, xpd = TRUE)
   if (type == "nj") {
     add.scale.bar(lwd = 5, length = barlen)
@@ -51,13 +51,13 @@ plot.tree <- function (tree, type = input$tree, ...){
 ## Plotting Minimum spanning network
 plot.minspan <- function(gen, mst, gadj=3, inds="none", ...){
   plot_poppr_msn(gen, mst, gadj=gadj, vertex.label.color = "firebrick",nodelab=100,
-                 vertex.label.font = 2, vertex.label.dist = 0.5, 
-                 inds = inds, quantiles = FALSE)  
+                 vertex.label.font = 2, vertex.label.dist = 0.5,
+                 inds = inds, quantiles = FALSE)
 }
 
 shinyServer(function(input, output, session) {
 
-  data_f <- reactive({ 
+  data_f <- reactive({
     df <- read.dna(input$dataset, format = "fasta")
     return(df)
     })
@@ -85,7 +85,7 @@ alin <- reactive({
 		#Make sure taxa names match across alignments otherwise concatenating will not work.
 		#Add more if/else blocks to add more datasets matching your index.html file.
 		if(input_datasetname == "test-dataset"){
-			#use genes listed in test_defined_genes and use the files in the 
+			#use genes listed in test_defined_genes and use the files in the
 			#test-dataset folder containing the alignments
 			defined_genes <- test_dataset_defined_genes
 		} else {
@@ -129,14 +129,14 @@ alin <- reactive({
       }
     }
     })
-  
-  
+
+
 
   dist.genoid <- reactive({
     all.dist <- dist.dna(alin(),input$model)
     return(all.dist)
   })
-  
+
   data.genoid <- reactive({
     gen <- DNAbin2genind(alin())
     #Adding colors to the tip values according to the clonal lineage
@@ -153,7 +153,7 @@ alin <- reactive({
      defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod")
 #     #
 #     # Change heat.colors to whatever color palette you want to represent
-#     # submitted data. 
+#     # submitted data.
 #     #
      input_colors   <- rainbow(ngroups - length(defined_groups))
 #     #
@@ -162,18 +162,18 @@ alin <- reactive({
      gen$other$tipcolor <- as.character(gen$other$tipcolor)
     return(gen)
   })
-  
+
   seed <- reactive({
     return(input$seed)
   })
 
-#Greyscale Slider  
+#Greyscale Slider
 slider <- reactive({
   slider.a <- (input$integer)
   return(slider.a)
 })
 
-  
+
   boottree <- reactive({
     if (input$boot > 1000){
       return(1000L)
@@ -184,7 +184,7 @@ slider <- reactive({
       if (input$tree == "upgma"){
         tre <- upgma(dist.genoid())
         bp <- boot.phylo(tre,alin(),function(x) upgma(dist.dna(x,input$model)),B=input$boot)
-      
+
   	  } else if (input$tree == "njs") {
         tre <- njs(dist.genoid())
 	    bp <- boot.phylo(tre,alin(),function(x) njs(dist.dna(x,input$model)),B=input$boot)
@@ -195,13 +195,13 @@ slider <- reactive({
     tre$node.labels <- round(((bp / input$boot)*100))
 	#collapse short branches into polytomies
 	tre <- di2multi(tre)
-	tre$tip.label <- paste(tre$tip.label, as.character(pop(data.genoid()))) 
+	tre$tip.label <- paste(tre$tip.label, as.character(pop(data.genoid())))
     if (input$tree=="nj" || input$tree=="njs"){
       tre <- phangorn::midpoint(ladderize(tre))
     }
     return(tre)
   })
-  
+
   msnet <- reactive ({
     msn.plot <-poppr.msn(data.genoid(), dist.genoid(), palette=rainbow, showplot = FALSE)
     #V(msn.plot$graph)$size <- 3
@@ -220,47 +220,47 @@ output$validateFasta <- renderText({
 
   output$distPlotTree <- renderPlot({
     if (is.null(alin())){
-      plot.new() 
-      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      plot.new()
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) +
       text(x = 0.5, y = 0.9, "No FASTA data has been input.", cex = 1.6, col = "white")
     } else if (alin() == FALSE){
-      plot.new() 
-      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      plot.new()
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) +
         text(x = 0.5, y = 0.9, "Invalid FASTA input.", cex = 1.6, col = "white")
     } else if (is.integer(boottree())){
       msg <- ifelse(boottree() > 10L, "\nless than or equal to 1000",
                                       "greater than 10")
       msg <- paste("The number of bootstrap replicates should be", msg)
       plot.new()
-      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) +
       text(x = 0.5, y = 0.9, msg, cex = 1.6, col = "white")
     } else {
       plot.tree(boottree(), type = input$tree, tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
     }
   })
-  
+
   #Minimum Spanning Network
   output$MinSpanTree <- renderPlot({
     if (is.null(alin())){
-      plot.new() 
-      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      plot.new()
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) +
         text(x = 0.5, y = 0.9, "No FASTA data has been input.", cex = 1.6, col = "white")
     } else if (alin() == FALSE){
-      plot.new() 
-      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) + 
+      plot.new()
+      rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) +
         text(x = 0.5, y = 0.9, "Invalid FASTA input.", cex = 1.6, col = "white")
     } else {
-      #plot_poppr_msn(data.genoid(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", vertex.label.font = 2, vertex.label.dist = 0.5,                    inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)  
+      #plot_poppr_msn(data.genoid(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", vertex.label.font = 2, vertex.label.dist = 0.5,                    inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)
       plot.minspan(data.genoid(), msnet(), gadj=c(slider()), ind = data.genoid()$other$input_data)
     }
   })
-    
+
   output$downloadData <- downloadHandler(
     filename = function() { paste0(input$tree, '.tre') },
     content = function(file) {
       write.tree(boottree(), file)
     })
-  
+
   output$downloadPdf <- downloadHandler(
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
@@ -268,7 +268,7 @@ output$validateFasta <- renderText({
       plot.tree(boottree(), type = input$tree, tip.col=as.character(unlist(data.genoid()$other$tipcolor)))
       dev.off()
     })
-  
+
   output$downloadPdfMst <- downloadHandler(
     filename = function() { paste0("min_span_net", '.pdf')} ,
     content = function(file) {
@@ -277,5 +277,5 @@ output$validateFasta <- renderText({
       plot.minspan(data.genoid(), msnet(), gadj=c(slider()), ind = data.genoid()$other$input_data)
       dev.off()
     })
-  
+
 })

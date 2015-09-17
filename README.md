@@ -15,8 +15,45 @@ Microbe-ID is comprised by two main applications: **Sequence-ID** and **Genotype
 
 ### Files included in this repository
 
-- [`index.html`](./index.html):
-- `[]()`
+#### Front end HTML files
+- [`index.html`](./index.html): Front page of **Microbe-ID**.
+- [`seq-id.html`](./seq-id.html): Front page of **Sequence-ID**. Provides the user with forms to submit the query sequences to be processed by BLAST to identify similarity in a custom-well curated database. This page provides the informatiom and connections to the `blast.cgi` script, which runs BLAST using PERL.
+- [`geno-id.html`](./geno-id.html): Front page of **Genotype-ID**. Provides the user with examples, forms and instructions in how to submit **SSR/Microsatellite** queries to be processed by R using shiny. This page provides a iFrame to [`shiny-server/www/Genotype-ID/www/index.html`](./shiny-server/www/Genotype-ID/www/index.html).
+- [`MLST.html`](./MLST.html): Front page of **MLST-ID**. Provides the user with examples, forms and instructions in how to submit **Multi Locus Seqeunce Type (MLST)**  queries to be processed by R using shiny. This page provides a iFrame to [`shiny-server/www/MLST/www/index.html`](./shiny-server/www/MLST/www/index.html).
+- [`binary-id.html`](./binary-id.html): Front page of **Genotype-ID**. Provides the user with examples, forms and instructions in how to submit **Codominant/Binary** queries to be processed by R using shiny. This page provides a iFrame to [`shiny-server/www/Binary-ID/www/index.html`](./shiny-server/www/Binary-ID/www/index.html).
+- [`about.html`](./about.html): Contact page.
+
+#### Front end HTML folders
+- [`Bootstrap_files/`](./Bootstrap_files/): Folder that contains all the files necessary for the [Bootstrap front-end framework](getbootstrap.com/) in which **Microbe-ID** was designed and built from.
+- [`cgi-bin/`](./cgi-bin/): Folder that contains the `blast.cgi` script for **Sequence-ID**. `blast.cgi` is a PERL-CGI script that runs `BLAST` in a custom database of curated sequences.
+- [`files/`](./files/): Folder in which additional files can be added.
+- [`img/`](./img/): Folder that contains images used in **Microbe-ID** webpages.
+
+#### Shiny applications
+- [`shiny-server/www/`](./shiny-server/www/): Contains all the folders and files to be used by the shiny server.
+  - [`Binary-ID/`](./shiny-server/www/Binary-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Binary-ID**.
+    - [`Aeut.txt`](./shiny-server/www/Binary-ID/Aeut.txt): Curated database of AFLP molecular markers used as references in **Binary-ID**. This file serves as input for `server.R`.
+    - [`server.R`](./shiny-server/www/Binary-ID/server.R): File that contains all the commands required by R to execute **Binary-ID** by R. This file is handled by the shiny server.  More information available on the **Shiny Arquitecture** region.
+    - [`www/`](./shiny-server/www/Binary-ID/www): Contains the files necesary to deploy the **user interphase** used by **Binary-ID**.
+      - [`AFLP_Aphanomyces.xlsx`](./shiny-server/www/Binary-ID/www/AFLP_Aphanomyces.xlsx): The `AFLP_Aphanomyces.xlsx` file contains a template to format the queries as an example for the end users of **Binary-ID**.
+      - [`index.html`](./shiny-server/www/Binary-ID/www/index.html): User interphase file for **Binary-ID**. More information available on the **Shiny Arquitecture** region.
+    - [`Binary-ID/`](./shiny-server/www/Binary-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Binary-ID**.
+      - [`www/`](./shiny-server/www/Binary-ID/www): Contains the files necesary to deploy the **user interphase** used by **Binary-ID**.
+        - [`AFLP_Aphanomyces.xlsx`](./shiny-server/www/Binary-ID/www/AFLP_Aphanomyces.xlsx): The `AFLP_Aphanomyces.xlsx` file contains a template to format the queries as an example for the end users of **Binary-ID**.
+        - [`index.html`](./shiny-server/www/Binary-ID/www/index.html): User interphase file for **Binary-ID**. More information available on the **Shiny Arquitecture** region.
+  - [`Genotype-ID/`](./shiny-server/www/Genotype-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Genotype-ID**.
+    - [`Ramorum_ssr.csv`](./shiny-server/www/Genotype-ID/Ramorum_ssr.csv): Curated database of SSR/Microsatellite molecular markers used as references in **Genotype-ID** for *Phytopthora ramorum*. This file serves as input for `server.R`.
+    - [`server.R`](./shiny-server/www/Genotype-ID/server.R): File that contains all the commands required by R to execute **Genotype-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
+    - [`www/`](./shiny-server/www/Genotype-ID/www): Contains the files necesary to deploy the **user interphase** used by **Genotype-ID**.
+      - [`SSR_Example_Data_ramorum.xlsx`](./shiny-server/www/Genotype-ID/www/SSR_Example_Data_ramorum.xlsx): The `SSR_Example_Data_ramorum.xlsx` file contains a template to format the queries as an example for the end users of **Genotype-ID**.
+      - [`index.html`](./shiny-server/www/Genotype-ID/www/index.html): User interphase file for **Genotype-ID**. More information available on the **Shiny Arquitecture** region.
+  - [`MLST/`](./shiny-server/www/MLST/): Contains all the folders and files to be used by the shiny server for the deployment of **MLST-ID**.
+    - [`server.R`](./shiny-server/www/MLST/server.R): File that contains all the commands required by R to execute **MLST-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
+    - [`www/`](./shiny-server/www/MLST/www): Contains the files necessary to deploy the **user interphase** used by **MLST-ID**.
+      - [`example.html`](./shiny-server/www/MLST/www/example.html): HTML page with examples for **MLST-ID** query formatting.
+      - [`index.html`](./shiny-server/www/MLST/www/index.html): User interphase file for **MLST-ID**. More information available on the **Shiny Arquitecture** region.
+      - [`help.html`](./shiny-server/www/MLST/www/help.html): Help and tutorials for **MLST-ID** use.
+    - [`test-dataset/`](./shiny-server/www/MLST/test-dataset): Contains the `FASTA` files used in several tests by **MLST-ID**.
 
 ## Requirements
 
