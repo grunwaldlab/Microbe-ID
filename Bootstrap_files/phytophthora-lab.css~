@@ -1,0 +1,27 @@
+/*!
+* Phytophthora-ID, Grunwald lab
+*
+* Copyright 2012
+* Licensed under the Apache License v2.0
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+*/
+
+.icon-twitter {
+    background-image: url("../img/twitter.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+ /*   display: inline-block; */
+    height: 16px;
+    vertical-align: left text-top;
+    width: 16px;
+}
+.icon-googleplus {
+    background-image: url("../img/google_plus_icon.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+ /*   display: inline-block; */
+    height: 16px;
+    vertical-align: left text-top;
+    width: 16px;
+}
