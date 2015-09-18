@@ -1,9 +1,18 @@
 library(shiny)
 library(poppr)
+library(phangorn)
 library(ape)
 library(igraph)
 
-########### IMPORTANT ############
+#####################################################
+# IMPORTANT: ALl the functions written before line 68 refer to functions loaded by R
+# before shiny is deployed and executes the custom functions. These functions are definitions of'
+# global functions and variables. Make sure to add these kinds of functions here. For more information
+# refer ro the shiny manual.
+####################################################
+
+
+########### MICROBE-ID customization ############
 # Here's where you add your database file (Comma Separated Object). Make sure
 # that the database is in the same folder than this file (server.R)
 df <- read.table("Ramorum_ssr.csv", header = TRUE, sep = "\t")
@@ -12,7 +21,7 @@ df.m <- as.matrix(df)
 
 
 
-########### IMPORTANT ############
+########### MICROBE-ID customization ############
 # Change these values to the repeat lenghts and names of your SSR markers.
 ssr <- c(PrMS6       = 3,
          PRMS9c3     = 2,
@@ -25,7 +34,7 @@ ssr <- c(PrMS6       = 3,
 ##################################
 
 # Functions to create elements to plot
-## Distance Tree
+## 1. Distance Tree
 plot.tree <- function (tree, type = input$tree, ...){
   ARGS <- c("nj", "upgma")
   type <- match.arg(type, ARGS)
@@ -45,13 +54,24 @@ plot.tree <- function (tree, type = input$tree, ...){
   }
 }
 
-## Minimum spanning network
+## 2. Minimum spanning network
 plot.minspan <- function(gen, mst, gadj=3, inds = "none", ...){
   plot_poppr_msn(gen, mst, gadj=gadj, vertex.label.color = "firebrick", inds = inds,
                  vertex.label.font = 2, vertex.label.dist = 0.5, nodelab = 100,
                  quantiles = FALSE)
 }
 
+########### MICROBE-ID customization  ############
+# From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications
+# of processes and outputs for the User interface file (in this case, the www/index.html) are found here.
+#
+# INPUT FROM index.html: All variables that start with index$...
+# OUTPUT TO index.html: All variables that start with output$...
+#
+# To determine which variable communicates with whic <div> in the index.html file, search for the line with the
+# class=shiny*.(e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">.
+#
+# For more information refer to the shiny manual
 
 shinyServer(function(input, output) {
 
@@ -71,7 +91,7 @@ shinyServer(function(input, output) {
       gen$other$tipcolor   <- pop(gen)
       gen$other$input_data.genoid <- input_data.genoid
       ngroups              <- length(levels(gen$other$tipcolor))
-      ########### IMPORTANT ############
+      ########### MICROBE-ID customization ############
       # Change these colors to represent the groups defined in your data.genoid set.
       #
       defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod","red")
@@ -88,19 +108,20 @@ shinyServer(function(input, output) {
     }
   })
 
-#Random seed number
+# Setting a random seed for the current session from the user interface (<input type = "number" name = "seed" id = "seed" value = "9449" min = "0" />)
   seed <- reactive({
     return(input$seed)
   })
 
-#Greyscale Slider
+# Greyscale slider settings from the user interface (<input id="integer" type="slider" name="integer" value="3" class="jslider" data-from="0" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>)
+
   slider <- reactive({
     slider.a <- (input$integer)
     return(slider.a)
   })
 
-
-# Bootstrap of a distance tree out of the data.genoid
+# Processing the results. The functions here create the figures to be displayed by the user interface.
+# Bootstrap of a distance tree out of the data
   boottree <- reactive({
     # Running the tree, setting a cutoff of 50 and saving it into a variable to
     # be plotted (tree)
@@ -113,7 +134,7 @@ shinyServer(function(input, output) {
     tree <- try(bruvo.boot(data.genoid(), replen = ssr, sample = input$boot,
                        tree = input$tree, cutoff = 50), silent = TRUE)
 
-    # This is a catch to avoid having missing data.genoid within the distance matrix.
+    # This is a catch to avoid having missing data within the distance matrix.
     if ("try-error" %in% class(tree)){
       for (i in sample(100)){
         tree <- try(bruvo.boot(data.genoid(), replen = ssr, sample = input$boot,
@@ -139,8 +160,12 @@ shinyServer(function(input, output) {
     return(msn.plot)
   })
 
-# Plotting on the UI
-## Distance Tree
+
+############ MICROBE-ID customization ############
+# The following lines of code communicate with the user interface to
+# plot the outputs from the processes in the server script.
+
+## Distance Tree (<div id="distPlotTree" class="span6 shiny-plot-output">)
   output$distPlotTree <- renderPlot({
     if (is.null(data.genoid())){
       plot.new()
@@ -158,7 +183,7 @@ shinyServer(function(input, output) {
     }
   })
 
-##Minimum Spanning Network
+##Minimum Spanning Network (<div id="MinSpanTree" class="shiny-plot-output")
   output$MinSpanTree <- renderPlot({
     if (is.null(data.genoid())){
       plot.new()
@@ -171,16 +196,18 @@ shinyServer(function(input, output) {
   })
 
 
-#Downloading results
+############ MICROBE-ID customization ############
+# The following lines of code communicate with the user interface to
+# download the outputs from the processes in the server script.
 
-## Distance tree in .tre format
+## Distance tree in .tre format (<a id="downloadData" class="btn btn-primary shiny-download-link">")
   output$downloadData <- downloadHandler(
     filename = function() { paste0(input$tree, '.tre') },
     content = function(file) {
       write.tree(boottree(), file)
     })
 
-## Distance tree in PDF format
+## Distance tree in PDF format (<a id="downloadPdf"  class="btn btn-info shiny-download-link">)
   output$downloadPdf <- downloadHandler(
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
@@ -189,7 +216,7 @@ shinyServer(function(input, output) {
       dev.off()
     })
 
-## Minimum spanning network in PDF format
+## Minimum spanning network in PDF format (<a id="downloadPdfMst"  class="btn btn-info shiny-download-link">)
   output$downloadPdfMst <- downloadHandler(
     filename = function() { paste0("min_span_net", '.pdf')} ,
     content = function(file) {

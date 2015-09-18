@@ -1,156 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
-    <!-- Change the title of the webpage in the <title> tag -->
+	<!-- Change the title of the webpage in the <title> tag -->
 	<title>Microbe-ID | Welcome</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
-	<meta name="author" content="root" >
+	<meta name="author" content="root">
 	<!-- Le styles, make sure that the Bootstrap_files folder is in the same directory than your homepage -->
 	<link href="Bootstrap_files/bootstrap.css" rel="stylesheet">
 	<link href="Bootstrap_files/phytophthora-lab.css" rel="stylesheet">
 	<style>
-	<!-- CSS for carousel-->
-	/* CUSTOMIZE THE CAROUSEL
+		<!-- CSS for carousel-->
+		/* CUSTOMIZE THE CAROUSEL
 	-------------------------------------------------- */
-	/* Carousel base class */
-	.carousel {
-		margin-bottom: 60px;
-	}
-	.carousel .container {
-		position: relative;
-		z-index: 0;
-	}
-	.carousel-control {
-		height: 80px;
-		margin-top: 0;
-		font-size: 120px;
-		text-shadow: 0 1px 1px rgba(0,0,0,.4);
-		background-color: transparent;
-		border: 0;
-		z-index: 10;
-	}
-	.carousel .item {
-		height: 450px;
-	}
-	.carousel img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		max-width: 100%;
-		min-width: 800px;
-		height: 450px;
-		max-height: 100%;
-	}
-	.carousel-caption {
-		background-color: transparent;
-		position: static;
-		max-width: 550px;
-		padding: 0 20px;
-		margin-top: 300px;
-	}
-	.carousel-caption h1,
-	.carousel-caption .lead {
-		margin: 0;
-		line-height: 1.1;
-		color: #fff;
-		text-shadow: 0 1px 1px rgba(0,0,0,.4);
-	}
-	.carousel-caption .btn {
-		margin-top: 10px;
-	}
-		@media (max-width: 979px) {
-		.carousel .item {
-		height: 500px;
-		}
-		.carousel img {
-		width: 800px;
-		height: 500px;
-		}
-		.featurette {
-		height: auto;
-		padding: 0;
-		}
-		.featurette-image.pull-left,
-		.featurette-image.pull-right {
-		display: block;
-		float: none;
-		max-width: 40%;
-		margin: 0 auto 20px;
-		}
-	}
-	@media (max-width: 767px) {
+		/* Carousel base class */
+
 		.carousel {
-		margin-left: -20px;
-		margin-right: -20px;
+			margin-bottom: 60px;
 		}
+
 		.carousel .container {
+			position: relative;
+			z-index: 0;
 		}
+
+		.carousel-control {
+			height: 80px;
+			margin-top: 0;
+			font-size: 120px;
+			text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
+			background-color: transparent;
+			border: 0;
+			z-index: 10;
+		}
+
 		.carousel .item {
-		height: 300px;
+			height: 450px;
 		}
+
 		.carousel img {
-		height: 300px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			max-width: 100%;
+			min-width: 800px;
+			height: 450px;
+			max-height: 100%;
 		}
+
 		.carousel-caption {
-		width: 65%;
-		padding: 0 70px;
-		margin-top: 100px;
+			background-color: transparent;
+			position: static;
+			max-width: 550px;
+			padding: 0 20px;
+			margin-top: 300px;
 		}
-		.carousel-caption h1 {
-		font-size: 30px;
+
+		.carousel-caption h1,
+		.carousel-caption .lead {
+			margin: 0;
+			line-height: 1.1;
+			color: #fff;
+			text-shadow: 0 1px 1px rgba(0, 0, 0, .4);
 		}
-		.carousel-caption .lead,
+
 		.carousel-caption .btn {
-		font-size: 18px;
+			margin-top: 10px;
 		}
-	}
-      /* Sticky footer styles
+
+		@media (max-width: 979px) {
+			.carousel .item {
+				height: 500px;
+			}
+			.carousel img {
+				width: 800px;
+				height: 500px;
+			}
+			.featurette {
+				height: auto;
+				padding: 0;
+			}
+			.featurette-image.pull-left,
+			.featurette-image.pull-right {
+				display: block;
+				float: none;
+				max-width: 40%;
+				margin: 0 auto 20px;
+			}
+		}
+
+		@media (max-width: 767px) {
+			.carousel {
+				margin-left: -20px;
+				margin-right: -20px;
+			}
+			.carousel .container {}
+			.carousel .item {
+				height: 300px;
+			}
+			.carousel img {
+				height: 300px;
+			}
+			.carousel-caption {
+				width: 65%;
+				padding: 0 70px;
+				margin-top: 100px;
+			}
+			.carousel-caption h1 {
+				font-size: 30px;
+			}
+			.carousel-caption .lead,
+			.carousel-caption .btn {
+				font-size: 18px;
+			}
+		}
+		/* Sticky footer styles
       -------------------------------------------------- */
-      html,
-      body {
-        height: 100%;
-        /* The html and body elements cannot have any padding or margin. */
-      }
-      /* Wrapper for page content to push down footer */
-      #wrap {
-        min-height: 95%;
-        height: auto !important;
-        height: 95%;
-        /* Negative indent footer by it's height */
-        margin: 0 auto -70px;
-      }
-      /* Set the fixed height of the footer here */
-      #push,
-      #footer {
-        height: 120px;
-      }
-      #footer {
-        background-color: #f5f5f5;
-      }
-      /* Lastly, apply responsive CSS fixes as necessary */
-      @media (max-width: 767px) {
-        #footer {
-          margin-left: -20px;
-          margin-right: -20px;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-      }
-      #wrap > .container {
-        padding-top: 60px;
-      }
-      .container .credit {
-        margin: 20px 0;
-      }
-      code {
-        font-size: 80%;
-      }
-      ul
-		{
-  		  list-style-type: none;
+
+		html,
+		body {
+			height: 100%;
+			/* The html and body elements cannot have any padding or margin. */
+		}
+		/* Wrapper for page content to push down footer */
+
+		#wrap {
+			min-height: 95%;
+			height: auto !important;
+			height: 95%;
+			/* Negative indent footer by it's height */
+			margin: 0 auto -70px;
+		}
+		/* Set the fixed height of the footer here */
+
+		#push,
+		#footer {
+			height: 120px;
+		}
+
+		#footer {
+			background-color: #f5f5f5;
+		}
+		/* Lastly, apply responsive CSS fixes as necessary */
+
+		@media (max-width: 767px) {
+			#footer {
+				margin-left: -20px;
+				margin-right: -20px;
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+		}
+
+		#wrap > .container {
+			padding-top: 60px;
+		}
+
+		.container .credit {
+			margin: 20px 0;
+		}
+
+		code {
+			font-size: 80%;
+		}
+
+		ul {
+			list-style-type: none;
 		}
 	</style>
 	<link href="Bootstrap_files/bootstrap-responsive.css" rel="stylesheet">
@@ -161,87 +179,90 @@
 	<!-- Fav and touch icons -->
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
-						<link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
-											<link rel="shortcut icon" href="img/customIcon.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="img/customIcon.png">
 </head>
+
 <body>
 	<div id="wrap">
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-		<div class="container">
-			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="brand" href="./index.html">Microbe-ID</a>
-			<div class="nav-collapse collapse">
-				<ul class="nav">
-				<!-- Names of the links are between the <a></a> tags. -->
-				<li class="./index.html"><a href="./index.html">Home</a></li>
-				<li><a href="./seq-id.html">Sequence-ID</a></li>
-				<li><a href="./geno-id.html">Genotype-ID</a></li>
-				<li><a href="./about.html">About</a></li>            </ul>
-			</div><!--/.nav-collapse -->
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="./index.html">Microbe-ID</a>
+					<div class="nav-collapse collapse">
+						<ul class="nav">
+							<!-- Names of the links are between the <a></a> tags. -->
+							<li class="./index.html"><a href="./index.html">Home</a></li>
+							<li><a href="./seq-id.html">Sequence-ID</a></li>
+							<li><a href="./geno-id.html">Genotype-ID</a></li>
+							<li><a href="./about.html">About</a></li>
+						</ul>
+					</div>
+					<!--/.nav-collapse -->
+				</div>
+			</div>
 		</div>
-		</div>
-	</div>
-	<!-- MICROBE-ID Specific. Carousel: The carousel is defined as the image contents on the javascript that rotates
+		<!-- MICROBE-ID Specific. Carousel: The carousel is defined as the image contents on the javascript that rotates
 	the front page images. Here, the tags <img> are for the images you want to add, the content
 	inside of the <div class="carousel-caption"> are the captions of the figure. inside of <h1>
 	its the title of the figure and inside <p class="lead:> the subcontent.
 	================================================== -->
-<div class="container">
-<div id="myCarousel" class="carousel slide">
-	<!-- Carousel items -->
-	<div class="carousel-inner">
-		<div class="item active">
-		<img alt="" src="img/first.png" />
-			<div class="container">
-					<div class="carousel-caption">
-				<h1>Title page 1</h1>
-					<p class="lead">Carousel page 1. Modify text in line 204 of index.html</p>
-			</div>
-		</div>
-		</div>
-		<div class="item">
-			<img alt="" src="img/third.png" />
-			<div class="container">
-				<div class="carousel-caption">
-					<h1>Title page 1</h1>
-					<p class="lead">Carousel page 2. Modify text in line 213 of index.html</p>
+		<div class="container">
+			<div id="myCarousel" class="carousel slide">
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="item active">
+						<img alt="" src="img/first.png" />
+						<div class="container">
+							<div class="carousel-caption">
+								<h1>Title page 1</h1>
+								<p class="lead">Carousel page 1. Modify text in line 204 of index.html</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<img alt="" src="img/third.png" />
+						<div class="container">
+							<div class="carousel-caption">
+								<h1>Title page 1</h1>
+								<p class="lead">Carousel page 2. Modify text in line 213 of index.html</p>
+							</div>
+						</div>
+					</div>
+					<div class="item">
+						<img alt="" src="img/second.png" />
+						<div class="container">
+							<div class="carousel-caption">
+								<h1>TItle page 3</h1>
+								<p class="lead">Carousel page 2. Modify text in line 212 of index.html</p>
+							</div>
+						</div>
+					</div>
+					<!-- Carousel nav -->
+					<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+					<a class="carousel-control right" href="#myCarousel" data-slide="prev">&rsaquo;</a>
 				</div>
 			</div>
+			<!-- MICROBE-ID customization: Change the body of the page here. -->
+			<h1>Welcome</h1>
+			<p> This is a demonstration website that can be readily customized for specific applcaitons for any organism. </p>
 		</div>
-		<div class="item">
-			<img alt="" src="img/second.png" />
-			<div class="container">
-				<div class="carousel-caption">
-					<h1>TItle page 3</h1>
-					<p class="lead">Carousel page 2. Modify text in line 212 of index.html</p>
-				</div>
-			</div>
-		</div>
-	<!-- Carousel nav -->
-	<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-	<a class="carousel-control right" href="#myCarousel" data-slide="prev">&rsaquo;</a>
+		<div id="push"></div>
 	</div>
-</div>
-<!-- MICROBE-ID customization: Change the body of the page here. -->
-<h1>Welcome</h1>
-<p> This is a demonstration website that can be readily customized for specific applcaitons for any organism. </p>
-	</div>
-	<div id="push"></div>
-</div>
 
-<div id="footer">
-	<div class="container">
-		<br>
-		<p> add content here </p>
+	<div id="footer">
+		<div class="container">
+			<br>
+			<p> add content here </p>
+		</div>
 	</div>
-</div>
-			<!-- Le javascript
+	<!-- Le javascript
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="Bootstrap_files/jquery.js"></script>
@@ -258,4 +279,6 @@
 	<script src="Bootstrap_files/bootstrap-carousel.js"></script>
 	<script src="Bootstrap_files/bootstrap-typeahead.js"></script>
 	<script src="Bootstrap_files/holder.js"></script>
-</body></html>
+</body>
+
+</html>

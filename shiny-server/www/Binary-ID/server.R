@@ -1,15 +1,30 @@
+##Loading the libraries
 library(shiny)
 library(poppr)
 library(ape)
 library(igraph)
 
-########### IMPORTANT ############
+#####################################################
+# IMPORTANT: ALl the functions written before line 68 refer to functions loaded by R
+# before shiny is deployed and executes the custom functions. These functions are definitions of
+# global functions and variables. Make sure to add these kinds of functions here. For more information
+# refer ro the shiny manual.
+####################################################
+
+
+########### MICROBE-ID customization  ############
 # Here's where you add your database file (Comma Separated Object). Make sure
 # that the database is in the same folder than this file (server.R)
+
 df <- read.table("Aeut.txt", header = TRUE, sep = "\t")
-##################################
+
+# Transforming the dataframe into a matrix
 df.m <- as.matrix(df)
 
+########### MICROBE-ID customization  ############
+# This line creates a function to obtain the genetic distances and add
+# them in a switch (evaluates EXPR and accordingly chooses one of the further arguments )
+# for easly post-hoc handling
 
 get_dist_fun <- function(dist){
   switch(dist,
@@ -21,8 +36,9 @@ get_dist_fun <- function(dist){
 }
 
 
-# Functions to create elements to plot
-## Distance Tree
+# Functions to create elements to plot:
+
+## 1. Distance Tree
 plot.tree <- function (tree, type = input$tree, ...){
   ARGS <- c("nj", "upgma")
   type <- match.arg(type, ARGS)
@@ -41,21 +57,31 @@ plot.tree <- function (tree, type = input$tree, ...){
     axisPhylo(3)
   }
 }
-## Minimum spanning network
+
+## 2. Minimum spanning network
 plot.minspan <- function(gen, mst, gadj=3, inds = "none", ...){
   plot_poppr_msn(gen, mst, gadj = gadj, vertex.label.color = "firebrick", inds = inds,
                  vertex.label.font = 2, vertex.label.dist = 0.5, nodelab = 100,
                  quantiles = FALSE)
 }
 
+########### MICROBE-ID customization  ############
+# From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications
+# of processes and outputs for the User interface file (in this case, the www/index.html) are found here.
+#
+# INPUT FROM index.html: All variables that start with index$...
+# OUTPUT TO index.html: All variables that start with output$...
+#
+# To determine which variable communicates with whic <div> in the index.html file, search for the line with the
+# class=shiny*.(e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">.
+#
+# For more information refer to the shiny manual
+
 shinyServer(function(input, output) {
-
-
   data.genoid <- reactive({
     if (gsub("\\s", "", input$table) == ""){
       return(NULL)
     } else {
-      #browser()
       input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
       if (input_table[1,1] == "Ind" | input_table[1,2] == "Pop"){
         input_table <- input_table[-1,]
@@ -64,17 +90,14 @@ shinyServer(function(input, output) {
       input_data.genoid            <- input_table[[1]]
       df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
-      gen  <- df2genind(df.m[, -c(1, 2)], ploid = 2, pop = df.m[, 2], type='PA', ind.names = df.m[, 1], )
-      #Adding colors to the tip values according to the clonal lineage
+      gen  <- df2genind(df.m[, -c(1, 2)], ncode=1,  ploid = 2, pop = df.m[, 2], type="PA", ind.names = df.m[, 1])
+    #Adding colors to the tip values according to the clonal lineage
       gen$other$tipcolor   <- pop(gen)
       gen$other$input_data.genoid <- input_data.genoid
       ngroups              <- length(levels(gen$other$tipcolor))
-
-      ########### IMPORTANT ############
+      ###########  MICROBE-ID customization ############
       # Change these colors to represent the groups defined in your data.genoid set.
-      #
-      defined_groups <- c("blue", "darkolivegreen")#, "red")
-      #
+      defined_groups <- c("blue", "darkolivegreen")
       # Change heat.colors to whatever color palette you want to represent
       # submitted data.genoid.
       #
@@ -89,29 +112,25 @@ shinyServer(function(input, output) {
     }
   })
 
-# Random Seed
-
+# Setting a random seed for the current session from the user interface (<input type = "number" name = "seed" id = "seed" value = "9449" min = "0" />)
   seed <- reactive({
     return(input$seed)
   })
 
-# Matching the distances from the UI to the server end
-
+# Matching the distances from the user interface (<select id="distance" style="width:300px">)
   distfun <- reactive({
     get_dist_fun(input$distance)
   })
 
-# Greyscale slider
-
+# Greyscale slider settings from the user interface (<input id="integer" type="slider" name="integer" value="3" class="jslider" data-from="0" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>)
   slider <- reactive({
     slider.a <- (input$integer)
     return(slider.a)
   })
 
-# Calculating the results
+# Processing the results. The functions here create the figures to be displayed by the user interface.
 
   # Distance tree with bootstrap
-
   boottree <- reactive({
       if (input$boot > 1000){
         return(1000L)
@@ -137,9 +156,11 @@ shinyServer(function(input, output) {
       return(msn.plot)
     })
 
-# Plotting on the UI
+############ MICROBE-ID customization ############
+# The following lines of code communicate with the user interface to
+# plot the outputs from the processes in the server script.
 
-  ## Distance Tree
+  ## Distance Tree 	(<div id="distPlotTree" class="span6 shiny-plot-output">)
   output$distPlotTree <- renderPlot({
     if (is.null(data.genoid())){
       plot.new()
@@ -157,7 +178,7 @@ shinyServer(function(input, output) {
     }
   })
 
-  ##Minimum Spanning Network
+  ##Minimum Spanning Network (<div id="MinSpanTree" class="shiny-plot-output")
   output$MinSpanTree <- renderPlot({
     if (is.null(data.genoid())){
       plot.new()
@@ -170,16 +191,18 @@ shinyServer(function(input, output) {
   })
 
 
-#Downloading results
+############ MICROBE-ID customization ############
+# The following lines of code communicate with the user interface to
+# download the outputs from the processes in the server script.
 
-  ## Distance tree in .tre format
+  ## Distance tree in .tre format (<a id="downloadData" class="btn btn-primary shiny-download-link">")
   output$downloadData <- downloadHandler(
     filename = function() { paste0(input$tree, '.tre') },
     content = function(file) {
       write.tree(boottree(), file)
     })
 
-  ## Distance tree in PDF format
+  ## Distance tree in PDF format (	<a id="downloadPdf"  class="btn btn-info shiny-download-link">)
   output$downloadPdf <- downloadHandler(
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
@@ -188,7 +211,7 @@ shinyServer(function(input, output) {
       dev.off()
     })
 
-  ## Minimum spanning network in PDF format
+  ## Minimum spanning network in PDF format (<a id="downloadPdfMst"  class="btn btn-info shiny-download-link")
   output$downloadPdfMst <- downloadHandler(
     filename = function() { paste0("min_span_net", '.pdf')} ,
     content = function(file) {

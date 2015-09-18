@@ -34,22 +34,23 @@ Microbe-ID is comprised by two main applications: **Sequence-ID** and **Genotype
   - [`Binary-ID/`](./shiny-server/www/Binary-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Binary-ID**.
     - [`Aeut.txt`](./shiny-server/www/Binary-ID/Aeut.txt): Curated database of AFLP molecular markers used as references in **Binary-ID**. This file serves as input for `server.R`.
     - [`server.R`](./shiny-server/www/Binary-ID/server.R): File that contains all the commands required by R to execute **Binary-ID** by R. This file is handled by the shiny server.  More information available on the **Shiny Arquitecture** region.
-    - [`www/`](./shiny-server/www/Binary-ID/www): Contains the files necesary to deploy the **user interphase** used by **Binary-ID**.
+    - [`www/`](./shiny-server/www/Binary-ID/www): Contains the files necesary to deploy the **user interface** used by **Binary-ID**.
       - [`AFLP_Aphanomyces.xlsx`](./shiny-server/www/Binary-ID/www/AFLP_Aphanomyces.xlsx): The `AFLP_Aphanomyces.xlsx` file contains a template to format the queries as an example for the end users of **Binary-ID**.
-      - [`index.html`](./shiny-server/www/Binary-ID/www/index.html): User interphase file for **Binary-ID**. More information available on the **Shiny Arquitecture** region.
+      - [`index.html`](./shiny-server/www/Binary-ID/www/index.html): User interface file for **Binary-ID**. More information available on the **Shiny Arquitecture** region.
   - [`Genotype-ID/`](./shiny-server/www/Genotype-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Genotype-ID**.
     - [`Ramorum_ssr.csv`](./shiny-server/www/Genotype-ID/Ramorum_ssr.csv): Curated database of SSR/Microsatellite molecular markers used as references in **Genotype-ID** for *Phytopthora ramorum*. This file serves as input for `server.R`.
     - [`server.R`](./shiny-server/www/Genotype-ID/server.R): File that contains all the commands required by R to execute **Genotype-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
-    - [`www/`](./shiny-server/www/Genotype-ID/www): Contains the files necesary to deploy the **user interphase** used by **Genotype-ID**.
+    - [`www/`](./shiny-server/www/Genotype-ID/www): Contains the files necesary to deploy the **user interface** used by **Genotype-ID**.
       - [`SSR_Example_Data_ramorum.xlsx`](./shiny-server/www/Genotype-ID/www/SSR_Example_Data_ramorum.xlsx): The `SSR_Example_Data_ramorum.xlsx` file contains a template to format the queries as an example for the end users of **Genotype-ID**.
-      - [`index.html`](./shiny-server/www/Genotype-ID/www/index.html): User interphase file for **Genotype-ID**. More information available on the **Shiny Arquitecture** region.
+      - [`index.html`](./shiny-server/www/Genotype-ID/www/index.html): User interface file for **Genotype-ID**. More information available on the **Shiny Arquitecture** region.
   - [`MLST/`](./shiny-server/www/MLST/): Contains all the folders and files to be used by the shiny server for the deployment of **MLST-ID**.
     - [`server.R`](./shiny-server/www/MLST/server.R): File that contains all the commands required by R to execute **MLST-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
-    - [`www/`](./shiny-server/www/MLST/www): Contains the files necessary to deploy the **user interphase** used by **MLST-ID**.
+    - [`www/`](./shiny-server/www/MLST/www): Contains the files necessary to deploy the **user interface** used by **MLST-ID**.
       - [`example.html`](./shiny-server/www/MLST/www/example.html): HTML page with examples for **MLST-ID** query formatting.
-      - [`index.html`](./shiny-server/www/MLST/www/index.html): User interphase file for **MLST-ID**. More information available on the **Shiny Arquitecture** region.
+      - [`index.html`](./shiny-server/www/MLST/www/index.html): User interface file for **MLST-ID**. More information available on the **Shiny Arquitecture** region.
       - [`help.html`](./shiny-server/www/MLST/www/help.html): Help and tutorials for **MLST-ID** use.
     - [`test-dataset/`](./shiny-server/www/MLST/test-dataset): Contains the `FASTA` files used in several tests by **MLST-ID**.
+    - **MLST-ID** Contains a copy of the `Bootstrap_files/` folder as the `help.html` and `example.html` pages require some of the files. This should not considerably affect performance or size of the deployment application.
 
 ## Requirements
 
@@ -72,11 +73,11 @@ To install Microbe-ID on your server you need the following components and appli
 
 ## Shiny app architecture
 
-For the R applications deploy successfully, shiny requires two types of files, the **user interphase file** and the **shiny script**.
+For the R applications deploy successfully, shiny requires two types of files, the **user interface file** and the **shiny script**.
 
-- **User interphase (ui.R or index.html):** The user interphase file (UI) permits the communication between the user and `R` using forms and reactive functions. TheUI can be defined as the "web-document" and its where the application will prompt the results and receive the input of the user. Examples of UI are available in any of the shiny-app folders of Microbe-ID (look for the `index.html` file)
+- **User interface (ui.R or index.html):** The user interface file (UI) permits the communication between the user and `R` using forms and reactive functions. TheUI can be defined as the "web-document" and its where the application will prompt the results and receive the input of the user. Examples of UI are available in any of the shiny-app folders of Microbe-ID (look for the `index.html` file)
 
-- **Server script (server.R):** The server script runs the application in R. The server script contains all the information that R will interpret to run the application (code, internal datasets and interpretations of the input/outputs from and to the user interphase file). Examples of server scripts are available in any of the shiny-app folders of Microbe-ID (look for the `server.R` file)
+- **Server script (server.R):** The server script runs the application in R. The server script contains all the information that R will interpret to run the application (code, internal datasets and interpretations of the input/outputs from and to the user interface file). Examples of server scripts are available in any of the shiny-app folders of Microbe-ID (look for the `server.R` file)
 
 Both `server.R` and `ui.R` files should be in the same directory. If you prefer to use the `index.html` file, create a folder called `www/` and move the `index.html` file to this folder.
 
@@ -94,7 +95,7 @@ For more info in `Shiny Server` please read:
   - [Shiny Server installation](http://rstudio.github.io/shiny-server/latest/#installation)
 
 2. Install any additional software.
-  - Install additional packages in `R`. We highly recommend to install the packages as a superuser, to make them available to all uses. For any of the applications on **Genotype-ID**, you will need the packages `shiny`,`poppr`, `pegas`, `igraph`, `phangorn`, `gdata`, `XML`, `phyloch` from CRAN.
+  - Install additional packages in `R`. We highly recommend to install the packages as a superuser, to make them available to all uses. For any of the applications on **Genotype-ID**, you will need the packages `shiny`,`poppr`, `pegas`, `igraph`, `phangorn`, `gdata`, `XML` from CRAN. Install `phyloch` from [here](http://www.christophheibl.de/Rpackages.html), follow these instructions to [install R packages from source.](http://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html)
   - If you are going to use `MLST-ID`, install `mafft`. `mafft` is a multiple sequence alignment program using fourier algorithms. `MLST-ID` uses `mafft` to align and creates multiple alignments for each of the MLST.
   - If you are planning on using **Sequence-ID**, install `BLAST`. `BLAST` is used by **Sequence-ID** to identify sequence data by similarity to a custom well-curated database.  For more information in `BLAST`, go to the [main page](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs) or to [downloads and installation](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
 

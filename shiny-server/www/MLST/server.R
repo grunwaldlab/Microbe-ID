@@ -4,18 +4,29 @@ library(ape)
 library(phangorn)
 library(igraph)
 library(gdata)
-library(XML) #needed for phyloch
-library(phyloch)
+library(XML, lib.loc="/data/www/chang/r_libs/")
+library(phyloch, lib.loc="/data/www/chang/r_libs/")
 
+#####################################################
+# IMPORTANT: ALl the functions written before line 69 refer to functions loaded by R
+# before shiny is deployed and executes the custom functions. These functions are definitions of
+# global functions and variables. Make sure to add these kinds of functions here. For more information
+# refer ro the shiny manual.
+####################################################
+
+########### MICROBE-ID customization  ############
 # Change this path to reflect where your binary of mafft is located.
-mafft_dir <- "/usr/bin/mafft"
+mafft_bin <- "/usr/bin/mafft"
 
+########### MICROBE-ID customization  ############
 #The name of the user submitted isolate for labelling in the tree
 query_name <- "query_isolate"
 
+########### MICROBE-ID customization  ############
 #The dataset gene names. Add more for each new dataset. Each gene name refers to a file matching that name, ie GyrB.aln
 #Alignments for each dataset are in folders named by that dataset, ie the index.html dataset option test-dataset refers to
 #a folder containing the gene alignments for that dataset.
+
 test_dataset_defined_genes <- c("CelA", "DnaA", "GyrB", "KdpA", "LigA", "NagA", "SdhA", "TomA")
 
 
@@ -27,16 +38,15 @@ get_last_substring <- function(x, sep = "_"){
 
 
 
-# Functions to reduce redundancy
-## Plotting trees
+# Functions to create elements to plot
+## 1. Plotting trees
 plot.tree <- function (tree, type = input$tree, ...){
   ARGS <- c("nj", "njs", "upgma")
   type <- match.arg(type, ARGS)
   barlen <- min(median(tree$edge.length), 0.1)
   if (barlen < 0.1)
     barlen <- 0.01
-  plot.phylo(tree, , cex = 0.8, font = 2, adj = 0, xpd = TRUE,
-             label.offset = 0, ...)
+  plot.phylo(tree, type = "phylogram", cex = 0.8, font = 2, adj = 0, xpd = TRUE, label.offset = 0, ...)
   nodelabels(tree$node.label, adj = c(1.3, -0.5), frame = "n",
              cex = 0.8, font = 3, xpd = TRUE)
   if (type == "nj") {
@@ -54,6 +64,18 @@ plot.minspan <- function(gen, mst, gadj=3, inds="none", ...){
                  vertex.label.font = 2, vertex.label.dist = 0.5,
                  inds = inds, quantiles = FALSE)
 }
+
+########### MICROBE-ID customization  ############
+# From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications
+# of processes and outputs for the User interface file (in this case, the www/index.html) are found here.
+#
+# INPUT FROM index.html: All variables that start with index$...
+# OUTPUT TO index.html: All variables that start with output$...
+#
+# To determine which variable communicates with whic <div> in the index.html file, search for the line with the
+# class=shiny*.(e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">.
+#
+# For more information refer to the shiny manual
 
 shinyServer(function(input, output, session) {
 
@@ -73,18 +95,13 @@ alin <- reactive({
         input_table <- read.dna(tstamp, format="fasta", as.matrix = FALSE)
         unlink(tstamp)
 		input_gene_list <- names(input_table)
-        #rownames(input_table) <- paste(rownames(input_table),c("query"),sep="_")
-        #input_table <- as.list(input_table)
-		#df <- as.list(data_f())
-        #all <- c(input_table,df)
-        #all.al <- muscle(all, exec = muscle_dir)
 		input_datasetname <- input$dataset
 		#add datasets from the website dataset option to choose which genes are analyzed.
 		#the dataset is assumed to have a folder with the same name as the dataset
 		#containing fasta format alignments of each gene in the dataset.
 		#Make sure taxa names match across alignments otherwise concatenating will not work.
 		#Add more if/else blocks to add more datasets matching your index.html file.
-		if(input_datasetname == "test-dataset"){
+		if(input_datasetname == "testdataset"){
 			#use genes listed in test_defined_genes and use the files in the
 			#test-dataset folder containing the alignments
 			defined_genes <- test_dataset_defined_genes
@@ -130,50 +147,53 @@ alin <- reactive({
     }
     })
 
-
-
+# Matching the distances from the user interface (<select id="distance" style="width:300px">)
   dist.genoid <- reactive({
     all.dist <- dist.dna(alin(),input$model)
     return(all.dist)
   })
 
+# Importing data into poppr/adegenet
   data.genoid <- reactive({
     gen <- DNAbin2genind(alin())
     #Adding colors to the tip values according to the clonal lineage
-    popnames <- get_last_substring(gen$ind.names, "_")
+    popnames <- get_last_substring(indNames(gen), "_")
     pop(gen) <- popnames
     gen$other$tipcolor <- pop(gen)
     name_char_end <- nchar(indNames(gen)) - nchar(popnames) - 1
-    gen$ind.names <- substr(indNames(gen), 1, name_char_end)
+    indNames(gen) <- substr(indNames(gen), 1, name_char_end)
     gen$other$input_data <- indNames(gen)[pop(gen) %in% "query"]
     ngroups   <- length(levels(gen$other$tipcolor))
-#     ########### IMPORTANT ############
-#     # Change these colors to represent the groups defined in your data set.
-#     #
-     defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod")
-#     #
-#     # Change heat.colors to whatever color palette you want to represent
-#     # submitted data.
-#     #
+     ########### MICROBE-ID customization  ############
+     # Change these colors to represent the groups defined in your data set.
+     #
+     defined_groups <- c("blue")
+     #
+     # Change heat.colors to whatever color palette you want to represent
+     # submitted data.
+     #
      input_colors   <- rainbow(ngroups - length(defined_groups))
-#     #
-#     ##################################
+     #
+     ##################################
     levels(gen$other$tipcolor) <- c(defined_groups, input_colors)
      gen$other$tipcolor <- as.character(gen$other$tipcolor)
     return(gen)
   })
 
+# Setting a random seed for the current session from the user interface (<input type = "number" name = "seed" id = "seed" value = "9449" min = "0" />)
   seed <- reactive({
     return(input$seed)
   })
 
-#Greyscale Slider
+# Greyscale slider settings from the user interface (<input id="integer" type="slider" name="integer" value="3" class="jslider" data-from="0" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>)
 slider <- reactive({
   slider.a <- (input$integer)
   return(slider.a)
 })
 
+# Processing the results. The functions here create the figures to be displayed by the user interface.
 
+  # Distance tree with bootstrap
   boottree <- reactive({
     if (input$boot > 1000){
       return(1000L)
@@ -202,14 +222,17 @@ slider <- reactive({
     return(tre)
   })
 
+# Minimum spanning network
   msnet <- reactive ({
     msn.plot <-poppr.msn(data.genoid(), dist.genoid(), palette=rainbow, showplot = FALSE)
-    #V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
 
-#Output
+############ MICROBE-ID customization ############
+# The following lines of code communicate with the user interface to
+# plot the outputs from the processes in the server script.
 
+# Validating query as FASTA file
 output$validateFasta <- renderText({
   if (is.null(alin())){
     return("")
@@ -218,6 +241,7 @@ output$validateFasta <- renderText({
   }
   })
 
+## Distance Tree 	(<div id="distPlotTree" class="span6 shiny-plot-output">)
   output$distPlotTree <- renderPlot({
     if (is.null(alin())){
       plot.new()
@@ -239,7 +263,7 @@ output$validateFasta <- renderText({
     }
   })
 
-  #Minimum Spanning Network
+##Minimum Spanning Network (<div id="MinSpanTree" class="shiny-plot-output")
   output$MinSpanTree <- renderPlot({
     if (is.null(alin())){
       plot.new()
@@ -250,17 +274,22 @@ output$validateFasta <- renderText({
       rect(0, 1, 1, 0.8, col = "indianred2", border = 'transparent' ) +
         text(x = 0.5, y = 0.9, "Invalid FASTA input.", cex = 1.6, col = "white")
     } else {
-      #plot_poppr_msn(data.genoid(), msnet(), gadj=c(slider()), vertex.label.color = "firebrick", vertex.label.font = 2, vertex.label.dist = 0.5,                    inds = data.genoid()$other$input_data.genoid, quantiles = FALSE)
       plot.minspan(data.genoid(), msnet(), gadj=c(slider()), ind = data.genoid()$other$input_data)
     }
   })
 
+############ MICROBE-ID customization ############
+# The following lines of code communicate with the user interface to
+# download the outputs from the processes in the server script.
+
+## Distance tree in .tre format (<a id="downloadData" class="btn btn-primary shiny-download-link">")
   output$downloadData <- downloadHandler(
     filename = function() { paste0(input$tree, '.tre') },
     content = function(file) {
       write.tree(boottree(), file)
     })
 
+## Distance tree in PDF format (	<a id="downloadPdf"  class="btn btn-info shiny-download-link">)
   output$downloadPdf <- downloadHandler(
     filename = function() { paste0(input$tree, '.pdf') },
     content = function(file) {
@@ -269,6 +298,7 @@ output$validateFasta <- renderText({
       dev.off()
     })
 
+## Minimum spanning network in PDF format (<a id="downloadPdfMst"  class="btn btn-info shiny-download-link")
   output$downloadPdfMst <- downloadHandler(
     filename = function() { paste0("min_span_net", '.pdf')} ,
     content = function(file) {
@@ -277,5 +307,5 @@ output$validateFasta <- renderText({
       plot.minspan(data.genoid(), msnet(), gadj=c(slider()), ind = data.genoid()$other$input_data)
       dev.off()
     })
-
+#EOF
 })
