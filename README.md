@@ -103,6 +103,8 @@ For more info in `Shiny Server` please read:
 
 4. Move the contents of `shiny-server/www` folder app to the Shiny Server directory on your local server (`/shiny-server/`) and restart your local `shiny-server`. If the installation is correct, the modules will be visible and executable at `127.0.0.1:3838`.
 
+4. Change the permissions for each of `shiny-server/` folders to group `shiny`, and make them readable, writable and executable by group.
+
 5. If you are installing **Sequence-ID**:
 
   - Move the `blast.cgi` file from the repository `cgi-bin/` folder into your apache `cgi-bin` folder.
