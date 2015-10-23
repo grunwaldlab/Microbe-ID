@@ -1,17 +1,15 @@
 Microbe-ID
 ===============
 
-Microbe-ID is a toolbox that can readily be customized for any taxonomic group or species for sequence based identification of species or marker-based identification of strains. Microbe-ID aims to:
-
-1. Outline a method for development of a species and strain identification website using existing open source, online resources
-
-2. Integrate existing population genetic analyses and visualizations into the genotype identification tool in order to improve genotype diagnostic capabilities.
-
-This site provides all code and applications necessary for creating a website for species identification or strain genotyping.
+Microbe-ID is a toolbox with two modules allowing 1. identificaiton of speceis using sequences and 2. identificaiton of genotypes using moleuclar markers against custom referecne databases. This web-based toolbox can readily be customized for any taxonomic group or species. This site provides all code and applications necessary for implementation.
 
 ## Components
 
-Microbe-ID is comprised by two main applications: **Sequence-ID** and **Genotype-ID**. **Sequence-ID** allows identification of species by blasting a query sequence for any locus of interest against a custom reference sequence database using BLAST.  **Genotype-ID**  allows placement of an unknown genotype in either a minimum spanning network or dendrogram with bootstrap support comparing the queue against an user-created reference database using R and a suite of R packages designed for molecular markers. **Microbe-ID** groups these two applications in a HTML5 framework based on [Bootstrap](http://getbootstrap.com) that links both applications into a simple, web-ready site to be deployed locally or in a server.
+Microbe-ID is contains two main applicaitons: **Sequence-ID** and **Genotype-ID**. 
+
+**Sequence-ID** allows identification of species by blasting a query sequence for any locus of interest against a custom reference sequence database using BLAST.  
+
+**Genotype-ID**  allows placement of an unknown genotype in either a minimum spanning network or dendrogram with bootstrap support comparing the queue against an user-created reference database using R and a suite of R packages designed for molecular markers. **Microbe-ID** groups these two applications in a HTML5 framework based on [Bootstrap](http://getbootstrap.com) that links both applications into a simple, web-ready site to be deployed locally or in a server.
 
 ### Files included in this repository
 
