@@ -26,9 +26,9 @@ Microbe-ID contains two main applications: **Sequence-ID** and **Genotype-ID**.
 The site can be customized further by deleting pages or adding additional pages as needed.
 
 #### Front end HTML folders
-- [`Bootstrap_files/`](./Bootstrap_files/): Folder that contains all the files necessary for the [Bootstrap front-end framework](getbootstrap.com/) in which **Microbe-ID** was designed and built from.
-- [`cgi-bin/`](./cgi-bin/): Folder that contains the `blast.cgi` script for **Sequence-ID**. `blast.cgi` is a PERL-CGI script that runs `BLAST` in a custom database of curated sequences.
-- [`files/`](./files/): Folder in which additional files can be added.
+- [`Bootstrap_files/`](./Bootstrap_files/): Folder that contains all the files necessary for the [Bootstrap front-end framework](getbootstrap.com/) used for **Microbe-ID**.
+- [`cgi-bin/`](./cgi-bin/): Folder that contains the `blast.cgi` script for **Sequence-ID**. `blast.cgi` is a PERL-CGI script that runs `BLAST` using a query against custom database of curated sequences.
+- [`files/`](./files/): Folder to which additional files can be added.
 - [`img/`](./img/): Folder that contains images used in **Microbe-ID** webpages.
 
 #### Shiny applications
