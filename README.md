@@ -85,12 +85,6 @@ Both `server.R` and `ui.R` files should be in the same directory. If you prefer 
 
 ## Installation of Genotype ID
 
-### Prerrequisites
-
-- [R](https://www.r-project.org)
-- [Shiny Server](http://shiny.rstudio.com/articles/shiny-server.html)
-- Shiny app (`server.R` and `ui.R or index.html`)
-
 1. Install `Shiny Server` and `R`. We recommend to follow the instructions carefully from the developers sites.
 For more info in `Shiny Server` please read:
   - [Shiny Server professional guide](http://rstudio.github.io/shiny-server/latest/)
