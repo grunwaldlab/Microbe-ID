@@ -5,11 +5,13 @@ Microbe-ID is a web-based toolbox for identifcation and genotyping of organisms.
 
 ## Components
 
-Microbe-ID contains two main applicaitons: **Sequence-ID** and **Genotype-ID**. 
+Microbe-ID contains two main applications: **Sequence-ID** and **Genotype-ID**. 
 
 **Sequence-ID** allows identification of species by blasting a query sequence for any locus of interest against a custom reference sequence database using BLAST.  
 
-**Genotype-ID**  allows placement of an unknown genotype in either a minimum spanning network or dendrogram with bootstrap support comparing the queue against an user-created reference database using R and a suite of R packages designed for molecular markers. **Microbe-ID** groups these two applications in a HTML5 framework based on [Bootstrap](http://getbootstrap.com) that links both applications into a simple, web-ready site to be deployed locally or in a server.
+**Genotype-ID**  allows placement of an unknown genotype in either a minimum spanning network or dendrogram with bootstrap support comparing the queue against an user-created reference database using R and a suite of R packages designed for molecular markers. 
+
+**Microbe-ID** groups these two applications in a HTML5 framework based on [Bootstrap](http://getbootstrap.com) that links both applications into a simple, web-ready site to be deployed locally or in a server.
 
 ### Files included in this repository
 
