@@ -28,8 +28,8 @@ The site can be customized further by deleting pages or adding additional pages 
 #### Front end HTML folders
 - [`Bootstrap_files/`](./Bootstrap_files/): Folder that contains all the files necessary for the [Bootstrap front-end framework](getbootstrap.com/) used for **Microbe-ID**.
 - [`cgi-bin/`](./cgi-bin/): Folder that contains the `blast.cgi` script for **Sequence-ID**. `blast.cgi` is a PERL-CGI script that runs `BLAST` using a query against custom database of curated sequences.
-- [`files/`](./files/): Folder to which additional files can be added.
-- [`img/`](./img/): Folder that contains images used in **Microbe-ID** webpages.
+- [`files/`](./files/): Folder to which additional files can be added (This folder is necessary if the user wants to customize the site by adding extra files, create the folder at the root of the `Microbe-ID` repository if not included).
+- [`img/`](./img/): Folder that contains images used in **Microbe-ID** webpages (This folder is necessary if the user wants to customize the site by adding custom image files, create the folder at the root of the `Microbe-ID` repository if not included).
 
 #### Shiny applications
 - [`shiny-server/www/`](./shiny-server/www/): Contains all the folders and files to be used by the shiny server.
