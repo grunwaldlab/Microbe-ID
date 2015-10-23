@@ -1,16 +1,11 @@
 Microbe-ID
 ===============
 
-Microbe-ID is a toolbox with two modules allowing 
-
-1. identificaiton of species using sequences and 
-2. identificaiton of genotypes using moecular markers against custom referecne databases. 
-
-This web-based toolbox can readily be customized for any taxonomic group or species. This site provides all code and applications necessary for implementation.
+Microbe-ID is a web-based toolbox for identifcation and genotyping of organisms.
 
 ## Components
 
-Microbe-ID is contains two main applicaitons: **Sequence-ID** and **Genotype-ID**. 
+Microbe-ID contains two main applicaitons: **Sequence-ID** and **Genotype-ID**. 
 
 **Sequence-ID** allows identification of species by blasting a query sequence for any locus of interest against a custom reference sequence database using BLAST.  
 
