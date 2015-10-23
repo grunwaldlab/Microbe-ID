@@ -60,7 +60,7 @@ To install Microbe-ID on your server you need the following components and appli
 
 ### General requirements
 - Access to a linux server to host the site.
-- A website based on [bootstrap](http://getbootstrap.com) to host your version of Microbe-ID. See our example [here](http://www.microbe-id.org).
+- A website based on [bootstrap](http://getbootstrap.com) to host your version of Microbe-ID. See our example [here](http://microbe-id.org).
 
 ### For the R-based apps of Genotype-ID
 - A self-hosted [shiny](http://www.rstudio.com/shiny/) R server session running on your server.
