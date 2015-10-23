@@ -11,17 +11,20 @@ Microbe-ID contains two main applications: **Sequence-ID** and **Genotype-ID**.
 
 **Genotype-ID**  allows placement of an unknown genotype in either a minimum spanning network or dendrogram with bootstrap support comparing the queue against an user-created reference database using R and a suite of R packages designed for molecular markers. 
 
-**Microbe-ID** uses the [Bootstrap](http://getbootstrap.com) framework that links both applications into a simple, web-ready site that can be deployed locally or on a server.
+**Microbe-ID** uses the [Bootstrap](http://getbootstrap.com) framework as front-end and links both applications into a simple, web-ready site that can be deployed locally or on a server.
 
 ### Files included in this repository
 
 #### Front end HTML files
 - [`index.html`](./index.html): Front page of **Microbe-ID**.
-- [`seq-id.html`](./seq-id.html): Front page of **Sequence-ID**. Provides the user with forms to submit the query sequences to be processed by BLAST to identify similarity in a custom-well curated database. This page provides the informatiom and connections to the `blast.cgi` script, which runs BLAST using PERL.
-- [`geno-id.html`](./geno-id.html): Front page of **Genotype-ID**. Provides the user with examples, forms and instructions in how to submit **SSR/Microsatellite** queries to be processed by R using shiny. This page provides a iFrame to [`shiny-server/www/Genotype-ID/www/index.html`](./shiny-server/www/Genotype-ID/www/index.html).
-- [`MLST.html`](./MLST.html): Front page of **MLST-ID**. Provides the user with examples, forms and instructions in how to submit **Multi Locus Seqeunce Type (MLST)**  queries to be processed by R using shiny. This page provides a iFrame to [`shiny-server/www/MLST/www/index.html`](./shiny-server/www/MLST/www/index.html).
-- [`binary-id.html`](./binary-id.html): Front page of **Genotype-ID**. Provides the user with examples, forms and instructions in how to submit **Codominant/Binary** queries to be processed by R using shiny. This page provides a iFrame to [`shiny-server/www/Binary-ID/www/index.html`](./shiny-server/www/Binary-ID/www/index.html).
-- [`about.html`](./about.html): Contact page.
+- [`seq-id.html`](./seq-id.html): Front page of **Sequence-ID**. Provides the user with forms to submit query sequences to be processed by BLAST for identificaiton of species based on similarity. This page provides the informatiom and connections to the `blast.cgi` script, which runs BLAST using PERL. The user has to provide a curated database.
+- [`geno-id.html`](./geno-id.html): Front page of **Genotype-ID**. Provides the user with examples, forms and instructions on how to submit **SSR/Microsatellite** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/Genotype-ID/www/index.html`](./shiny-server/www/Genotype-ID/www/index.html).
+- [`MLST.html`](./MLST.html): Front page of **MLST-ID**. Provides the user with examples, forms and instructions on how to submit **Multi Locus Sequence Type (MLST)**  queries to be processed by R using shiny. This page provides am iFrame to [`shiny-server/www/MLST/www/index.html`](./shiny-server/www/MLST/www/index.html).
+- [`binary-id.html`](./binary-id.html): Front page of **Genotype-ID**. This page provides the user with examples, forms and instructions on how to submit **Codominant/Binary** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/Binary-ID/www/index.html`](./shiny-server/www/Binary-ID/www/index.html).
+- [`about.html`](./about.html): This contact page can be customized.
+
+The site can be customized by deleteing unnecessary pages or adding additional pages as needed.
+
 
 #### Front end HTML folders
 - [`Bootstrap_files/`](./Bootstrap_files/): Folder that contains all the files necessary for the [Bootstrap front-end framework](getbootstrap.com/) in which **Microbe-ID** was designed and built from.
