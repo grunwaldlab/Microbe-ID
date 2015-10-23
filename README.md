@@ -23,7 +23,7 @@ Microbe-ID contains two main applications: **Sequence-ID** and **Genotype-ID**.
 - [`binary-id.html`](./binary-id.html): Front page of **Genotype-ID**. This page provides the user with examples, forms and instructions on how to submit **Codominant/Binary** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/Binary-ID/www/index.html`](./shiny-server/www/Binary-ID/www/index.html).
 - [`about.html`](./about.html): This contact page can be customized.
 
-The site can be customized further by deleteing unnecessary pages or adding additional pages as needed.
+The site can be customized further by deleting pages or adding additional pages as needed.
 
 #### Front end HTML folders
 - [`Bootstrap_files/`](./Bootstrap_files/): Folder that contains all the files necessary for the [Bootstrap front-end framework](getbootstrap.com/) in which **Microbe-ID** was designed and built from.
