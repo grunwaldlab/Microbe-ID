@@ -54,6 +54,16 @@ The site can be customized further by deleting pages or adding additional pages 
     - [`test-dataset/`](./shiny-server/www/MLST/test-dataset): Contains the `FASTA` files used in several tests by **MLST-ID**.
     - **MLST-ID** Contains a copy of the `Bootstrap_files/` folder as the `help.html` and `example.html` pages require some of the files. This should not considerably affect performance or size of the deployment application.
 
+## Shiny app architecture
+
+For the R applications deploy successfully, shiny requires two types of files, the **user interface file** and the **shiny script**.
+
+- **User interface (ui.R or index.html):** The user interface file (UI) permits the communication between the user and `R` using forms and reactive functions. TheUI can be defined as the "web-document" and its where the application will prompt the results and receive the input of the user. Examples of UI are available in any of the shiny-app folders of Microbe-ID (look for the `index.html` file)
+
+- **Server script (server.R):** The server script runs the application in R. The server script contains all the information that R will interpret to run the application (code, internal datasets and interpretations of the input/outputs from and to the user interface file). Examples of server scripts are available in any of the shiny-app folders of Microbe-ID (look for the `server.R` file)
+
+Both `server.R` and `ui.R` files should be in the same directory. If you prefer to use the `index.html` file, create a folder called `www/` and move the `index.html` file to this folder.
+
 ## Requirements
 
 To install Microbe-ID on your server you need the following components and applications:
@@ -72,16 +82,6 @@ To install Microbe-ID on your server you need the following components and appli
 - Access to cgi-bin perl applications.
 - `BLAST+` suite
 - Custom `FASTA` database of curated sequences for the group in interest
-
-## Shiny app architecture
-
-For the R applications deploy successfully, shiny requires two types of files, the **user interface file** and the **shiny script**.
-
-- **User interface (ui.R or index.html):** The user interface file (UI) permits the communication between the user and `R` using forms and reactive functions. TheUI can be defined as the "web-document" and its where the application will prompt the results and receive the input of the user. Examples of UI are available in any of the shiny-app folders of Microbe-ID (look for the `index.html` file)
-
-- **Server script (server.R):** The server script runs the application in R. The server script contains all the information that R will interpret to run the application (code, internal datasets and interpretations of the input/outputs from and to the user interface file). Examples of server scripts are available in any of the shiny-app folders of Microbe-ID (look for the `server.R` file)
-
-Both `server.R` and `ui.R` files should be in the same directory. If you prefer to use the `index.html` file, create a folder called `www/` and move the `index.html` file to this folder.
 
 ## Installation of Genotype ID
 
