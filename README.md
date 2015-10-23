@@ -1,7 +1,12 @@
 Microbe-ID
 ===============
 
-Microbe-ID is a toolbox with two modules allowing 1. identificaiton of speceis using sequences and 2. identificaiton of genotypes using moleuclar markers against custom referecne databases. This web-based toolbox can readily be customized for any taxonomic group or species. This site provides all code and applications necessary for implementation.
+Microbe-ID is a toolbox with two modules allowing 
+
+1. identificaiton of species using sequences and 
+2. identificaiton of genotypes using moecular markers against custom referecne databases. 
+
+This web-based toolbox can readily be customized for any taxonomic group or species. This site provides all code and applications necessary for implementation.
 
 ## Components
 
