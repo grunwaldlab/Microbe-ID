@@ -11,7 +11,7 @@ Microbe-ID contains two main applications: **Sequence-ID** and **Genotype-ID**.
 
 **Genotype-ID**  allows placement of an unknown genotype in either a minimum spanning network or dendrogram with bootstrap support comparing the queue against an user-created reference database using R and a suite of R packages designed for molecular markers. 
 
-**Microbe-ID** groups these two applications in a HTML5 framework based on [Bootstrap](http://getbootstrap.com) that links both applications into a simple, web-ready site to be deployed locally or in a server.
+**Microbe-ID** uses the [Bootstrap](http://getbootstrap.com) framework that links both applications into a simple, web-ready site that can be deployed locally or on a server.
 
 ### Files included in this repository
 
