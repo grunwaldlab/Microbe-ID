@@ -116,7 +116,7 @@ For more info in `Shiny Server` please read:
 
 - Customize each html file to your needs including for example ['index.html'](./index.html), ['seq-id.html'](./seq-id.html), ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['binary-id.html'](./binary-id.html), and ['about.html'](./about.html). Instructions for customizations are provided inside each html document as comments starting with `<!--MICROBE-ID customization: ...>`. Please follow the directions of these tags carefully.
 - Remove unnecessary files and add any additional pages for your site.
-- Images and additional files can be added to the `img/` and `files/` folders, respectively. Images or files can be added to any of the `html` pages using HTML5. More information on HTML5 image tags can be found  [here](http://www.w3schools.com/html/html_images.asp)
+- Images and additional files can be added to the `img/` and `files/` folders, respectively. Images or files can be added to any of the `html` pages using HTML5. More information on HTML5 image tags can be found  [here](http://www.w3schools.com/html/html_images.asp).
 - Customize each `server.R` and `ui.R/index.html` file required by shiny for each application under [shiny-server/www](./shiny-server/www).
 - Do not modify ['validate.js'](./validate.js) or the `Bootstrap_files/` folder as they contain required scripts for the website.
 - In case the user wants to modify the `.gitignore` file, please do not remove the files present originally.
