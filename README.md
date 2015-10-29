@@ -91,11 +91,11 @@ For more info in `Shiny Server` please read:
   - [Shiny Server installation](http://rstudio.github.io/shiny-server/latest/#installation)
 
 2. Install any additional software.
-  - Install additional packages in `R`. We highly recommend installation of packages as a superuser to make them available to all users. For any of the applications on **Genotype-ID**, you will need the packages `shiny`,`poppr`, `pegas`, `igraph`, `phangorn`, `gdata`, `XML` from CRAN. Install `phyloch` from [here](http://www.christophheibl.de/Rpackages.html), follow these instructions to [install R packages from source.](http://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html)
+  - Install additional packages in `R`. We highly recommend installation of packages as a superuser to make them available to all users. For any of the applications on **Genotype-ID**, you will need the packages `shiny`,`poppr`, `pegas`, `igraph`, `phangorn`, `gdata`, `XML` from CRAN. Install `phyloch` from [here](http://www.christophheibl.de/Rpackages.html), follow these instructions to [install R packages from source.](http://stat.ethz.ch/R-manual/R-devel/library/utils/html/install.packages.html).
   - If you are going to use `MLST-ID`, install [`mafft`](http://mafft.cbrc.jp/alignment/software/). `mafft` is a multiple sequence alignment program using fourier algorithms. `MLST-ID` uses `mafft` to align and creates multiple alignments for each of the MLST.
-  - If you are planning on using **Sequence-ID**, install `BLAST`. `BLAST` is used by **Sequence-ID** to identify sequence data by similarity to a custom well-curated database.  For more information in `BLAST`, go to the [main page](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs) or to [downloads and installation](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
+  - If you are planning on using **Sequence-ID**, install `BLAST`. `BLAST` is used by **Sequence-ID** to identify sequence data by similarity to a custom well-curated database.  For more information in `BLAST`, go to the [main page](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs) or to [downloads and installation](http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download).
 
-3. Clone this repository in a folder accessible by Apache (`cgi-bin` integration is required to use Sequence-ID)
+3. Clone this repository in a folder accessible by Apache (`cgi-bin` integration is required to use Sequence-ID).
 
 4. Move the contents of `shiny-server/www` folder app to the Shiny Server directory on your local server (`/shiny-server/`) and restart your local `shiny-server`. If the installation is correct, the modules will be visible and executable at `127.0.0.1:3838`.
 
