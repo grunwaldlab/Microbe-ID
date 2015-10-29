@@ -85,7 +85,7 @@ To install Microbe-ID on your server you need the following components and appli
 
 ## Installation of Genotype ID
 
-1. Install `Shiny Server` and `R`. We recommend to follow the instructions carefully from the developers sites.
+1. Install `Shiny Server` and `R`. We recommend following the instructions from the developers.
 For more info in `Shiny Server` please read:
   - [Shiny Server professional guide](http://rstudio.github.io/shiny-server/latest/)
   - [Shiny Server installation](http://rstudio.github.io/shiny-server/latest/#installation)
