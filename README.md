@@ -18,7 +18,7 @@ Microbe-ID contains two main applications: **Sequence-ID** and **Genotype-ID**.
 #### Front end HTML files
 - [`index.html`](./index.html): Front page of **Microbe-ID**.
 - [`seq-id.html`](./seq-id.html): Front page of **Sequence-ID**. Provides the user with forms to submit query sequences to be processed by BLAST for identificaiton of species based on similarity. This page provides the informatiom and connections to the `blast.cgi` script, which runs BLAST using PERL. The user has to provide a curated database.
-- [`geno-id.html`](./geno-id.html): Front page of **Genotype-ID**. Provides the user with examples, forms and instructions on how to submit **SSR/Microsatellite** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/Genotype-ID/www/index.html`](./shiny-server/www/Genotype-ID/www/index.html).
+- [`geno-id.html`](./geno-id.html): Front page of **Genotype-ID: SSR-ID**. Provides the user with examples, forms and instructions on how to submit **SSR/Microsatellite** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/Genotype-ID/www/index.html`](./shiny-server/www/Genotype-ID/www/index.html).
 - [`MLST.html`](./MLST.html): Front page of **MLST-ID**. Provides the user with examples, forms and instructions on how to submit **Multi Locus Sequence Type (MLST)**  queries to be processed by R using shiny. This page provides am iFrame to [`shiny-server/www/MLST/www/index.html`](./shiny-server/www/MLST/www/index.html).
 - [`binary-id.html`](./binary-id.html): Front page of **Genotype-ID**. This page provides the user with examples, forms and instructions on how to submit **Codominant/Binary** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/Binary-ID/www/index.html`](./shiny-server/www/Binary-ID/www/index.html).
 - [`about.html`](./about.html): This contact page can be customized.
@@ -39,10 +39,10 @@ The site can be customized further by deleting pages or adding additional pages 
     - [`www/`](./shiny-server/www/Binary-ID/www): Contains the files necesary to deploy the **user interface** used by **Binary-ID**.
       - [`AFLP_Aphanomyces.xlsx`](./shiny-server/www/Binary-ID/www/AFLP_Aphanomyces.xlsx): The `AFLP_Aphanomyces.xlsx` file contains a template to format the queries as an example for the end users of **Binary-ID**.
       - [`index.html`](./shiny-server/www/Binary-ID/www/index.html): User interface file for **Binary-ID**. More information available on the **Shiny Arquitecture** region.
-  - [`Genotype-ID/`](./shiny-server/www/Genotype-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Genotype-ID**.
-    - [`Ramorum_ssr.csv`](./shiny-server/www/Genotype-ID/Ramorum_ssr.csv): Curated database of SSR/Microsatellite molecular markers used as references in **Genotype-ID** for *Phytopthora ramorum*. This file serves as input for `server.R`.
-    - [`server.R`](./shiny-server/www/Genotype-ID/server.R): File that contains all the commands required by R to execute **Genotype-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
-    - [`www/`](./shiny-server/www/Genotype-ID/www): Contains the files necesary to deploy the **user interface** used by **Genotype-ID**.
+  - [`Genotype-ID/`](./shiny-server/www/Genotype-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Genotype-ID: SSR-ID**.
+    - [`Ramorum_ssr.csv`](./shiny-server/www/Genotype-ID/Ramorum_ssr.csv): Curated database of SSR/Microsatellite molecular markers used as references in **SSR-ID** for *Phytopthora ramorum*. This file serves as input for `server.R`.
+    - [`server.R`](./shiny-server/www/Genotype-ID/server.R): File that contains all the commands required by R to execute **SSR-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
+    - [`www/`](./shiny-server/www/Genotype-ID/www): Contains the files necesary to deploy the **user interface** used by **SSR-ID**.
       - [`SSR_Example_Data_ramorum.xlsx`](./shiny-server/www/Genotype-ID/www/SSR_Example_Data_ramorum.xlsx): The `SSR_Example_Data_ramorum.xlsx` file contains a template to format the queries as an example for the end users of **Genotype-ID**.
       - [`index.html`](./shiny-server/www/Genotype-ID/www/index.html): User interface file for **Genotype-ID**. More information available on the **Shiny Arquitecture** region.
   - [`MLST/`](./shiny-server/www/MLST/): Contains all the folders and files to be used by the shiny server for the deployment of **MLST-ID**.
