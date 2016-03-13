@@ -69,18 +69,30 @@
           <label style="align:center">
             <h4>Data Input</h3>
           </label>
-          <!--  MICROBE-ID customization: From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications         of processes and inputs for the shiny script file (../shiny.R) are found here. To determine which variable communicates with which <div> in the index.html file, search in the server.R filefor the line with the class=shiny*. (e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">. For more information refer to the shiny manual -->
+          <!--  MICROBE-ID customization: From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications         of processes and inputs for the shiny script file (../shiny.R) are found here. To determine which variable communicates with which <div> in the index.html file, search in the server.R file for the line with the class=shiny*. (e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">. For more information refer to the shiny manual -->
           <textarea id="table" name="table" class="shiny-bound-input" cols="25" rows="7" style="width: 100%"></textarea>
           <br>
         </form>
         <form class="text">
-          <p>
-            <label>Random Seed (This will affect bootstrap values and the layout of the minimum spanning network.)</label>
-            <!-- MICROBE-ID customization: Change the default value of your seed depending on how you want the  minimum spanning network to appear initially. -->
-            <input type="number" name="seed" id="seed" value="9449" min="0" />
-          </p>
-          <button type="submit" class="btn btn-success collapse in" data-toggle="collapse" data-target="#input">Submit genotype</button>
-        </form>
+            <p>
+              <!-- MICROBE-ID customization: In this <div> you can find the differerent genetic distances to be used. Note how all the <option value = > tags have a smaller          name. These names communicate with the server.R file of Binary-ID to modify the distance used (lines 29-36). Be careful if you are changing these lines and modify the correspondent server.R file-->
+              <div class="control-group span3">
+                <label class="control-label" for="distance">Choose a genetic distance:</label>
+                <select id="distance" style="width:300px">
+                  <option value="bruvo" selected="selected">Bruvo's Distance (SSR Data Only)</option>
+                  <option value="nei">Nei's distance</option>
+                  <option value="edwards">Edwards' distance</option>
+                  <option value="rogers">Rogers' or Classic Eucledian distance </option>
+                  <option value="reynolds">Reynolds' distance</option>
+                  <option value="provesti">Absolute/Provesti's distance</option>
+                </select>
+              </div>
+              <label>Random Seed (This will affect bootstrap values and the layout of the minimum spanning network.)</label>
+              <!-- MICROBE-ID customization: Change the default value of your seed depending on how you want the  minimum spanning network to appear initially. -->
+              <input type="number" name="seed" id="seed" value="9449" min="0" />
+            </p>
+            <button type="submit" class="btn btn-success collapse in" data-toggle="collapse" data-target="#input">Submit genotype</button>
+          </form>
     </div>
   </div>
 
