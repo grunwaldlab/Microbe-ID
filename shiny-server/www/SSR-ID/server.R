@@ -20,9 +20,19 @@ df <- read.table("Ramorum_ssr.csv", header = TRUE, sep = "\t")
 df.m <- as.matrix(df)
 
 
+get_dist_fun <- function(dist){
+  switch(dist,
+         nei = 'nei.dist',
+         edwards = 'edwards.dist',
+         rogers = 'rogers.dist',
+         reynolds = 'reynolds.dist',
+         provesti = 'provesti.dist',
+         bruvo = 'bruvo.dist')
+}
+
 
 ########### MICROBE-ID customization ############
-# Change these values to the repeat lenghts and names of your SSR markers.
+# Change these values to the repeat lengths and names of your SSR markers.
 ssr <- c(PrMS6       = 3,
          PRMS9c3     = 2,
          PrMS39a     = 2,
@@ -113,6 +123,11 @@ shinyServer(function(input, output) {
     return(input$seed)
   })
 
+# Matching the distances from the user interface (<select id="distance" style="width:300px">)
+  distfun <- reactive({
+    get_dist_fun(input$distance)
+  })
+
 # Greyscale slider settings from the user interface (<input id="integer" type="slider" name="integer" value="3" class="jslider" data-from="0" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>)
 
   slider <- reactive({
@@ -131,14 +146,23 @@ shinyServer(function(input, output) {
       return(10L)
     }
     set.seed(seed())
-    tree <- try(bruvo.boot(data.genoid(), replen = ssr, sample = input$boot,
-                       tree = input$tree, cutoff = 50), silent = TRUE)
+    if (distfun() == "bruvo.dist"){
+      BOOTFUN <- function(x){
+        bruvo.boot(x, replen = ssr, sample = input$boot, tree = input$tree,
+          cutoff = 50, showtree = FALSE)
+      }
+    } else {
+      BOOTFUN <- function(x){
+        aboot(x, distance = distfun(), sample = input$boot, showtree = FALSE,
+              tree = input$tree, cutoff = 50)
+      }
+    }
+    tree <- try(BOOTFUN(data.genoid()), silent = TRUE)
 
     # This is a catch to avoid having missing data within the distance matrix.
     if ("try-error" %in% class(tree)){
       for (i in sample(100)){
-        tree <- try(bruvo.boot(data.genoid(), replen = ssr, sample = input$boot,
-                               tree = input$tree, cutoff = 50), silent = TRUE)
+        tree <- try(BOOTFUN(data.genoid()), silent = TRUE)
         if (!"try-error" %in% class(tree)){
           print(paste0("Success: ", i))
           break
@@ -155,7 +179,12 @@ shinyServer(function(input, output) {
 
 #Minimum spanning network creation
   msnet <- reactive ({
-    msn.plot <- bruvo.msn(data.genoid(), replen = ssr)
+    if (distfun() == "bruvo.dist"){
+      msn.plot <- bruvo.msn(data.genoid(), replen = ssr)
+    } else {
+      DIST <- match.fun(distfun())
+      msn.plot <- poppr.msn(data.genoid(),distmat=DIST(data.genoid()),showplot=FALSE)
+    }
     V(msn.plot$graph)$size <- 3
     return(msn.plot)
   })
