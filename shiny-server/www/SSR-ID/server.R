@@ -27,6 +27,7 @@ ssr <- c(PrMS6       = 3,
          PRMS9c3     = 2,
          PrMS39a     = 2,
          PrMS45      = 4,
+         PrMS43ab    = 2,
          KI18        = 2,
          KI64        = 2,
          ILVOPrMS131 = 2
