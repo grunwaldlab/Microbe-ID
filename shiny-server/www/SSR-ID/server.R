@@ -132,8 +132,10 @@ shinyServer(function(input, output) {
 # Greyscale slider settings from the user interface (<input id="integer" type="slider" name="integer" value="3" class="jslider" data-from="0" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE"/>)
 
   slider <- reactive({
-    slider.a <- (input$integer)
-    return(slider.a)
+    if (is.null(input$integer)){
+      return(3)
+    }
+    return(input$integer)
   })
 
 # Processing the results. The functions here create the figures to be displayed by the user interface.
