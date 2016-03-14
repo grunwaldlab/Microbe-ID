@@ -9,8 +9,8 @@
 	<meta name="description" content="">
 	<meta name="author" content="root" >
 	<!-- Le styles, make sure that the Bootstrap_files folder is in the same directory than your homepage -->
-	<link href="Bootstrap_files/bootstrap.css" rel="stylesheet">
-	<link href="Bootstrap_files/phytophthora-lab.css" rel="stylesheet">
+	<link href="Bootstrap_files/css/bootstrap.css" rel="stylesheet">
+	<link href="Bootstrap_files/css/phytophthora-lab.css" rel="stylesheet">
 	<style>
 	#updates .modal-body {
 	max-height: 800px;
@@ -24,7 +24,7 @@
 
       html,
       body {
-        height: 100%;
+        height: 40%;
         /* The html and body elements cannot have any padding or margin. */
       }
 
@@ -69,7 +69,7 @@
 
 	</style>
 	<!-- Recalling stylesheets and icons. Once again, make sure that the Bootstrap_files folder is in the same directory than your homepage -->
-	<link href="Bootstrap_files/bootstrap-responsive.css" rel="stylesheet">
+	<!-- link href="Bootstrap_files/css/bootstrap-responsive.css" rel="stylesheet">
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 	<script src="../assets/js/html5shiv.js"></script>
@@ -83,27 +83,23 @@
 </head>
 <body>
 	<div id="wrap">
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Names of the links are between the <a></a> tags. -->
-					<a class="brand" href="./index.html">Microbe-ID</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li><a href="./index.html">Home</a></li>
-							<li><a href="./seq-id.html">Sequence-ID</a></li>
-							<li><a href="./geno-id.html">Genotype-ID</a></li>
-							<li><a href="./about.html">About</a></li>
-						</ul>
-					</div><!--/.nav-collapse -->
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="./index.html">Microbe-ID</a>
+				</div>
+					<ul class="nav navbar-nav">
+						<!-- Names of the links are between the <a></a> tags. -->
+						<li class="./index.html"><a href="./index.html">Home</a></li>
+						<li><a href="./seq-id.html">Sequence-ID</a></li>
+						<li><a href="./geno-id.html">Genotype-ID</a></li>
+						<li><a href="./about.html">About</a></li>
+					</ul>
+					<!--/.nav-collapse -->
 				</div>
 			</div>
-		</div>
+		</nav>
+	</div>
 		<div class="container">
 		<!-- Change this image to the one of your preference! -->
 			<h1>Sequence-ID</h1>
@@ -137,14 +133,14 @@
 							<div class="control-group">
 								<label class="control-label">Job name</label>
 								<div class="controls">
-									<input type="text" class="input-xlarge span6" id="job_name" name="job_name" data-content="Enter a name for the job." data-original-title="Job Name" placeholder="Enter job name here">
+									<input type="text" class="form-control span4" id="job_name" name="job_name" data-content="Enter a name for the job." data-original-title="Job Name" placeholder="Enter job name here">
 								</div>
 							</div>
 							<!-- Sequence Form -->
 							<div class="control-group">
 								<label class="control-label" for="textarea" >Input FASTA format sequence here:</label>
 								<div class="controls">
-									<textarea rows="11" class="input-xlarge span6" id="fasta_file" name="fasta_file" placeholder=" >Query file
+									<textarea rows="11" class="form-control span6" id="fasta_file" name="fasta_file" placeholder=" >Query file
 										GTGAGTACCTTGGGCTGCCTTTATATATAATCTAGAAACAAGGCCCCTGTAAGGCCCTTTCCTTCCTCCTCCCCAAAGCTATAAAAGATATTTGGGTAGAATTCACAGCTTCAGGCTATGGAACTCCTGGATTCCCTCCTTCCACTTCCACCCTACTGCAGAGATGCTGAGAAAGTCTGGGAGGGTTTTTCTAAAAGCTAAGCTGGGCCAAATAGCCAGGTTCAAGTCAGTACATGAAGAGTTGTGGTTCTAAATTCCTTCCCTACTCCAGCTCCAAATTTCATTTTAGTTCCACTTTTGGGCCTAACCAGCTAAAGGTCCCCACCCAGCTCCTGCCTATCTAGTCACTGCATATGGCAGACCTTGAAAGTCCTATCTCAAAGCAGCAGAATTATCAGTTATCTGTCTTGTCATGGAAAAGAGAGATAAGCAGAGGCCTGAGAAAGGAGTCTGGAGCTCCAGCTTCTGGTACACATCCTTGTGTTACCTGGATATGATCCTATTCCTCTAGAG"></textarea>
 									</div>
 								</div>
@@ -161,15 +157,17 @@
 					</div>
 			</div>
 			<!-- Start Of Modal popup showing the site help-->
-			<div class="modal fade hide" id="updates">
-				<div class="modal-header">
-					<a class="close" data-dismiss="modal">&times;</a>
-					<h2>Help</h2>
-					<p>Choose the appropriate tab for help.</p>
-					<ul class="nav nav-pills">
-						<li class="active"><a href="#sequence" data-toggle="pill">Sequence</a></li>
-					</ul>
-				</div>
+			<div class="modal fade" id="updates" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<a class="close" data-dismiss="modal">&times;</a>
+							<h2>Help</h2>
+							<p>Choose the appropriate tab for help.</p>
+							<ul class="nav nav-pills">
+								<li class="active"><a href="#sequence" data-toggle="pill">Sequence</a></li>
+							</ul>
+						</div>
 				<div class="modal-body">
 					<div class="pill-content">
 						<div class="pill-pane active" id="sequence">
@@ -198,38 +196,28 @@
 							</div>
 							</div>
 					<div class="modal-footer">
-								<a href="#" class="btn" data-dismiss="modal">Close</a>
+								<a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>
 							</div>
 				</div>			</div>
+					</div>
+				</div>
 			<div id="push"></div>
 		</div>
-
 	</div>
 
-
-
-<div id="footer">
-	<div class="container">
-		<br>
-		<p>Add some content here </p>
+	<div id="footer">
+		<div class="container">
+			<br>
+			<p>Add some content here </p>
+		</div>
 	</div>
-</div>
-															<!-- Le javascript
-															================================================== -->
-															<!-- Placed at the end of the document so the pages load faster -->
-															<script src="Bootstrap_files/jquery.js"></script>
-															<script src="Bootstrap_files/bootstrap-transition.js"></script>
-															<script src="Bootstrap_files/bootstrap-alert.js"></script>
-															<script src="Bootstrap_files/bootstrap-modal.js"></script>
-															<script src="Bootstrap_files/bootstrap-dropdown.js"></script>
-															<script src="Bootstrap_files/bootstrap-scrollspy.js"></script>
-															<script src="Bootstrap_files/bootstrap-tab.js"></script>
-															<script src="Bootstrap_files/bootstrap-tooltip.js"></script>
-															<script src="Bootstrap_files/bootstrap-popover.js"></script>
-															<script src="Bootstrap_files/bootstrap-button.js"></script>
-															<script src="Bootstrap_files/bootstrap-collapse.js"></script>
-															<script src="Bootstrap_files/bootstrap-carousel.js"></script>
-															<script src="Bootstrap_files/bootstrap-typeahead.js"></script>
-															<script src="Bootstrap_files/holder.js"></script>
-															<script src="validate.js"></script>
-</body></html>
+	<!-- Le javascript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="Bootstrap_files/js/jquery.js"></script>
+	<script src="Bootstrap_files/js/bootstrap.js"></script>
+	<script src="validate.js"></script>
+</body>
+</html>
