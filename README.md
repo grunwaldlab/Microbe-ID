@@ -1,7 +1,7 @@
 Microbe-ID
 ===============
 
-Microbe-ID is a web-based toolbox for identifcation and genotyping of organisms.
+Microbe-ID is a web-based toolbox for identification and genotyping of organisms.
 
 ## Components
 
@@ -20,7 +20,6 @@ Microbe-ID contains two main applications: **Sequence-ID** and **Genotype-ID**.
 - [`seq-id.html`](./seq-id.html): Front page of **Sequence-ID**. Provides the user with forms to submit query sequences to be processed by BLAST for identificaiton of species based on similarity. This page provides the informatiom and connections to the `blast.cgi` script, which runs BLAST using PERL. The user has to provide a curated database.
 - [`geno-id.html`](./geno-id.html): Front page of **Genotype-ID: SSR-ID**. Provides the user with examples, forms and instructions on how to submit **SSR/Microsatellite** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/SSR-ID/www/index.html`](./shiny-server/www/SSR-ID/www/index.html).
 - [`MLST.html`](./MLST.html): Front page of **MLST-ID**. Provides the user with examples, forms and instructions on how to submit **Multi Locus Sequence Type (MLST)**  queries to be processed by R using shiny. This page provides am iFrame to [`shiny-server/www/MLST/www/index.html`](./shiny-server/www/MLST/www/index.html).
-- [`binary-id.html`](./binary-id.html): Front page of **Genotype-ID**. This page provides the user with examples, forms and instructions on how to submit **Codominant/Binary** queries to be processed by R using shiny. This page provides an iFrame to [`shiny-server/www/Binary-ID/www/index.html`](./shiny-server/www/Binary-ID/www/index.html).
 - [`about.html`](./about.html): This contact page can be customized.
 
 The site can be customized further by deleting pages or adding additional pages as needed.
@@ -33,23 +32,17 @@ The site can be customized further by deleting pages or adding additional pages 
 
 #### Shiny applications
 - [`shiny-server/www/`](./shiny-server/www/): Contains all the folders and files to be used by the shiny server.
-  - [`Binary-ID/`](./shiny-server/www/Binary-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Binary-ID**.
-    - [`Aeut.txt`](./shiny-server/www/Binary-ID/Aeut.txt): Curated database of AFLP molecular markers used as references in **Binary-ID**. This file serves as input for `server.R`.
-    - [`server.R`](./shiny-server/www/Binary-ID/server.R): File that contains all the commands required by R to execute **Binary-ID** by R. This file is handled by the shiny server.  More information available on the **Shiny Arquitecture** region.
-    - [`www/`](./shiny-server/www/Binary-ID/www): Contains the files necesary to deploy the **user interface** used by **Binary-ID**.
-      - [`AFLP_Aphanomyces.xlsx`](./shiny-server/www/Binary-ID/www/AFLP_Aphanomyces.xlsx): The `AFLP_Aphanomyces.xlsx` file contains a template to format the queries as an example for the end users of **Binary-ID**.
-      - [`index.html`](./shiny-server/www/Binary-ID/www/index.html): User interface file for **Binary-ID**. More information available on the **Shiny Arquitecture** region.
   - [`SSR-ID/`](./shiny-server/www/SSR-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Genotype-ID: SSR-ID**.
     - [`Ramorum_ssr.csv`](./shiny-server/www/SSR-ID/Ramorum_ssr.csv): Curated database of SSR/Microsatellite molecular markers used as references in **SSR-ID** for *Phytopthora ramorum*. This file serves as input for `server.R`.
     - [`server.R`](./shiny-server/www/SSR-ID/server.R): File that contains all the commands required by R to execute **SSR-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
-    - [`www/`](./shiny-server/www/SSR-ID/www): Contains the files necesary to deploy the **user interface** used by **SSR-ID**.
+    - [`www/`](./shiny-server/www/SSR-ID/www): Contains the files necessary to deploy the **user interface** used by **SSR-ID**.
       - [`SSR_Example_Data_ramorum.xlsx`](./shiny-server/www/Genotype-ID/www/SSR_Example_Data_ramorum.xlsx): The `SSR_Example_Data_ramorum.xlsx` file contains a template to format the queries as an example for the end users of **Genotype-ID**.
-      - [`index.html`](./shiny-server/www/Genotype-ID/www/index.html): User interface file for **Genotype-ID**. More information available on the **Shiny Arquitecture** region.
+      - [`index.html`](./shiny-server/www/Genotype-ID/www/index.html): User interface file for **Genotype-ID**. More information available on the **Shiny Architecture** region.
   - [`MLST/`](./shiny-server/www/MLST/): Contains all the folders and files to be used by the shiny server for the deployment of **MLST-ID**.
     - [`server.R`](./shiny-server/www/MLST/server.R): File that contains all the commands required by R to execute **MLST-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
     - [`www/`](./shiny-server/www/MLST/www): Contains the files necessary to deploy the **user interface** used by **MLST-ID**.
       - [`example.html`](./shiny-server/www/MLST/www/example.html): HTML page with examples for **MLST-ID** query formatting.
-      - [`index.html`](./shiny-server/www/MLST/www/index.html): User interface file for **MLST-ID**. More information available on the **Shiny Arquitecture** region.
+      - [`index.html`](./shiny-server/www/MLST/www/index.html): User interface file for **MLST-ID**. More information available on the **Shiny Architecture** region.
       - [`help.html`](./shiny-server/www/MLST/www/help.html): Help and tutorials for **MLST-ID** use.
     - [`test-dataset/`](./shiny-server/www/MLST/test-dataset): Contains the `FASTA` files used in several tests by **MLST-ID**.
     - **MLST-ID** Contains a copy of the `Bootstrap_files/` folder as the `help.html` and `example.html` pages require some of the files. This should not considerably affect performance or size of the deployment application.
@@ -75,7 +68,7 @@ To install Microbe-ID on your server you need the following components and appli
 ### For the R-based apps of Genotype-ID
 - A self-hosted [shiny](http://www.rstudio.com/shiny/) R server session running on your server.
 - Two [shiny R scripts](./shiny-server/www/Readme.md) for server (`server.R`) and user interface (`ui.R` or `index.html`), respectively.
-- A custom file input for each of the genotyping modules (`Genotype-ID`, `MLST-ID` or `Binary-ID`, each has a description and example in the `shiny-server` folder).
+- A custom file input for each of the genotyping modules (`Genotype-ID` or `MLST-ID`, each has a description and example in the `shiny-server` folder).
 
 ### For Sequence-ID
 - Your custom FASTA curated database for **Sequence-ID**. This database
@@ -107,14 +100,14 @@ For more info in `Shiny Server` please read:
   - Create the database for your custom `BLAST` search using the `makeblastdb` command that comes with the blast binaries.
   - Change the path of the `blastn` executable and the `BLAST` database in the `blast.cgi` file.
 
-6. Integrate the **Genotype-ID** modules into your custom webpage by changing the paths on the `frames` in the ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['binary-id.html'](./binary-id.html) files.
+6. Integrate the **Genotype-ID** modules into your custom webpage by changing the paths on the `frames` in the ['geno-id.html'](./geno-id.html) and ['MLST.html'](./MLST.html) files.
 
 
 ## Customization
 
 ### Genotype-ID
 
-- Customize each html file to your needs including for example ['index.html'](./index.html), ['seq-id.html'](./seq-id.html), ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['binary-id.html'](./binary-id.html), ['about.html'](./about.html). Instructions for customizations are provided inside each html document as comments starting with `<!--MICROBE-ID customization: ...>`. Please follow the directions of these tags carefully.
+- Customize each html file to your needs including for example ['index.html'](./index.html), ['seq-id.html'](./seq-id.html), ['geno-id.html'](./geno-id.html), ['MLST.html'](./MLST.html), ['about.html'](./about.html). Instructions for customizations are provided inside each html document as comments starting with `<!--MICROBE-ID customization: ...>`. Please follow the directions of these tags carefully.
 - Remove unnecessary files and add any additional pages for your site.
 - Images and additional files can be added to the `img/` and `files/` folders respectively. Images or files can be added to any of the `html` pages using HTML5. More information on HTML5 image tags [here](http://www.w3schools.com/html/html_images.asp)
 - Customize each `server.R` and `ui.R/index.html` file required by shiny for each application under [shiny-server/www](./shiny-server/www).
@@ -129,4 +122,4 @@ For more info in `Shiny Server` please read:
 
 # Example implementation
 
-A working implementation of Microbe-ID for plant pathogens in the genus *Phytophthora* can be found at [Phytophthora-ID](http://phytophthora-id.org). See the sample code on [github](https://github.com/grunwaldlab/phytophthora_id)  for this implementation.
+A working implementation of Microbe-ID for plant pathogens in the genus *Phytophthora* can be found at [Phytophthora-ID](http://phytophthora-id.org). See the sample code on [github](https://github.com/grunwaldlab/phytophthora_id) for this implementation.
