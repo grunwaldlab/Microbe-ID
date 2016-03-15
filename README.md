@@ -34,12 +34,12 @@ The site can be customized further by deleting pages or adding additional pages 
 - [`shiny-server/www/`](./shiny-server/www/): Contains all the folders and files to be used by the shiny server.
   - [`SSR-ID/`](./shiny-server/www/SSR-ID/): Contains all the folders and files to be used by the shiny server for the deployment of **Genotype-ID: SSR-ID**.
     - [`Ramorum_ssr.csv`](./shiny-server/www/SSR-ID/Ramorum_ssr.csv): Curated database of SSR/Microsatellite molecular markers used as references in **SSR-ID** for *Phytopthora ramorum*. This file serves as input for `server.R`.
-    - [`server.R`](./shiny-server/www/SSR-ID/server.R): File that contains all the commands required by R to execute **SSR-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
+    - [`server.R`](./shiny-server/www/SSR-ID/server.R): File that contains all the commands required by R to execute **SSR-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Architecture** region.
     - [`www/`](./shiny-server/www/SSR-ID/www): Contains the files necessary to deploy the **user interface** used by **SSR-ID**.
       - [`SSR_Example_Data_ramorum.xlsx`](./shiny-server/www/Genotype-ID/www/SSR_Example_Data_ramorum.xlsx): The `SSR_Example_Data_ramorum.xlsx` file contains a template to format the queries as an example for the end users of **Genotype-ID**.
       - [`index.html`](./shiny-server/www/Genotype-ID/www/index.html): User interface file for **Genotype-ID**. More information available on the **Shiny Architecture** region.
   - [`MLST/`](./shiny-server/www/MLST/): Contains all the folders and files to be used by the shiny server for the deployment of **MLST-ID**.
-    - [`server.R`](./shiny-server/www/MLST/server.R): File that contains all the commands required by R to execute **MLST-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Arquitecture** region.
+    - [`server.R`](./shiny-server/www/MLST/server.R): File that contains all the commands required by R to execute **MLST-ID** by R. This file is handled by the shiny server. More information available on the **Shiny Architecture** region.
     - [`www/`](./shiny-server/www/MLST/www): Contains the files necessary to deploy the **user interface** used by **MLST-ID**.
       - [`example.html`](./shiny-server/www/MLST/www/example.html): HTML page with examples for **MLST-ID** query formatting.
       - [`index.html`](./shiny-server/www/MLST/www/index.html): User interface file for **MLST-ID**. More information available on the **Shiny Architecture** region.
