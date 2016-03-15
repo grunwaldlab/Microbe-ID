@@ -93,28 +93,25 @@ shinyServer(function(input, output) {
     } else {
       input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
       colnames(input_table) <- colnames(df.m)
-      input_data.genoid     <- input_table[[1]]
       df.m <- rbind(df.m, input_table, deparse.level = 0)
-      df.m <- as.data.frame(df.m)
-      gen  <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2],
-                        ind.names = df.m[, 1])
-      #Adding colors to the tip values according to the clonal lineage
-      gen$other$tipcolor <- pop(gen)
-      gen$other$input_data.genoid <- input_data.genoid
-      ngroups <- nPop(gen)
+      gen  <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", 
+                        pop = df.m[, 2], ind.names = df.m[, 1])
+      # Adding colors to the tip values according to the clonal lineage
+      tipcolor <- pop(gen)
+      other(gen)$input_names <- input_table[[1]]
       ########### MICROBE-ID customization ############
-      # Change these colors to represent the groups defined in your data.genoid set.
+      # Change these colors to represent the groups defined in your data set.
       #
       defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod", "red")
       #
       # Change heat.colors to whatever color palette you want to represent
-      # submitted data.genoid.
+      # submitted data.
       #
-      input_colors <- heat.colors(ngroups - length(defined_groups))
+      input_colors <- heat.colors(nPop(gen) - length(defined_groups))
       #
       ##################################
-      levels(gen$other$tipcolor) <- c(defined_groups, input_colors)
-      gen$other$tipcolor <- as.character(gen$other$tipcolor)
+      levels(tipcolor)    <- c(defined_groups, input_colors)
+      other(gen)$tipcolor <- as.character(tipcolor)
       return(gen)
     }
   })
@@ -135,8 +132,8 @@ shinyServer(function(input, output) {
     return(input$integer)
   })
 
-# Processing the results. The functions here create the figures to be displayed by the user interface.
-# Bootstrap of a distance tree out of the data
+# Processing the results. The functions here create the figures to be displayed
+# by the user interface. Bootstrap of a distance tree out of the data
   boottree <- reactive({
     # Running the tree, setting a cutoff of 50 and saving it into a variable to
     # be plotted (tree)
@@ -220,7 +217,7 @@ shinyServer(function(input, output) {
       text(x = 0.5, y = 0.9, "No SSR data has been input.", cex = 1.6, col = "white")
     } else {
       set.seed(seed())
-      plot.minspan(data.genoid(), msnet(), gadj=slider(), inds = data.genoid()$other$input_data.genoid)
+      plot.minspan(data.genoid(), msnet(), gadj=slider(), inds = data.genoid()$other$input_names)
     }
   })
 
@@ -251,7 +248,7 @@ shinyServer(function(input, output) {
     content = function(file) {
       pdf(file, width=11, height=8.5)
       set.seed(seed())
-      plot.minspan( data.genoid(), msnet(), gadj=slider(), inds = data.genoid()$other$input_data.genoid)
+      plot.minspan( data.genoid(), msnet(), gadj=slider(), inds = data.genoid()$other$input_names)
       dev.off()
     }
   )
