@@ -5,19 +5,18 @@ library(ape)
 library(igraph)
 
 #####################################################
-# IMPORTANT: ALl the functions written before line 68 refer to functions loaded by R
-# before shiny is deployed and executes the custom functions. These functions are definitions of'
-# global functions and variables. Make sure to add these kinds of functions here. For more information
-# refer ro the shiny manual.
+# IMPORTANT: ALl the functions written before line 68 refer to functions loaded
+# by R before shiny is deployed and executes the custom functions. These
+# functions are definitions of' global functions and variables. Make sure to add
+# these kinds of functions here. For more information refer ro the shiny manual.
 ####################################################
 
 
 ########### MICROBE-ID customization ############
 # Here's where you add your database file (Comma Separated Object). Make sure
 # that the database is in the same folder than this file (server.R)
-df <- read.table("Ramorum_ssr.csv", header = TRUE, sep = "\t")
+df <- read.table("Ramorum_ssr.csv", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 ##################################
-df.m <- as.matrix(df)
 
 
 get_dist_fun <- function(dist){
@@ -67,21 +66,33 @@ plot.tree <- function (tree, type = input$tree, ...){
 
 ## 2. Minimum spanning network
 plot.minspan <- function(gen, mst, gadj=3, inds = "none", ...){
-  plot_poppr_msn(gen, mst, gadj=gadj, vertex.label.color = "firebrick", inds = inds,
-                 vertex.label.font = 2, vertex.label.dist = 0.5, nodelab = 100,
-                 quantiles = FALSE)
+  plot_poppr_msn(
+    gen,         # genotype data
+    mst,         # minimum spanning tree
+    gadj = gadj, # grey adjustment parameter
+    vertex.label.color = "firebrick",
+    inds = inds, # samples to be labeled
+    vertex.label.font = 2,
+    vertex.label.dist = 0.5,
+    nodelab = 100,
+    quantiles = FALSE
+  )
 }
 
-########### MICROBE-ID customization  ############
-# From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications
-# of processes and outputs for the User interface file (in this case, the www/index.html) are found here.
-#
-# INPUT FROM index.html: All variables that start with index$...
-# OUTPUT TO index.html: All variables that start with output$...
-#
-# To determine which variable communicates with whic <div> in the index.html file, search for the line with the
-# class=shiny*.(e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">.
-#
+########### MICROBE-ID customization  ############ 
+# From this line on, every one of the functions is going to be used by shiny in
+# a reactive way. All modifications of processes and outputs for the User
+# interface file (in this case, the www/index.html) are found here.
+# 
+# INPUT FROM 
+#   index.html: All variables that start with index$... 
+# OUTPUT TO
+#   index.html: All variables that start with output$...
+# 
+# To determine which variable communicates with which <div> in the index.html
+# file, search for the line with the class=shiny*.(e.g. The input$table variable
+# is gonna be filled with info from the <div class="shiny-bound-input" id="table">.
+# 
 # For more information refer to the shiny manual
 
 shinyServer(function(input, output) {
@@ -92,10 +103,10 @@ shinyServer(function(input, output) {
       return(NULL)
     } else {
       input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
-      colnames(input_table) <- colnames(df.m)
-      df.m <- rbind(df.m, input_table, deparse.level = 0)
-      gen  <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", 
-                        pop = df.m[, 2], ind.names = df.m[, 1])
+      colnames(input_table) <- colnames(df)
+      df  <- rbind(df, input_table, deparse.level = 0)
+      gen <- df2genind(df[, -c(1, 2)], ploidy = 2, sep = "/", 
+                        pop = df[, 2], ind.names = df[, 1])
       # Adding colors to the tip values according to the clonal lineage
       tipcolor <- pop(gen)
       other(gen)$input_names <- input_table[[1]]
