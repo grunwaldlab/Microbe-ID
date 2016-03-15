@@ -93,24 +93,24 @@ shinyServer(function(input, output) {
     } else {
       input_table <- read.table(text = input$table, stringsAsFactors = FALSE)
       colnames(input_table) <- colnames(df.m)
-      input_data.genoid            <- input_table[[1]]
+      input_data.genoid     <- input_table[[1]]
       df.m <- rbind(df.m, input_table, deparse.level = 0)
       df.m <- as.data.frame(df.m)
       gen  <- df2genind(df.m[, -c(1, 2)], ploid = 2, sep = "/", pop = df.m[, 2],
                         ind.names = df.m[, 1])
       #Adding colors to the tip values according to the clonal lineage
-      gen$other$tipcolor   <- pop(gen)
+      gen$other$tipcolor <- pop(gen)
       gen$other$input_data.genoid <- input_data.genoid
-      ngroups              <- length(levels(gen$other$tipcolor))
+      ngroups <- nPop(gen)
       ########### MICROBE-ID customization ############
       # Change these colors to represent the groups defined in your data.genoid set.
       #
-      defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod","red")
+      defined_groups <- c("blue", "darkcyan", "darkolivegreen", "darkgoldenrod", "red")
       #
       # Change heat.colors to whatever color palette you want to represent
       # submitted data.genoid.
       #
-      input_colors   <- heat.colors(ngroups - length(defined_groups))
+      input_colors <- heat.colors(ngroups - length(defined_groups))
       #
       ##################################
       levels(gen$other$tipcolor) <- c(defined_groups, input_colors)
