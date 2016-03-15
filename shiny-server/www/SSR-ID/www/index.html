@@ -26,7 +26,7 @@
 <link rel="stylesheet" type="text/css" href="shared/highlight/rstudio.css"/>
 <link rel="stylesheet" type="text/css" href="shared/shiny-showcase.css"/>
 
-  <title>Microbe-ID ID: SSR-ID (SSR identification for strains of P. ramorum)</title>
+  <title>Microbe-ID: SSR-ID (SSR identification for strains of P. ramorum)</title>
 </head>
 
 <body>
@@ -75,7 +75,7 @@
         </form>
         <form class="text">
             <p>
-              <!-- MICROBE-ID customization: In this <div> you can find the differerent genetic distances to be used. Note how all the <option value = > tags have a smaller          name. These names communicate with the server.R file of Binary-ID to modify the distance used (lines 29-36). Be careful if you are changing these lines and modify the correspondent server.R file-->
+              <!-- MICROBE-ID customization: In this <div> you can find the different genetic distances to be used. Note how all the <option value = > tags have a smaller name. These names communicate with the server.R file of Binary-ID to modify the distance used (lines 29-36). Be careful if you are changing these lines and modify the correspondent server.R file-->
               <div class="control-group span3">
                 <label class="control-label" for="distance">Choose a genetic distance:</label>
                 <select id="distance" style="width:300px">
@@ -102,7 +102,7 @@
     <div class="span9 offset1">
       <h4>Analysis</h4>
       <p>Select between a distance tree with bootstrap support values or a minimum spanning network</p>
-      <!-- MICROBE-ID customization: In this <div class = "tabbable"> we created two different tabs: Distance trees (line 86) and minimum spanning networks (line 89). These lines represent the hyperlinks to the real tabs, defined in lines 94 (distance tree) and 140 (minimum spanning network). Be sure that the <a href= #value> correspond to the precise tab-->
+      <!-- MICROBE-ID customization: In this <div class = "tabbable"> we created two different tabs: Distance trees (line 109) and minimum spanning networks (line 112). These lines represent the hyperlinks to the real tabs, defined in lines 117 (distance tree) and 164 (minimum spanning network). Be sure that the <a href= #value> correspond to the precise tab-->
       <div class="tabbable">
         <ul class="nav nav-tabs">
           <li class="active">
@@ -165,7 +165,6 @@
             <div class="span12 well">
               <h3>Minimum Spanning Network</h3>
               <form id="form">
-                <span class="help-block">Note: Distances are calculated using Bruvo's distance, which follows a stepwise mutation model.</span>
                 <div class="span3">
                   <!-- MICROBE-ID customization: Slider to control levels of grayness for the edges in the Minimum spanning networks. This line communicates with line 127 of server.R-->
                   <label class="control-label" for="integer">Use the slider to adjust the grey scale of the edge distances.</label>
@@ -180,8 +179,7 @@
                 </div>
               </form>
             </div>
-            <!-- MICROBE-ID customization: This <div id="MinSpanTree"> outputs the results of the minimum spanning network. Note that the div id is the same than the
-  variable output$MinSpanTree in of the server.R. READ THE SHINY DOCUMENTATION IN INPUTS/OUTPUTS TO UNDERSTAND HOW REACTIVE OUTPUTS WORK (http://shiny.rstudio.com/tutorial/lesson4/)-->
+            <!-- MICROBE-ID customization: This <div id="MinSpanTree"> outputs the results of the minimum spanning network. Note that the div id is the same as the variable output$MinSpanTree in of the server.R. READ THE SHINY DOCUMENTATION IN INPUTS/OUTPUTS TO UNDERSTAND HOW REACTIVE OUTPUTS WORK (http://shiny.rstudio.com/tutorial/lesson4/)-->
             <div id="MinSpanTree" class="shiny-plot-output" style="width: 100% ; height: 800px"></div>
           </div>
         </div>
