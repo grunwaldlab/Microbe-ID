@@ -10,8 +10,8 @@
 	<meta name="description" content="">
 	<meta name="author" content="root">
 	<!-- Le styles, make sure that the Bootstrap_files folder is in the same directory than your homepage -->
-	<link href="Bootstrap_files/bootstrap.css" rel="stylesheet">
-	<link href="Bootstrap_files/phytophthora-lab.css" rel="stylesheet">
+	<link href="Bootstrap_files/css/bootstrap.css" rel="stylesheet">
+	<link href="Bootstrap_files/css/phytophthora-lab.css" rel="stylesheet">
 	<style>
 		/* CUSTOMIZE THE CAROUSEL
 	-------------------------------------------------- */
@@ -152,7 +152,7 @@
 	  }
 	}
 	</style>
-	<link href="Bootstrap_files/bootstrap-responsive.css" rel="stylesheet">
+	<link href="Bootstrap_files/css/bootstrap-responsive.css" rel="stylesheet">
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 		<script src="../assets/js/html5shiv.js"></script>
@@ -167,29 +167,23 @@
 
 <body>
 	<div id="wrap">
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="brand" href="./index.html">Microbe-ID</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<!-- Names of the links are between the <a></a> tags. -->
-							<li class="./index.html"><a href="./index.html">Home</a></li>
-							<li><a href="./seq-id.html">Sequence-ID</a></li>
-							<li><a href="./geno-id.html">Genotype-ID</a></li>
-							<li><a href="./about.html">About</a></li>
-						</ul>
-					</div>
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="./index.html">Microbe-ID</a>
+				</div>
+					<ul class="nav navbar-nav">
+						<!-- Names of the links are between the <a></a> tags. -->
+						<li class="./index.html"><a href="./index.html">Home</a></li>
+						<li><a href="./seq-id.html">Sequence-ID</a></li>
+						<li><a href="./geno-id.html">Genotype-ID</a></li>
+						<li><a href="./about.html">About</a></li>
+					</ul>
 					<!--/.nav-collapse -->
 				</div>
 			</div>
-		</div>
-		<!-- MICROBE-ID Specific. Carousel: The carousel is defined as the image contents on the javascript that rotates
+		</nav>
+				<!-- MICROBE-ID Specific. Carousel: The carousel is defined as the image contents on the javascript that rotates
 	the front page images. Here, the tags <img> are for the images you want to add, the content
 	inside of the <div class="carousel-caption"> are the captions of the figure. inside of <h1>
 	its the title of the figure and inside <p class="lead:> the subcontent.
@@ -204,7 +198,7 @@
 						<div class="container">
 							<div class="carousel-caption">
 								<h1>Title page 1</h1>
-								<p class="lead">Carousel page 1. Modify text in line 207 of index.html</p>
+								<p class="lead">Carousel page 1. Modify text in line 201 of index.html</p>
 							</div>
 						</div>
 					</div>
@@ -214,7 +208,7 @@
 						<div class="container">
 							<div class="carousel-caption">
 								<h1>Title page 2</h1>
-								<p class="lead">Carousel page 2. Modify text in line 217 of index.html</p>
+								<p class="lead">Carousel page 2. Modify text in line 211 of index.html</p>
 							</div>
 						</div>
 					</div>
@@ -224,7 +218,7 @@
 						<div class="container">
 							<div class="carousel-caption">
 								<h1>TItle page 3</h1>
-								<p class="lead">Carousel page 3. Modify text in line 227 of index.html</p>
+								<p class="lead">Carousel page 3. Modify text in line 221 of index.html</p>
 							</div>
 						</div>
 					</div>
@@ -270,20 +264,7 @@
 	<!-- Le javascript
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="Bootstrap_files/jquery.js"></script>
-	<script src="Bootstrap_files/bootstrap-transition.js"></script>
-	<script src="Bootstrap_files/bootstrap-alert.js"></script>
-	<script src="Bootstrap_files/bootstrap-modal.js"></script>
-	<script src="Bootstrap_files/bootstrap-dropdown.js"></script>
-	<script src="Bootstrap_files/bootstrap-scrollspy.js"></script>
-	<script src="Bootstrap_files/bootstrap-tab.js"></script>
-	<script src="Bootstrap_files/bootstrap-tooltip.js"></script>
-	<script src="Bootstrap_files/bootstrap-popover.js"></script>
-	<script src="Bootstrap_files/bootstrap-button.js"></script>
-	<script src="Bootstrap_files/bootstrap-collapse.js"></script>
-	<script src="Bootstrap_files/bootstrap-carousel.js"></script>
-	<script src="Bootstrap_files/bootstrap-typeahead.js"></script>
-	<script src="Bootstrap_files/holder.js"></script>
-</body>
-
+	<script src="Bootstrap_files/js/jquery.js"></script>
+	<script src="Bootstrap_files/js/bootstrap.js"></script>
+	</body>
 </html>

@@ -2,19 +2,31 @@
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <script src="shared/jquery.js" type="text/javascript"></script>
-  <script src="shared/shiny.js" type="text/javascript"></script>
-  <link rel="stylesheet" type="text/css" href="shared/shiny.css" />
-  <link rel="stylesheet" type="text/css" href="shared/slider/css/jquery.slider.min.css" />
-  <script src="shared/slider/js/jquery.slider.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="shared/bootstrap/css/bootstrap.min.css" />
-  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="shared/bootstrap/css/bootstrap-responsive.min.css" />
-  <link href="/twitter-bootstrap/twitter-bootstrap-v2/docs/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/shiny-singletons"></script>
+<script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.12.2];jqueryui[1.10.4];showdown[0.3.1];highlight.js[6.2];ionrangeslider[2.0.12];strftime[0.9.2];bootstrap[3.3.1];font-awesome[4.2.0]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<script src="shared/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="shared/showdown/compressed/showdown.js"></script>
+<script src="shared/highlight/highlight.pack.js"></script>
+<link href="shared/ionrangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
+<link href="shared/ionrangeslider/css/ion.rangeSlider.skinShiny.css" rel="stylesheet" />
+<script src="shared/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+<script src="shared/strftime/strftime-min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+<link href="shared/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<script src="shared/shiny-showcase.js"></script>
+<link rel="stylesheet" type="text/css" href="shared/highlight/rstudio.css"/>
+<link rel="stylesheet" type="text/css" href="shared/shiny-showcase.css"/>
 
-  <title>Microbe-ID ID: SSR-ID (SSR identification for strains of P. ramorum)</title>
+  <title>Microbe-ID: SSR-ID (SSR identification for strains of P. ramorum)</title>
 </head>
 
 <body>
@@ -57,18 +69,31 @@
           <label style="align:center">
             <h4>Data Input</h3>
           </label>
-          <!--  MICROBE-ID customization: From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications         of processes and inputs for the shiny script file (../shiny.R) are found here. To determine which variable communicates with which <div> in the index.html file, search in the server.R filefor the line with the class=shiny*. (e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">. For more information refer to the shiny manual -->
+          <!--  MICROBE-ID customization: From this line on, every one of the functions is going to be used by shiny in a reactive way. All modifications         of processes and inputs for the shiny script file (../shiny.R) are found here. To determine which variable communicates with which <div> in the index.html file, search in the server.R file for the line with the class=shiny*. (e.g. The input$table variable is gonna be filled with info from the <div class="shiny-bound-input" id="table">. For more information refer to the shiny manual -->
           <textarea id="table" name="table" class="shiny-bound-input" cols="25" rows="7" style="width: 100%"></textarea>
           <br>
         </form>
         <form class="text">
-          <p>
-            <label>Random Seed (This will affect bootstrap values and the layout of the minimum spanning network.)</label>
-            <!-- MICROBE-ID customization: Change the default value of your seed depending on how you want the  minimum spanning network to appear initially. -->
-            <input type="number" name="seed" id="seed" value="9449" min="0" />
-          </p>
-          <button type="submit" class="btn btn-success collapse in" data-toggle="collapse" data-target="#input">Submit genotype</button>
-        </form>
+            <p>
+              <!-- MICROBE-ID customization: In this <div> you can find the different genetic distances to be used. Note how all the <option value = > tags have a smaller name. These names communicate with the server.R file of SSR-ID to modify the distance used (lines 29-36). Be careful if you are changing these lines and modify the correspondent server.R file-->
+              <div class="control-group span3">
+                <label class="control-label" for="distance">Choose a genetic distance:</label>
+                <select id="distance" style="width:300px">
+                  <!-- IMPORTANT NOTE: If you are not using SSR data or it doesn't follow a stepwise mutation model, remove the line below -->
+                  <option value="bruvo" selected="selected">Bruvo's Distance (SSR Data Only)</option>
+                  <option value="nei">Nei's distance</option>
+                  <option value="edwards">Edwards' distance</option>
+                  <option value="rogers">Rogers' or Classic Eucledian distance </option>
+                  <option value="reynolds">Reynolds' distance</option>
+                  <option value="provesti">Absolute/Provesti's distance</option>
+                </select>
+              </div>
+              <label>Random Seed (This will affect bootstrap values and the layout of the minimum spanning network.)</label>
+              <!-- MICROBE-ID customization: Change the default value of your seed depending on how you want the  minimum spanning network to appear initially. -->
+              <input type="number" name="seed" id="seed" value="9449" min="0" />
+            </p>
+            <button type="submit" class="btn btn-success collapse in" data-toggle="collapse" data-target="#input">Submit genotype</button>
+          </form>
     </div>
   </div>
 
@@ -78,7 +103,7 @@
     <div class="span9 offset1">
       <h4>Analysis</h4>
       <p>Select between a distance tree with bootstrap support values or a minimum spanning network</p>
-      <!-- MICROBE-ID customization: In this <div class = "tabbable"> we created two different tabs: Distance trees (line 86) and minimum spanning networks (line 89). These lines represent the hyperlinks to the real tabs, defined in lines 94 (distance tree) and 140 (minimum spanning network). Be sure that the <a href= #value> correspond to the precise tab-->
+      <!-- MICROBE-ID customization: In this <div class = "tabbable"> we created two different tabs: Distance trees (line 110) and minimum spanning networks (line 113). These lines represent the hyperlinks to the real tabs, defined in lines 118 (distance tree) and 165 (minimum spanning network). Be sure that the <a href= #value> correspond to the precise tab-->
       <div class="tabbable">
         <ul class="nav nav-tabs">
           <li class="active">
@@ -141,11 +166,11 @@
             <div class="span12 well">
               <h3>Minimum Spanning Network</h3>
               <form id="form">
-                <span class="help-block">Note: Distances are calculated using Bruvo's distance, which follows a stepwise mutation model.</span>
                 <div class="span3">
                   <!-- MICROBE-ID customization: Slider to control levels of grayness for the edges in the Minimum spanning networks. This line communicates with line 127 of server.R-->
                   <label class="control-label" for="integer">Use the slider to adjust the grey scale of the edge distances.</label>
-                  <input id="integer" type="slider" name="integer" value="3" class="jslider" data-from="0" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE" />
+                  <input class="js-range-slider" id="integer" value=3 data-min="0" data-max="50" data-from="500" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-keyboard="true" data-keyboard-step="0.1" data-drag-interval="true" data-data-type="number"/>
+                  <!-- input id="integer" type="slider" name="integer" value="3" class="jslider" data-from="0" data-to="50" data-step="1" data-skin="plastic" data-round="FALSE" data-locale="us" data-format="#,##0.#####" data-smooth="FALSE" /-->
                 </div>
                 <div class="span12">
                   <!-- MICROBE-ID customization: Here is the submit button. It will send a signal to run the queries with the parameters specified.-->
@@ -155,8 +180,7 @@
                 </div>
               </form>
             </div>
-            <!-- MICROBE-ID customization: This <div id="MinSpanTree"> outputs the results of the minimum spanning network. Note that the div id is the same than the
-  variable output$MinSpanTree in of the server.R. READ THE SHINY DOCUMENTATION IN INPUTS/OUTPUTS TO UNDERSTAND HOW REACTIVE OUTPUTS WORK (http://shiny.rstudio.com/tutorial/lesson4/)-->
+            <!-- MICROBE-ID customization: This <div id="MinSpanTree"> outputs the results of the minimum spanning network. Note that the div id is the same as the variable output$MinSpanTree in of the server.R. READ THE SHINY DOCUMENTATION IN INPUTS/OUTPUTS TO UNDERSTAND HOW REACTIVE OUTPUTS WORK (http://shiny.rstudio.com/tutorial/lesson4/)-->
             <div id="MinSpanTree" class="shiny-plot-output" style="width: 100% ; height: 800px"></div>
           </div>
         </div>
@@ -164,63 +188,5 @@
     </div>
   </div>
   </div>
-  <!--script src="shared/jquery.js" type="text/javascript"></script>
-<script src="shared/shiny.js" type="text/javascript"></script>
-<script src="shared/slider/js/jquery.slider.min.js"></script>
-<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
-<script>if (typeof(Shiny) != "undefined") {
-Shiny.createSocket = function() {return new SockJS(location.pathname + "__sockjs__",null,{});};
-Shiny.oncustommessage = function(message) {
-	if (typeof message === "string") alert(message);
-	if (message.alert) alert(message.alert);
-	if (message.console && console.log) console.log(message.console);
-};
-}</script>
-<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-transition.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-alert.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-scrollspy.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tooltip.js"></script>
-	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-popover.js"></script>
-	<script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function(){
-// Validation
-$("#form").validate({
-	errorClass: "help-inline",
-	errorElement: "span",
-	highlight:function(element, errorClass,validClass) {
-								$(element).parents('.control-group').addClass('error');
-								},
-	unhighlight:function(element, errorClass, validClass) {
-								$(element).parents('.control-group').removeClass('error');
-								}
-							});
-		});
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
